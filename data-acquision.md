@@ -7,7 +7,7 @@
 | _Reading Tab-delimited text files_ | Mydata &lt;- read.delim\(“mydata.tab”\) |  |  |
 | _Reading text from a web site_ | myURL &lt;- http:\/\/sites.google.com\/site\/mydata.csv     mydata &lt;- read.csv\(myURL\) |  |  |
 | _Reading text from the clipborad_ | myvector &lt;- readClipboard\(\) |  |  |
-| _  Missing values for character variables_ |  |  |  |
+| _  Missing values for character variables_ | weiueryqewyi |  |  |
 | _Trouble with Tabs_ |  |  |  |
 | _ Skipping variables in delimited text files_ |  |  |  |
 | _Reading Character strings_ |  |  |  |

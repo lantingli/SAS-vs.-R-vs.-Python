@@ -1,7 +1,7 @@
 # Summary
 
 * [Introduction](README.md)
-* Data structure
+* [Data structure](data-structure.md)
 * [Data Acquision](data-acquision.md)
 * [Selecting Variables](selecting-variables.md)
 * [Selecting observations](selecting-observations.md)
