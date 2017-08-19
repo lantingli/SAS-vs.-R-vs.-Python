@@ -22,9 +22,31 @@
 
 * **Selecting variables**
 
-* |  | R | PYTHON | SAS |
+
+
+|  |  |
+| :--- | :--- |
+|  | by index number |
+| R | 1. Select all variables by default:                                                    print\(mydata\[ \]\); print \(mydata\[, \]\);                                           2. Select the 3rd variable:                                                               print\(mydata \[ , 3\]\); print\(mydata\[3\]\);                                      3. Select the variables q1, q2 ,q3, q4                                           print\(mydata\[c\(3,4,5,6\)\]\); print\(mydata\[3:6\]\)                            4. Exclude q1, q2 ,q3 q4                                                               print\(mydata\[-c\(3,4,5,6\)\]\) ; print\(mydata\[-\(3:6\)\]\)                       5. Using indices in a numeric  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+
+
+
+
+
+
+
+* |  |  |  |  |
   | --- | --- | --- | --- |
-  | **By index number** | 1. select all variables by default :print\(mydata\[ \]\); print\(mydata, \[ , \]\); 2. select the 3rd variable : print\(mydata \[, 3\]\); print\(mydata\[3\]\) ; 3. select the variables q1, q2, q3, q4 by indices: print\(mydata \[c\(3,4,5,6\)\]\); print\(mydata\[3:6\]\); 4. exclude q1 q2 q3 q4: print\(mydata\[-c\(3,4,5,6\)\]\); print\(mydata\[-\(3:6\)\]\); 5.  |  |  |
+  | **By index number** |  |  |  |
+  |  |  |  |  |
   | **by Column name** | 1. names\(mydata\), summary\(mydata\["q1"\]\), if supply only one index value, = summary\(mydata\[, "q1"\]\); for two conditions above, the summary function treats the presence or absence of a comma the same, some functions will have problems. this is because with a comma, the selection results in a vector, and without a comma, the selection is a data frame containing only that vector. 2. summary\(mydata\[c\("q1", "q2", "q3", "q4"\)\]\); 3. myqnames &lt;- c\("q1", "q2", "q3", "q4"\), summary\(mydata\[myqnames\]\); 3. summary\(mydata\[names\(mydata\) =="q1"\]\) == summary\(mydata\["q1"\]\); summary\(mydata\[!names\(mydata\) =="q1"\]\); myqtf &lt;- names \(mydata\) =="q1"\| names\(mydata\) =="q2", summary\(mydata\[myQtf\); myqtf &lt;- names \(mydata\) %in% c\("q1", "q2", "q3", "q4"\) |  |  |
   | **uUsing logic** |  |  |  |
   | **By string search** |  |  |  |
