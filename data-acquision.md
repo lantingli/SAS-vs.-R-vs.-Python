@@ -5,11 +5,11 @@
 | **1. Reading Delimited Text files** |  |  |  |
 | Reading Comma-delimited text files | Mydata &lt;- read.csv\(“mydata.csv”\) |  |  |
 | _Reading Tab-delimited text files_ | Mydata &lt;- read.delim\(“mydata.tab”\) |  |  |
-| _Reading text from a web site_ | myURL &lt;- http:\/\/sites.google.com\/site\/mydata.csv     mydata &lt;- read.csv\(myURL\) |  |  |
-| _Reading text from the clipborad_ | myvector &lt;- readClipboard\(\) |  |  |
-| _  Missing values for character variables_ | weiueryqewyi |  |  |
+| _Reading text from a web site_ | myURL &lt;- http://sites.google.com/site/mydata.csv     mydata &lt;- read.csv\(myURL\) |  |  |
+| _Reading text from the clipborad_ | for a single column of data, myvector &lt;- readClipboard\(\); for a whole set of columns: mydata &lt;- read.delim\("clipboard", header = TRUE\) |  |  |
+| _  Missing values for character variables_ | R will not set the blanks to missing unless you specially tell it to do so. if you want to set them, in comma delimited file, the missing valuewas entered as a single space, therefore, the argument na.char = " " added to any of the comma-delimited examples will set the value to missing. there is a single space between the quotes in that argument; for tal-delimited file, the missing value was entered as nothing between two tabs\(just two consecutive tabs\); another thing need to note: it is very easy to accidentally have blanks where you think there are none or to enter more than you meant to. then should add "strip.white = TRUE" which will get rid of all trailing blanks.  |  |  |
 | _Trouble with Tabs_ |  |  |  |
-| _ Skipping variables in delimited text files_ |  |  |  |
+| _ Skipping variables in delimited text files_ | myCols &lt;- read.delim \("mydata.tab", strip.white = TURE, na,strings = "", colClasses = c \("integer", "integer", "character", "NULL", "NULL", "interger", "interger"\)\):  use to read data while skipping the fourth and fifth columns\) |  |  |
 | _Reading Character strings_ |  |  |  |
 | **2. Reading Text data within a program** |  |  |  |
 | _The easy approach_ |  |  |  |
@@ -18,7 +18,8 @@
 | **4. Reading data from the keyboard** |  |  |  |
 | **5. Reading Fixed-Width text files, one record per case** |  |  |  |
 | **6. Reading Fixed-Width text files, two or more records per case** |  |  |  |
-| **7. Reading excel files** |  |  |  |
+| **7. Reading excel files** | install.packages\("xlsReadWrite"; library\("xlsReadWrite"\); mydata &lt;- read.xls\("mydata.xls"\) |  |  |
+|  |  |  |  |
 | **8. Reading from rational databases** |  |  |  |
 | **9. Reading data from SAS** |  |  |  |
 | **10.** **Reading data from SPSS** |  |  |  |
