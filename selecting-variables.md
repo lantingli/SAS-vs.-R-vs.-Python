@@ -37,19 +37,33 @@
 | Python |  |
 | SAS |  |
 |  | By string search |
-| R | 1. use grep to save the q variable indices:                               myQindices &lt;- grep\("^q", names\(mydata\), value = FALSE\)       2. use grep to save the q variable names : value = TRUE         3. use %in% to create a logical vector                                        myQtf &lt;- names \(mydata\) %in% myQnames; print  |
+| R | 1. use grep to save the q variable indices:                               myQindices &lt;- grep\("^q", names\(mydata\), value = FALSE\)       2. use grep to save the q variable names : value = TRUE         3. use %in% to create a logical vector                                        myQtf &lt;- names \(mydata\) %in% myQnames; print |
 | Python |  |
 | SAS |  |
 |  | By $notation |
 | R | 1. print\(mydata$q1\)                                                                          print\(data.frame\(mydata$q1, mydata$q2\)                            2. by simple name: using attach function                                  3. using "with" function                                                                   with\(mydata, summary\(data.frame\(q1, q2, q3, q4\)\)\) |
 | Python |  |
 | SAS |  |
-|  | with subset function  |
-| R | 1. print\(subset\(mydata, select = q1: q4\)\)                                  2. print\(subset\(mydata, select = c\(workshop, q1:q4\)      |
+|  | with subset function |
+| R | 1. print\(subset\(mydata, select = q1: q4\)\)                                  2. print\(subset\(mydata, select = c\(workshop, q1:q4\) |
 | Python |  |
 | SAS |  |
-|  | Select variables by list subscript                                                  |
-| R |  |
+|  | Select variables by list subscript |
+| R | print\(mydata\[\[3\]\] |
+| Python |  |
+| SAS |  |
+|  | Generate indices A to Z from two variables |
+| R | myqA &lt;- which\(names \(mydata\) == "q1"\)                                   myqZ &lt;- which\(names\(mydata\) =="q4"\)                                     print\(mydata\[myqA : myqZ\) |
+| Python |  |
+| SAS |  |
+|  | Select numeric or character variables  |
+| R  | 1. is. numeric \(mydata$workshop\)                                                  find numeric variables:                                                            2. mynums &lt;- sapply\(mydata, is.numeric\); print\(mydata \[myNums\]                                                                                             3. myA &lt;- which\(names\(mydata\) == "gender"\)                              myZ &lt;- which\(names\(mydata\) == "q3"\)                                     myRange &lt;- 1 : length\(mydata\) %in% myA : myZ                 print \(mydata\[myNums & myRange\]\)                                                                                               |
+| Python |  |
+| SAS |  |
+|  | Create a new data frame of selected variables |
+| R | myqs &lt;- mydata\[3:6\]                                                                      myqs &lt;- mydata\[ c \("q1", "q2", "q3", "q4"\)\]                                   myqs &lt;- data.frame \(mydata$q1, mydata$q2, mydata$q3, mydata$q4\)                                                                                       myqs &lt;- data.frame\(q1 = mydata$q1, q2 = mydata$q2, q3 = mydata$q3, q4= mydata $q4\)                                                     myqs &lt;- subset\(mydata, select = q1 :q4\) |
+| Python |  |
+| SAS |  |
 |  |  |
 |  |  |
 |  |  |
@@ -58,168 +72,7 @@
 |  |  |
 |  |  |
 |  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
 
-* |  |  |  |  |
-  | --- | --- | --- | --- |
-  | **By index number** |  |  |  |
-  |  |  |  |  |
-  | **by Column name** | 1. names\(mydata\), summary\(mydata\["q1"\]\), if supply only one index value, = summary\(mydata\[, "q1"\]\); for two conditions above, the summary function treats the presence or absence of a comma the same, some functions will have problems. this is because with a comma, the selection results in a vector, and without a comma, the selection is a data frame containing only that vector. 2. summary\(mydata\[c\("q1", "q2", "q3", "q4"\)\]\); 3. myqnames &lt;- c\("q1", "q2", "q3", "q4"\), summary\(mydata\[myqnames\]\); 3. summary\(mydata\[names\(mydata\) =="q1"\]\) == summary\(mydata\["q1"\]\); summary\(mydata\[!names\(mydata\) =="q1"\]\); myqtf &lt;- names \(mydata\) =="q1"\| names\(mydata\) =="q2", summary\(mydata\[myQtf\); myqtf &lt;- names \(mydata\) %in% c\("q1", "q2", "q3", "q4"\) |  |  |
-  | **uUsing logic** |  |  |  |
-  | **By string search** |  |  |  |
-  | **Using $notation** |  |  |  |
-  | **bBy simple name** |  |  |  |
-  | _The attach function_ |  |  |  |
-  | _The with function_ |  |  |  |
-  | _Using short variable names in formulas_ |  |  |  |
-  | **With the subset function** |  |  |  |
-  | **bBy list subscript** |  |  |  |
-* by index number
-
-summary \(mydata\[ , 3\]\) = summary \(mydata \[3\]\)
-
-summary\(mydata \[ c\(3,4,5,6\)\]\) = summary \(mydata\[3:6\]\)
-
-summary\(mydata\[-\(3:6\)\]\) : exclude the columns from 3 to 6
-
-generate a numbered list of variable names:
-
-data.frame\(names\(mydata\)\)
-
-summary \(mydata\[1: ncol\(mydata\)\]\)
-
-1. by column name
-
-   First check the name of the dataset: names\(mydata\)
-
-   Summary\(mydata, \[“q1”\]\)
-
-   Summary\(mydata \[ c\(“q1”, “q2”, “q3”, “q4”\)\]
-
-   myQnames &lt;- paste \(“q”, 1:4, sep = “”\)
-
-   summary\(mydata \[myQnames\]\)
-
-2. Using logic
-
-   Summary \(mydata\[c\(FALSE, FALSE, TRUE, FALSE, FALSE, FALSE\)\]
-
-   Summary \(mydata\[as.logical\(c\(0,0,1,0,0,0\)\)\]
-
-   Summary \(mydata \[names\(mydata\)== “q1”\]\)
-
-   Summary \(mydata \[!names\(mydata\)==”q1”\]\)
-
-   myQtf &lt;- names\(mydata\) == “q1” \| \(or\)
-
-   names\(mydata\)== “q2”\|
-
-   names\(mydata\)== “q3”\|
-
-   names\(mydata\)== “q4”
-
-   myQtf &lt;- names\(mydata\) %in% c\(“q1”, “q2”, “q3”, “q4”\)
-
-   Summary\(mydata\[myQtf\]\)
-
-3. by string search
-
-   myQindices &lt;- grep\(“^q”, names\(mydata\)， value = FALSE\)
-
-myQindices &lt;- grep\(“^q\[1-9\]”, names\(mydata\)， value = FALSE\)
-
-“^q” means “find strings that begin with lowercase p”
-
-Summary \(mydata \[myQindices\]\)
-
-myQtf &lt;- names \(mydata\) %in% myQnames
-
-Summary\(mydata\[myQtf\]\)
-
-1. using $notation
-
-Summary \(mydata $q1\)
-
-Summary \(data.frame\(mydata$q1, mydata $q2\)\)
-
-Summary \(c\(mydata$q1, mydata$q2\)\) not good!
-
-1. By simple name
-
-2. Use attach function
-
-Attach\(myadta\)
-
-Summary\(q1\) or Summary \(data.frame \(q1, q2, q3, q4\)
-
-1. Use with function
-
-With \(mydata,
-
-Summary \(data.frame \(q1, q2, q3, q4\)\)
-
-1. Using short variable names in formulas
-
-Lm\(mydata $q4~ mydata $q1 + mydata $q2 + mydata $q3\)
-
-Lm\(q4 ~ q1 +q2 +q3, data = mydata\)
-
-1. With subset function
-
-Summary \(subset\(mydata, select = q1 :q4\)
-
-Summary \(
-
-subset\(mydata, select = c\(workshop, q1:q4\)\)
-
-\)
-
-It is interesting to note that when using the c function within the subset function’s select argument, it combines the variable names, not the vectors themselves. So ：
-
-Summary \(
-
-Subset \(mydata, select = c \(q1, q2\)\)
-
-\) \# good
-
-Summary \(c\(mydata$q1, mydata $q2\)\) \# not good
-
-1. By list subscript
-
-Summary \(mydata \[\[3\]\]\) : select the third variable.
-
-Mydata \[\[3:6\]\] : wrong.
-
-1. Generating indices A to Z from two variable names
-
-myqA &lt;- which \(names\(mydata\) == “q1”\)
-
-myqZ &lt;- which\(names\(mydata\) == “q4”\)
-
-summary \(mydata\[ , myqA : myqZ\]\)
-
-check if some variables are numeric:
-
-is.numeric\(mydata$workshop\)
-
-1. Saving selected variables to a new data set
-
-Myqs &lt;- mydata \[3:6\]
-
-Myqs &lt;- mydata \[c\(“q1”, “q2”, “q3”, “q4”\)\]
-
-Myqs &lt;- data.frame \(mydata $q1, mydata$q2, mydata$q3, mydata$q4\)
-
-Myqs &lt;- subset\(mydata, select = q1:q4\)
-
-# PYTHON
-
-# SAS
-
+* 
 
 
