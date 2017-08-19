@@ -10,7 +10,7 @@
 | Python |  |
 | SAS |  |
 |  | By Logic |
-| R | 1. myRows &lt;- c\(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE\)   ; print\(mydata\[myRows,\]\)                                        2. select first four rows using 1 and 0:                                       myBinary &lt;- c\(1,1,1,1,0,0,0,0\) ; print\(mydata\[myBinary, \]\)         myRows &lt;- as.logical\(myBinary\) ; print\(mydata\[myRows, \]\)    3. print\(mydata\[mydata$gender == "f", \]\)                                       print\(mydata\[which \(mydata$gender == "f"\), \]\)                     4. using a saved vector                                                                myFemales &lt;- which\(mydata$gender == "f” ）                         print\(mydata\[myFemales, \]\)                                                        5. using %in%                                                 |
+| R | 1. myRows &lt;- c\(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE\)   ; print\(mydata\[myRows,\]\)                                        2. select first four rows using 1 and 0:                                       myBinary &lt;- c\(1,1,1,1,0,0,0,0\) ; print\(mydata\[myBinary, \]\)         myRows &lt;- as.logical\(myBinary\) ; print\(mydata\[myRows, \]\)    3. print\(mydata\[mydata$gender == "f", \]\)                                       print\(mydata\[which \(mydata$gender == "f"\), \]\)                     4. using a saved vector                                                                myFemales &lt;- which\(mydata$gender == "f” ）                         print\(mydata\[myFemales, \]\)                                                        5. using %in%              |
 |  |  |
 |  |  |
 |  |  |
