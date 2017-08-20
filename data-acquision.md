@@ -1,13 +1,57 @@
-# R
+
+
+
+
+|  | Reading delimited text files |
+| :--- | :--- |
+| R | 1. comma delimited files:                                                                   with id variable not named: mydata &lt;- read.csv\("mydata.csv"\); with id named in the header: mydata &lt;- read.csv\("mydataID.csv", row.names = "id"\)                                                       2. Tab delimited files:                                                                         with named ID column: mydata &lt;- read.delim\("mydata.tab"\); count.fields\("mydata.tab", sep = "\t"\)  ; with ID named in the header: mydata &lt;- read.delim\("mydataID.tab", row.names = "id"\)                                                                                             3. reading Text from a web site:                                                 myURL &lt;- "hettp://sites.google.com/site/r4statistics/mydata.csv"; mydata &lt;- read.csv\(myURL\)                                             4. reading text from the clipboard:                                              copy a column of numbers or words: myvector &lt;-readClipboard\(\); copy mydata.csv, select &copy contents, then :            mydata &lt;- read.delim \("clipboard", header = TURE\)                  5. missing values for character variables:                                  mydata &lt;- read.csv\("mydataID.csv", row.names = "id", strip.white = TRUE, na.string = " "\)                                                        6. skipping variables in delimited text files:                              myCols &lt;- read.delim\("mydata.tab", strip.white =TRUE, na.strings = " ", colClasses = c\("integer", "integer", "character", "NULL", "NULL", "integer", "interger"\)\)  |
+| Python |  |
+| SAS | 1. Reading delimited text files:                                                     proc import out = mylib.mydata                                                             datafile = "c"\myRfolder\mydataID.csv"                                     DBMS = CSV    REPLACE;                                                            GETNAMES = YES;                                                                       DATAROW = 2;                                                                   RUN;                                                                                               PROC PRINT; RUN;                                                                       2. Tab delimited files:                                                                   PROC IMPORT OUT = mylib.mydata                                                        DATAFILE = "C:\myRworkshop\mydataID.tab"                          DBMS = TAB  REPLACE;                                                               GETNAMES = YES;                                                                       DATAROW =2;                                                                   RUN;                                                                                               3. Reading from a web site:                                                  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+
+
+
+
+
+
+
+
+
+
+
+
 
 |  | R | PYTHON | SAS |
 | --- | --- | --- | --- |
 | **1. Reading Delimited Text files** |  |  |  |
 | Reading Comma-delimited text files | Mydata &lt;- read.csv\(“mydata.csv”\) |  |  |
 | _Reading Tab-delimited text files_ | Mydata &lt;- read.delim\(“mydata.tab”\) |  |  |
-| _Reading text from a web site_ | myURL &lt;- http://sites.google.com/site/mydata.csv     mydata &lt;- read.csv\(myURL\) |  |  |
+| _Reading text from a web site_ | myURL &lt;- [http://sites.google.com/site/mydata.csv](http://sites.google.com/site/mydata.csv)     mydata &lt;- read.csv\(myURL\) |  |  |
 | _Reading text from the clipborad_ | for a single column of data, myvector &lt;- readClipboard\(\); for a whole set of columns: mydata &lt;- read.delim\("clipboard", header = TRUE\) |  |  |
-| _  Missing values for character variables_ | R will not set the blanks to missing unless you specially tell it to do so. if you want to set them, in comma delimited file, the missing valuewas entered as a single space, therefore, the argument na.char = " " added to any of the comma-delimited examples will set the value to missing. there is a single space between the quotes in that argument; for tal-delimited file, the missing value was entered as nothing between two tabs\(just two consecutive tabs\); another thing need to note: it is very easy to accidentally have blanks where you think there are none or to enter more than you meant to. then should add "strip.white = TRUE" which will get rid of all trailing blanks.  |  |  |
+| _  Missing values for character variables_ | R will not set the blanks to missing unless you specially tell it to do so. if you want to set them, in comma delimited file, the missing valuewas entered as a single space, therefore, the argument na.char = " " added to any of the comma-delimited examples will set the value to missing. there is a single space between the quotes in that argument; for tal-delimited file, the missing value was entered as nothing between two tabs\(just two consecutive tabs\); another thing need to note: it is very easy to accidentally have blanks where you think there are none or to enter more than you meant to. then should add "strip.white = TRUE" which will get rid of all trailing blanks. |  |  |
 | _Trouble with Tabs_ |  |  |  |
 | _ Skipping variables in delimited text files_ | myCols &lt;- read.delim \("mydata.tab", strip.white = TURE, na,strings = "", colClasses = c \("integer", "integer", "character", "NULL", "NULL", "interger", "interger"\)\):  use to read data while skipping the fourth and fifth columns\) |  |  |
 | _Reading Character strings_ |  |  |  |
