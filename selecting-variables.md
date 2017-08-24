@@ -56,22 +56,14 @@
 | R | myqA &lt;- which\(names \(mydata\) == "q1"\)                                   myqZ &lt;- which\(names\(mydata\) =="q4"\)                                     print\(mydata\[myqA : myqZ\) |
 | Python |  |
 | SAS |  |
-|  | Select numeric or character variables  |
-| R  | 1. is. numeric \(mydata$workshop\)                                                  find numeric variables:                                                            2. mynums &lt;- sapply\(mydata, is.numeric\); print\(mydata \[myNums\]                                                                                             3. myA &lt;- which\(names\(mydata\) == "gender"\)                              myZ &lt;- which\(names\(mydata\) == "q3"\)                                     myRange &lt;- 1 : length\(mydata\) %in% myA : myZ                 print \(mydata\[myNums & myRange\]\)                                                                                               |
+|  | Select numeric or character variables |
+| R | 1. is. numeric \(mydata$workshop\)                                                  find numeric variables:                                                            2. mynums &lt;- sapply\(mydata, is.numeric\); print\(mydata \[myNums\]                                                                                             3. myA &lt;- which\(names\(mydata\) == "gender"\)                              myZ &lt;- which\(names\(mydata\) == "q3"\)                                     myRange &lt;- 1 : length\(mydata\) %in% myA : myZ                 print \(mydata\[myNums & myRange\]\) |
 | Python |  |
 | SAS |  |
 |  | Create a new data frame of selected variables |
 | R | myqs &lt;- mydata\[3:6\]                                                                      myqs &lt;- mydata\[ c \("q1", "q2", "q3", "q4"\)\]                                   myqs &lt;- data.frame \(mydata$q1, mydata$q2, mydata$q3, mydata$q4\)                                                                                       myqs &lt;- data.frame\(q1 = mydata$q1, q2 = mydata$q2, q3 = mydata$q3, q4= mydata $q4\)                                                     myqs &lt;- subset\(mydata, select = q1 :q4\) |
 | Python |  |
 | SAS |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
 
 * 
 
