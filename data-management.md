@@ -1,4 +1,4 @@
-| Transforming variables | R | a. \#transformation in the middle of another function                                           `summary(log(mydata$q4))`                 b. creating meanQ with dollar notation                                                                  `mydata$meanQ <- mydata$q1 + mydata$q2 + mydata$q3 + mydata$q4)/4 `                                     |
+| Transforming variables | R | a. \#transformation in the middle of another function                                           `summary(log(mydata$q4))`                 b. creating meanQ with dollar notation                                                                  `mydata$meanQ <- mydata$q1 + mydata$q2 + mydata$q3 + mydata$q4)/4` |
 | :--- | :--- | :--- |
 |  | Python |  |
 |  | SAS | LIBNAME mylib 'C:\myRfolder'                 data mylib.mydatatransformed;                set mylib.mydata;                                    totalq = \(q1+q2+q3+q4\);                         logtot = log10\(totalq\)                              mean1 = \(q1+q2+q3+q4\)/4;                   mean2 = mean\(of q1 -q4\) |
