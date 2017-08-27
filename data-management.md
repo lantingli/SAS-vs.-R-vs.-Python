@@ -1,30 +1,155 @@
 
 
+1. Tranforming variables
+
+   \# Transformation in the middle of another function
+
+    setwd\("c:/myRfolder"\)
+
+    load\(file = "mydata.RData"\)
+
+   summary\(log\(mydata$q4\)\)
+
+   \# Creating meanQ with dollar notation
+
+    mydata$meanQ &lt;- \(mydata$q1 +mydata$q2+mydata$q3+mydata$q4\) /4
+
+   \# Creating two variables using transfrom
+
+    mydata &lt;- transform\(mydata, score1 = \(q1+q2\)/2, score2 = \(q3+q4\)/2\)
+
+   \# Creating meanQ using index notation on the left 
+
+1. Procedures or functions
+
+     \#Applying the mean function
+
+     \#Finding N or NVALID
+
+     \#standardizing and ranking variables
+
+     \# applying your own functions
+
+     
+
+1. Conditional transformations
+
+     \# the ifelse function
+
+     \# cutting functions
+
+1. Multiple conditional transformation
+2. Missing values
+
+     \# Substituting means for missing values
+
+     \# finding complete observations
+
+     \# when "99" has meaning 
+
+    
+
+1. Renaming variables
+
+      \# advanced renaming 
+
+      \# renaming by index
+
+      \# renaming by column name 
+
+      \# renaming many sequentially numbered variable
+
+      \# renaming observations
+
+   
+
+1. Recording variables
+
+      \# recoding a few variables
+
+      \# recoding many variables
+
+   
+
+1. indicator or Dummy variables
+2. Keeping and Dropping variables
+3. Stacking/Concatenating/Adding data sets
+4. Joining/Merging datasets
+5. Creating summarized or aggregated data sets
+
+     \# the aggregate function
+
+    \# the tapply function
+
+    \# merging aggregates with original data
+
+    \# tabular aggregation
+
+    \# the plyr and reshape2 packages
+
+1. By or Split-file processing
+2. Removing duplicate obserations
+3. Selecting first or last observations per group
+4. Transposing or flipping data sets
+5. Reshaping variables to observations and back
+6. sorting data frames
+7. Converting data structure
+8. Character string manipulations
+9. Dates and Times
+
+   \# Calculating durations
+
+   \# adding durations to date-time variables
+
+   \# accessing date-time elements
+
+   \# creating date-time variables from elements
+
+   \# logical comparisons with date-time variables
+
+   \# formatting date-time output
+
+   \# two-digit years
+
+   \# date-time conclusion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Transforming variables:
 
-R 
+R
 
 `mydata$meanQ <- (mydata$q1 +mydata$q2) /2`
 
-Python 
+Python
 
 SAS
 
 `data a;`
 
-`  set b;`
+`set b;`
 
-`  keep var1 var2 var3;`
+`keep var1 var2 var3;`
 
 `run;`
-
-
-
-
-
-
-
-
 
 | Transforming variables |  |  |
 | :--- | :--- | :--- |
