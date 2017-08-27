@@ -46,31 +46,48 @@ c. SAS:
 2. Procedures or functions
 
 
-     \#1)Applying the mean function
-        \#a. R
+  \#1)Applying the mean function
+     
+  \#a. R
         
  \# Mean of the q variables
-     mean(mydata[3:6], na.rm = TURE)
+     `mean(mydata[3:6], na.rm = TURE)`
   \# Create mymatrix
-     mymatrix <- as.matrix(mydata[ , 3:6])
+     `mymatrix <- as.matrix(mydata[ , 3:6])`
   \#  Get mean of whole matrix
-     mean(mymatrix, na.rm = TRUE)
+     `mean(mymatrix, na.rm = TRUE)`
   \# get mean of matrix columns.
-     apply(mymatrix, 2,mean, na.rm= TRUE)
+     `apply(mymatrix, 2,mean, na.rm= TRUE)`
   \# get mean of matrix rows
+  
+```
      apply(mymatrix, 1, mean, na.rm = TRUE)
      rowMeans (mymatrix, na.rm = TRUE)
+```
+
   \# add row means to mydata
+    
+
+```
      mydata$meanQ <- apply(mymatrix, 1, mean, na.rm = TRUE) 
      mydata$meanQ <- rowMeans (mymatrix, na.rm = TRUE)
-     mydata <- transform(mydata, meanQ = rowMeans(mymatrix, na.rm = TRUE)
+     mydata <- transform(mydata, meanQ =  rowMeans(mymatrix, na.rm = TRUE)
      )
+```
+
+
   \# Means of data frames & their vectors
+     
+
+```
      lapply(mydata [, 3:6], mean, na.rm = TRUE)
      sapply(mydata [, 3:6], mean, na.rm = TRUE)
      mean(
      sapply(mydata [, 3:6], mean, na.rm = TURE)
      )
+```
+
+
      
      python:
      SAS:
