@@ -4,11 +4,22 @@
 
    \# Transformation in the middle of another function
 
-    setwd\("c:/myRfolder"\)
+    
 
-    load\(file = "mydata.RData"\)
+```
+ setwd\("c:/myRfolder"\)
+ load\(file = "mydata.RData"\)
 
-   summary\(log\(mydata$q4\)\)
+```
+
+
+   
+
+```
+summary\(log\(mydata$q4\)\)
+
+```
+
 
    \# Creating meanQ with dollar notation
 
