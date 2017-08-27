@@ -15,6 +15,7 @@ The contents include below list:
 5. Selecting Variables and Observations
 
 6. Data management
+
 7. Enhancing your output
 8. Generating Data
 9. Managing your files and workspace
