@@ -87,12 +87,19 @@ c. SAS:
      )
 ```
 
+ \# Length of data frames & their vectors
+ 
 
-     
-     python:
-     SAS:
-
-
+```
+    length(mydata[, "q3"])
+    nrow(mydata)
+    is.na(mydata[, "a3"])
+    !is.na(mydata [ , "q3"])
+    sum(!is.na(mydata [, "q3"]))
+```
+ 
+   python:
+   SAS:
 ```
     data mylib.mydata;
      set mylib.mydata;
@@ -108,14 +115,30 @@ c. SAS:
 
 
      \#Finding N or NVALID
+     R: 
+```
+     library("prettyR")
+     sapply(mydata, valid.n)
+     apply(myMatrix, 1, valid.n)
+     mydata$myQn <- apply(myMatrix,1, valid.n)
+```
+
+
 
      \#standardizing and ranking variables
      
      R:
+
+
+```
+     myZs <- apply(mymatrix, 2,scale)
+     myRanks <- apply(mymatrix, 2, rank)
+```
+
+
+     
      PYTHON:
      SAS:
-
-
 ```
      proc standard data = mylib.mydata;
        mean = 0 std = 1 out = myzs;
