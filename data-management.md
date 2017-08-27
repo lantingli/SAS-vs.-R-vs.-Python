@@ -2,34 +2,52 @@
 
 1. Tranforming variables
 
+R：
+
+```
+setwd("c:/myRfolder") 
+load(file = "mydata.RData")
+```
    \# Transformation in the middle of another function
-
-    
-
 ```
- setwd\("c:/myRfolder"\)
- load\(file = "mydata.RData"\)
-
+ summary\(log\(mydata$q4\)
 ```
-
-
-   
-
-```
-summary\(log\(mydata$q4\)\)
-
-```
-
-
    \# Creating meanQ with dollar notation
 
-    mydata$meanQ &lt;- \(mydata$q1 +mydata$q2+mydata$q3+mydata$q4\) /4
+    mydata$meanQ <- \(mydata$q1 +mydata$q2+mydata$q3+mydata$q4) /4
 
    \# Creating two variables using transfrom
 
-    mydata &lt;- transform\(mydata, score1 = \(q1+q2\)/2, score2 = \(q3+q4\)/2\)
+    mydata <-- transform\(mydata, score1 = (q1+q2)/2, score2 = (q3+q4)/2)
 
    \# Creating meanQ using index notation on the left 
+   
+   
+
+```
+ load(file = "mydata.RData")
+   mydata <- data.frame(cbind(mydata, mean   q =0.))
+   mydata[7] <- (mydata$q1 +mydata$q2 +mydata$q3 +mydata$q4)/4
+```
+PYTHON:
+SAS:
+
+
+
+
+```
+LIBNAME mylib 'C:\myRfolder';
+  data mylib.mydataTransformed;
+    set mylib.mydata;
+     totalq = (q1+q2+q3+q4);
+     logtot = log10(totalq);
+     mean1 = (q1+q2+q3+q4)/4;
+     mean2 = mean(of q1 - q4);
+```
+
+
+
+
 
 1. Procedures or functions
 
