@@ -5,12 +5,12 @@
 R：
 
 ```
-setwd("c:/myRfolder") 
-load(file = "mydata.RData")
+    setwd("c:/myRfolder") 
+    load(file = "mydata.RData")
 ```
    \# Transformation in the middle of another function
 ```
- summary\(log\(mydata$q4\)
+     summary\(log\(mydata$q4\)
 ```
    \# Creating meanQ with dollar notation
 
@@ -23,22 +23,22 @@ load(file = "mydata.RData")
    \# Creating meanQ using index notation on the left 
 
 ```
-load(file = "mydata.RData")
-   mydata <- data.frame(cbind(mydata, mean   q =0.))
-   mydata[7] <- (mydata$q1 +mydata$q2 +mydata$q3 +mydata$q4)/4
+    load(file = "mydata.RData")
+      mydata <- data.frame(cbind(mydata, mean   q =0.))
+      mydata[7] <- (mydata$q1 +mydata$q2 +mydata$q3    +mydata$q4)/4
 ```
 
 PYTHON:
 
 SAS:
 ```
-LIBNAME mylib 'C:\myRfolder';
-  data mylib.mydataTransformed;
-    set mylib.mydata;
-     totalq = (q1+q2+q3+q4);
-     logtot = log10(totalq);
-     mean1 = (q1+q2+q3+q4)/4;
-     mean2 = mean(of q1 - q4);
+    LIBNAME mylib 'C:\myRfolder';
+      data mylib.mydataTransformed;
+        set mylib.mydata;
+        totalq = (q1+q2+q3+q4);
+        logtot = log10(totalq);
+        mean1 = (q1+q2+q3+q4)/4;
+        mean2 = mean(of q1 - q4);
 ```
 
 
@@ -49,12 +49,50 @@ LIBNAME mylib 'C:\myRfolder';
      \#Applying the mean function
      
      R:
+  # Mean of the q variables
+     mean(mydata[3:6], na.rm = TURE)
+  # Create mymatrix
+     mymatrix <- as.matrix(mydata[ , 3:6])
+  #  Get mean of whole matrix
+     mean(mymatrix, na.rm = TRUE)
+     
      python:
      SAS:
+
+
+```
+    data mylib.mydata;
+     set mylib.mydata;
+       myMean = MEAN(OF q1-q4);
+       myN = N(OF q1- q4);
+    run;
+    
+    proc means ;
+       var q1 - q4 myMean myN;
+    run;
+```
+
+
 
      \#Finding N or NVALID
 
      \#standardizing and ranking variables
+     
+     R:
+     PYTHON:
+     SAS:
+
+
+```
+     proc standard data = mylib.mydata;
+       mean = 0 std = 1 out = myzs;
+     run;
+   
+     proc rank data = mylib.mydata out = myranks;
+     run;
+```
+
+
 
      \# applying your own functions
 
