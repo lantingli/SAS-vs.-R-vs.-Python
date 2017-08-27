@@ -21,20 +21,16 @@ load(file = "mydata.RData")
     mydata <-- transform\(mydata, score1 = (q1+q2)/2, score2 = (q3+q4)/2)
 
    \# Creating meanQ using index notation on the left 
-   
-   
 
 ```
- load(file = "mydata.RData")
+load(file = "mydata.RData")
    mydata <- data.frame(cbind(mydata, mean   q =0.))
    mydata[7] <- (mydata$q1 +mydata$q2 +mydata$q3 +mydata$q4)/4
 ```
+
 PYTHON:
+
 SAS:
-
-
-
-
 ```
 LIBNAME mylib 'C:\myRfolder';
   data mylib.mydataTransformed;
@@ -47,11 +43,14 @@ LIBNAME mylib 'C:\myRfolder';
 
 
 
-
-
 1. Procedures or functions
 
+
      \#Applying the mean function
+     
+     R:
+     python:
+     SAS:
 
      \#Finding N or NVALID
 
@@ -59,7 +58,7 @@ LIBNAME mylib 'C:\myRfolder';
 
      \# applying your own functions
 
-     
+ 
 
 1. Conditional transformations
 
