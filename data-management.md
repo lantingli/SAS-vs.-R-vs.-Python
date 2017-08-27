@@ -2,7 +2,7 @@
 
 1. Tranforming variables
 
-R：
+a. R：
 
 ```
     setwd("c:/myRfolder") 
@@ -10,15 +10,15 @@ R：
 ```
    \# Transformation in the middle of another function
 ```
-     summary\(log\(mydata$q4\)
+     summary(log(mydata$q4)
 ```
    \# Creating meanQ with dollar notation
 
-    mydata$meanQ <- \(mydata$q1 +mydata$q2+mydata$q3+mydata$q4) /4
+    mydata$meanQ <- (mydata$q1 +mydata$q2+mydata$q3+mydata$q4) /4
 
    \# Creating two variables using transfrom
 
-    mydata <-- transform\(mydata, score1 = (q1+q2)/2, score2 = (q3+q4)/2)
+    mydata <-- transform(mydata, score1 = (q1+q2)/2, score2 = (q3+q4)/2)
 
    \# Creating meanQ using index notation on the left 
 
@@ -28,9 +28,9 @@ R：
       mydata[7] <- (mydata$q1 +mydata$q2 +mydata$q3    +mydata$q4)/4
 ```
 
-PYTHON:
+b. PYTHON:
 
-SAS:
+c. SAS:
 ```
     LIBNAME mylib 'C:\myRfolder';
       data mylib.mydataTransformed;
@@ -43,18 +43,34 @@ SAS:
 
 
 
-1. Procedures or functions
+2. Procedures or functions
 
 
-     \#Applying the mean function
-     
-     R:
-  # Mean of the q variables
+     \#1)Applying the mean function
+        \#a. R
+        
+ \# Mean of the q variables
      mean(mydata[3:6], na.rm = TURE)
-  # Create mymatrix
+  \# Create mymatrix
      mymatrix <- as.matrix(mydata[ , 3:6])
-  #  Get mean of whole matrix
+  \#  Get mean of whole matrix
      mean(mymatrix, na.rm = TRUE)
+  \# get mean of matrix columns.
+     apply(mymatrix, 2,mean, na.rm= TRUE)
+  \# get mean of matrix rows
+     apply(mymatrix, 1, mean, na.rm = TRUE)
+     rowMeans (mymatrix, na.rm = TRUE)
+  \# add row means to mydata
+     mydata$meanQ <- apply(mymatrix, 1, mean, na.rm = TRUE) 
+     mydata$meanQ <- rowMeans (mymatrix, na.rm = TRUE)
+     mydata <- transform(mydata, meanQ = rowMeans(mymatrix, na.rm = TRUE)
+     )
+  \# Means of data frames & their vectors
+     lapply(mydata [, 3:6], mean, na.rm = TRUE)
+     sapply(mydata [, 3:6], mean, na.rm = TRUE)
+     mean(
+     sapply(mydata [, 3:6], mean, na.rm = TURE)
+     )
      
      python:
      SAS:
