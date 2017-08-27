@@ -174,6 +174,19 @@ c. SAS:
      \# the ifelse function
      
       \#a. R
+      
+
+```
+      setwd("c:/myRfolder")
+      load(file = "mydata.RData")
+      mydata$q4Sagree <- ifelse(q4 ==5, 1,0)
+      mydata$q4agree <- as.numeric(q4 ==5)
+      mydata$q4agree <- ifelse(q4 >= 4, 1,0)
+      mydata$ws1agree <- ifelse(workshop = 1& q4 >= 4, 1,0)
+      mydata$score <- ifelse(gender =="f", (2*q1) +q2, (3*q1) +q2)
+```
+
+
       \#b. python
       \#c. SAS
       
@@ -199,13 +212,52 @@ c. SAS:
 
   \# cutting functions
   \#a. R
+  
+  `attach(mydata100)`
+  
+\#an inefficient approach
+ ```    
+     postgroup <- posttest 
+     postgroup <- ifelse(posttest <60           , 1, postgroup)
+     postgroup <- ifelse(posttest >= 60 & posttest <70, 2, postgroup)
+     postgroup <- ifelse(posttest >= 70 & posttest <80, 3, postgroup)
+     postgroup <- ifelse(posttest >= 80 & posttest <90, 4, postgroup)
+     postgroup <- ifelse(posttest >= 90,                5, postgroup)
+```
+
+\#an efficient approach
+```
+    postgroup <- 
+     ifelse(posttest <60                 , 1,
+       ifelse(posttest>= 60 & posttest <70, 2,
+          ifelse(posttest >= 70 & posttest <80, 3, 
+          ifelse(posttest >= 80 & posttest <90, 4,
+             ifelse (posttest >= 90            , 5, posttest)
+     ))))
+    table(postgroup)
+```
+\# Logical approach
+  
+
+```
+   postgroup <- 1 +
+      (posttest >= 60) +
+      (posttest >= 70) +
+      (posttest >= 80) +
+      (posttest >= 90)
+      table(postgroup)
+```
+
+l
+
+
   \#b. python
   \#c. SAS
   
  
 
 ```
-   data mylib.mydataTransformed;
+    data mylib.mydataTransformed;
     set mylib.mydata100;
     if (posttest <60) then postGroup = 1;
     else if(posttest >= 60 & posttest <70) then postgroup = 2;
