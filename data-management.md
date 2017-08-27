@@ -150,15 +150,81 @@ c. SAS:
 
 
 
-     \# applying your own functions
+ \# applying your own functions
 
+  `apply(mymatrix, 2, mean, sd) # No good`
+   
  
+
+```
+    mystats <function(x) {
+     c(mean= mean(x, na.rm = TRUE),
+       sd = sd(x, na.rm = TRUE))
+       }
+    apply(mymatrix, 2, mystats)
+    apply(mymatrix, 2, function(x) {
+        c(mean = mean(x, na.rm = TRUE), 
+         sd = sd(x, na.rm = TRUE))
+         })
+```
+
 
 1. Conditional transformations
 
      \# the ifelse function
+     
+      \#a. R
+      \#b. python
+      \#c. SAS
+      
 
-     \# cutting functions
+
+```
+      LIBNAME mylib 'C:\myRfolder';
+      data mylib.mydataTransformed;
+        set mylib.mydata;
+        if q4 = 5 then x1 =1 ; else x1 = 0;
+        if q4 >= 4 then x2 =1; else x2 = 0;
+        if workshop = 1 & q4 >= 5 then x3 = 1;
+          else x3 = 0;
+          if gender = "f" then scoreA = 2*q1 +q2;
+                               else scoreA  = 3* q1 +q2;
+          if workshop = 1 and q4 >= 5 
+            then scoreB = 2*q1 +a2;
+            else scoreB = 3*q1 +q2;
+         run;
+```
+
+
+
+  \# cutting functions
+  \#a. R
+  \#b. python
+  \#c. SAS
+  
+ 
+
+```
+   data mylib.mydataTransformed;
+    set mylib.mydata100;
+    if (posttest <60) then postGroup = 1;
+    else if(posttest >= 60 & posttest <70) then postgroup = 2;
+    else if(posttest >= 70 & posttest <80) then postgroup = 3;
+    else if (posttest >= 80 & posttest <90) then postgroup = 4;
+    else if (posttest >= 90) then postegroup = 5;
+    run;
+ 
+    proc freq;
+      tables postgroup;
+    run;
+ 
+    proc rank out = mylib.mydataTransformed Groups = 5;
+      var posttest;
+    run;
+```
+
+
+     
 
 1. Multiple conditional transformation
 2. Missing values
