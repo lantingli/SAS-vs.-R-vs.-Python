@@ -1,69 +1,77 @@
-| Transforming variables | R | a. \#transformation in the middle of another function                       `summary(log(mydata$q4))`                            
-b. creating meanQ with dollar notation                 `mydata$meanQ <- mydata$q1 + mydata$q2 + mydata$q3 + mydata$q4)/4` |
-| :--- | :--- | :--- |
-|  | Python |  |
-|  | SAS | LIBNAME mylib 'C:\myRfolder'                 data mylib.mydatatransformed;                set mylib.mydata;                                    totalq = \(q1+q2+q3+q4\);                         logtot = log10\(totalq\)                              mean1 = \(q1+q2+q3+q4\)/4;                   mean2 = mean\(of q1 -q4\) |
-| PROCEDURES OR FUNCTIONS | R |  |
-|  | Python |  |
-|  | SAS |  |
-| CONDITIONAL TRANSFORMATION | R | a. the ifelse function                               b. cutting functions |
-|  | PYTHON |  |
-|  | SAS |  |
-| MULTIPLE CONDITIONAL TRANSFORMATIONS | R |  |
-|  | PYTHON |  |
-|  | SAS |  |
-| MISSING VALUES | R | a. substituting means for missing values                                                              b. finding complete observations         c. when "99" has meaning |
+\| Transforming variables \| R \| a. \#transformation in the middle of another function                       `summary(log(mydata$q4))`  
+b. creating meanQ with dollar notation                 `mydata$meanQ <- mydata$q1 + mydata$q2 + mydata$q3 + mydata$q4)/4` \|  
+\| :--- \| :--- \| :--- \|     
+\|  \| Python \|  \|  
+\|  \| SAS \| LIBNAME mylib 'C:\myRfolder'                 data mylib.mydatatransformed;                set mylib.mydata;                                    totalq = \(q1+q2+q3+q4\);                         logtot = log10\(totalq\)                              mean1 = \(q1+q2+q3+q4\)/4;                   mean2 = mean\(of q1 -q4\) \|  
+\| PROCEDURES OR FUNCTIONS \| R \|  \|  
+\|  \| Python \|  \|  
+\|  \| SAS \|  \|  
+\| CONDITIONAL TRANSFORMATION \| R \| a. the ifelse function                               b. cutting functions \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| MULTIPLE CONDITIONAL TRANSFORMATIONS \| R \|  \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| MISSING VALUES \| R \| a. substituting means for missing values                                                              b. finding complete observations         c. when "99" has meaning \|  
+\|  \|  \|  \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| RENAMING VARIABLES \| R \| a. renaming by index                               b. renaming by column name                 c. renaming many sequentially numbered variable names                                   d. renaming observations \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| RECORDING VARIABLES \| R \| a. recoding a few variables                     b. recoding many variables \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| INDICATOR OR DUMMY VARIABLES \| R \|  \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| KEEPING AND DROPPING VARIABLES \| R \|  \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| STACKING/CONCATENATING/ADDING DATA SETS \| R \|  \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| JOINING/MERGING DATA SETS \| R \|  \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| CREATING SUMMARIZED OR AGGREGATED DATSAETS \| R \| a. the aggregate function                       b. the tapply function                              c. merging aggregates with original data                                                              d. tabular aggregation                            e. the plyr and reshape2 pack \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| BY OR SPLIT -FILE PROCESSING \| R \|  \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| REMOVING DUPLICATE OBSERVATIONS \| R \|  \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| SELECTING FIRST OR LAST OBSERVATIONS PER GROUP \| R \|  \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| TRANSPOSING OR FLIPPING DATA SETS \| R \|  \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| RESHAPING VARIABLES TO OBSERVATIONS AND BACK \| R \|  \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| SORTING DATA FRAMES \| R \|  \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| CONVERTING DATA STRUCTURES \| R \|  \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| CHARACTER STRING MANIPULATIONS \| R \|  \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|  
+\| DATES AND TIMES \| R \| a. calculating durations                           b. adding durations to date-time variables                                                            c. accessing date-time elements           d. creating date-time variables from elements                                                       e. logical comparisons with date-time variables                                                   f. formatting date-time output              g. two-digit years                                     h. date-time conclusion \|  
+\|  \| PYTHON \|  \|  
+\|  \| SAS \|  \|
+
+
+
 |  |  |  |
-|  | PYTHON |  |
-|  | SAS |  |
-| RENAMING VARIABLES | R | a. renaming by index                               b. renaming by column name                 c. renaming many sequentially numbered variable names                                   d. renaming observations |
-|  | PYTHON |  |
-|  | SAS |  |
-| RECORDING VARIABLES | R | a. recoding a few variables                     b. recoding many variables |
-|  | PYTHON |  |
-|  | SAS |  |
-| INDICATOR OR DUMMY VARIABLES | R |  |
-|  | PYTHON |  |
-|  | SAS |  |
-| KEEPING AND DROPPING VARIABLES | R |  |
-|  | PYTHON |  |
-|  | SAS |  |
-| STACKING/CONCATENATING/ADDING DATA SETS | R |  |
-|  | PYTHON |  |
-|  | SAS |  |
-| JOINING/MERGING DATA SETS | R |  |
-|  | PYTHON |  |
-|  | SAS |  |
-| CREATING SUMMARIZED OR AGGREGATED DATSAETS | R | a. the aggregate function                       b. the tapply function                              c. merging aggregates with original data                                                              d. tabular aggregation                            e. the plyr and reshape2 pack |
-|  | PYTHON |  |
-|  | SAS |  |
-| BY OR SPLIT -FILE PROCESSING | R |  |
-|  | PYTHON |  |
-|  | SAS |  |
-| REMOVING DUPLICATE OBSERVATIONS | R |  |
-|  | PYTHON |  |
-|  | SAS |  |
-| SELECTING FIRST OR LAST OBSERVATIONS PER GROUP | R |  |
-|  | PYTHON |  |
-|  | SAS |  |
-| TRANSPOSING OR FLIPPING DATA SETS | R |  |
-|  | PYTHON |  |
-|  | SAS |  |
-| RESHAPING VARIABLES TO OBSERVATIONS AND BACK | R |  |
-|  | PYTHON |  |
-|  | SAS |  |
-| SORTING DATA FRAMES | R |  |
-|  | PYTHON |  |
-|  | SAS |  |
-| CONVERTING DATA STRUCTURES | R |  |
-|  | PYTHON |  |
-|  | SAS |  |
-| CHARACTER STRING MANIPULATIONS | R |  |
-|  | PYTHON |  |
-|  | SAS |  |
-| DATES AND TIMES | R | a. calculating durations                           b. adding durations to date-time variables                                                            c. accessing date-time elements           d. creating date-time variables from elements                                                       e. logical comparisons with date-time variables                                                   f. formatting date-time output              g. two-digit years                                     h. date-time conclusion |
-|  | PYTHON |  |
-|  | SAS |  |
+| :--- | :--- | :--- |
+|  |  |  |
+|  |  |  |
+|  |  |  |
 
 |  | R | PYTHON | SAS |
 | :--- | :--- | :--- | :--- |
