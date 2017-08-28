@@ -248,10 +248,17 @@ c. SAS:
       table(postgroup)
 ```
 
+
+
+```
 library("Hmisc"）
 postgroup <- cut2(posttest, c(60,70, 80, 90))
 table(postgroup)
-po
+postgroup<- cut2(posttest, g = 5)
+postgroup <- cut2(postest, m =25)
+```
+
+
 
 
   \#b. python
@@ -282,15 +289,148 @@ po
      
 
 1. Multiple conditional transformation
-2. Missing values
 
-     \# Substituting means for missing values
+\#R
+
+\# using the ifelse approach
+
+  mydata$score1 <- ifelse(gender == "f", (2*q1) +q2, #score1 for females;
+  (20*q1+q2)  # score1 for males
+  )
+  
+  mydata$score2 <- ifelse(gender =="f", 
+  (3*q1+q2), # score2 for females
+   (30 *q1 +q2) # score 2 for males
+   )
+   
+\# using the index approach
+  load(file = "mydata.Rdata")
+      \#create names in data frame
+
+
+```
+      mydata <- data.frame(mydata, score1 = NA, score2 = NA)
+       attach(mydata)
+       \# find which are males and females
+       gals <- which(gender == "f")
+       guys <- which(gender =="m")
+       mydata[gals, "socre1"] <- 2*q1[gals] +q2[gals]
+       mydata[gals, "score2"] <- 3 *q1[gals] +q2[gals]
+       mydata[guys, "score1"] <- 20* q1[guys] + q2 *[guys]
+       mydata[guys, "score2"] <- 30 * q1[guys] +q2[guys]
+       
+        \# clean up
+        rm(guys, gals)
+```
+
+
+  
+\#PYTHON
+\# SAS
+
+
+
+```
+    data mylib.mydata;
+    set mylib.mydata;
+    if gender = "f" then do;
+    score1 = (2*q1) +q2;
+    score2 = (3*q1) +q2;
+    end;
+    else if gender = "m" then do;
+    score1 = (20*q1) +q2;
+    score2 = (30*q1)+q2;
+    end;
+    run;
+```
+
+
+
+
+
+2. Missing values
+\# when importing numeric data, R reads blanks as missing(except when blanks are delimiters). R reads the string NA as missing for both numeric and character variables. when importing a text file, both SAS and SPSS would recognize a period as a missing value for numeric variables. R will instead read the whole variable as a character vector!
+\# SAS 
+
+
+```
+    data mylib.mydata;
+     set mylib.mydata;
+       if q1= 9 then q1 = .;
+       if q2 = 9 then q2 = .;
+       if q3 = 99 then q3 = .;
+       if q4 = 99 then q4 = .;
+    \# same thing but is quicker for lots of vars
+       array q9 q1 -q2;
+         do over q9;
+           if q9 = 9 then q = .;
+        end;
+        array q99 q3 - q4;
+          do over q99;
+            if q = 99 then q99 = .;
+        end;
+```
+
+\# R
+
+
+```
+mydataNA <- read.table("mydataNA.txt")
+  \#read it so that ".", 9, 99 are missing.
+  mydataNA <- read.table("mydtaNA.txt", 
+    na.strings = c(".", "9", "99"))
+    
+    \# convert 9 and 99 manually
+    mydataNA <- read.table("mydataNA.txt",
+    na.string = ".")
+    mydataNA [mydataNA ==9 | mydataNA ==99] <-NA
+    \# substitute the mean for missing values
+     mydataNA$q1 [is.na(mydataNA$q1)] <- mean(mydataNA$q1, na.rm = TRUE)
+
+```
+
+
+    \eliminate observations with any NAs
+    `myNoMissing <- na.omit(mydataNA)`
+    
 
      \# finding complete observations
+     
+     `complete.cases(mydataNA)`
+     \# use that result to select complete cases
+      `myNoMissing <- mydataN[complete.cases(mydataNA), ]`
+     \# use that result to select incomplete cases
+     `myincomplete <- mydataNA [!complete.cases(mydataNA), ]`
+     
 
      \# when "99" has meaning 
+     `mydataNA <- read.table("mydataNA.txt", na.strings = ".")`
+     
+     \# assign missing values for q variables
+     
 
-    
+```
+      mydataNA$q1 [q1 == 9] <- NA
+      mydataNA$q2[q2 ==9] <- NA
+      mydataNA$q3 [q3 ==99] <- NA
+      mydataNA$q4 [q4 == 99] <- NA
+```
+
+
+      
+      \#use our funcion
+
+
+
+```
+       my9isNA <- function(X){x[x==9] <- NA; x}
+       my99isNA <- function(x) {x[x==99]<- NA; x}
+       
+       mydataNA[3:4] <- lapply(mydataNA[3:4, my9isNA)
+       mydataNA[5:6] <- lapply(mydataNA[5:6], my99isNA)
+```
+
+
 
 1. Renaming variables
 
