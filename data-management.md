@@ -248,7 +248,10 @@ c. SAS:
       table(postgroup)
 ```
 
-l
+library("Hmisc"）
+postgroup <- cut2(posttest, c(60,70, 80, 90))
+table(postgroup)
+po
 
 
   \#b. python
