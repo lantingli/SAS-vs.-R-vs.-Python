@@ -433,18 +433,78 @@ mydataNA <- read.table("mydataNA.txt")
 
 
 1. Renaming variables
+ 
+    \# R
 
       \# advanced renaming 
-
-      \# renaming by index
-
-      \# renaming by column name 
-
-      \# renaming many sequentially numbered variable
-
-      \# renaming observations
-
    
+     \# using the data editor
+       fix(mydata)
+     \# Restore original names for next example
+        names(mydata) <- c("workshop", "gender", "q1", "q2", "q3", "q4")
+      
+      \# using the reshape2 pakage
+        library("reshape2")
+        myChanges <- c(q1 = "x1", q2 = "x2", q3 = "x3", q4 = "x4")
+        mydata <- rename(mydata, myChanges)
+      
+      \# the standard R approach
+        names(mydata) <- c("workshop", "gender", "x1", "x2", "x3", "x4")
+        
+      \#Using the edit function
+        names (mydata) <- edit(names(mydata))
+      
+   \#python
+   \#sas
+   
+ \# renaming by index
+ 
+
+
+```
+   mynames <- names(mydata)
+   data.frame(mynames))
+   mynames[3] <- "x1"
+   mynames[4] <- "x2"
+   mynames[5] <- "x3"
+   mynames[6] <- "x4"
+   names(mydata) <- mynames
+```
+
+
+
+\# renaming by column name
+ 
+
+```
+mynames <- names(mydata)
+ mynames[mynames == "q1"] <- "x1"
+ mynames[mynames =="q2"] <- x2"
+ mynames [mynames == "q3"]<- "x3"
+ mynames[mynames == "q4"] <- "x4"
+ names(mydata) <- mynames
+```
+
+
+ 
+
+\# renaming many sequentially numbered variable
+
+names(mydata)
+myXs <- paste("x", 1:4, sep = "")
+myA <- which(names(mydata) == "q1")
+myZ <- which(names(mydata) =="q4")
+
+names(mydata) [myA:myZ] < myXs(mydata)
+
+\# SAS
+```
+     data mylib.mydata;
+     rename q1 - q4 = x1-x4;
+     run;
+```
+
+
 
 1. Recording variables
 
@@ -452,7 +512,64 @@ mydataNA <- read.table("mydataNA.txt")
 
       \# recoding many variables
 
-   
+       \#R
+
+
+```
+       library("car")
+       mydata$qr1 <- recode(q1, "1=2; 5= 4")
+       mydata$qr2 <- recode(q2, "1=2; 5= 4")
+       mydata$qr3 <- recode(q3, "1=2; 5=4")
+       mydata$qr4 <- recode(q4, 1=2; 5=4")
+```
+
+
+       
+       \#not sure what this part is about!!!
+      
+      \#SAS
+      
+    
+
+```
+  LIBNAME mylib 'C:\myRfolder';
+      data mylib.mydata;
+        infile '$\myRfolder\mydata.csv' csv$ delimiter = '$,', $ MISSOVER DSD LRECL = 32767 firstobs = 2;
+        INPUT id workshop gender $ q1 q2  q3 q4;
+        proc print ; run;
+        proc format;
+        value agreement 1= "Disagree" 2= "Disagree"
+          3 = "Neutral" 4 = "Agree"; 
+        run;
+        
+      data mylib.mydata;
+        set mylib.mydata;
+          array q q1 - q4;
+          array qr qr1 - qr4;
+          do i = 1 to 4;
+          qr{i} = q{i}
+            if q{i} =  then qr{i} = 2;
+            else 
+            if q{i} = 5then qr{i} = 4;
+          end;
+          format q1 - q4 agreement;
+        run;
+        
+        \#this will use the recorded formats automatically
+        proc freq;
+          tables q1 - q4;
+        run;
+        \# this will ignore the formats
+        proc univariate;
+          var q1-q4;
+        run;
+        proc univariate;
+          var qr1 - qr4;
+        run;
+            
+
+```
+
 
 1. indicator or Dummy variables
 2. Keeping and Dropping variables
