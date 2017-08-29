@@ -38,13 +38,23 @@ print(mydata[ ]); print (mydata[, ]);
 \# 2. Select the 3rd variable:     
 
 ```                                                                                                   print(mydata [ , 3]); print(mydata[3]); 
-```
-                                                                                                                                                                                                                                        \#3. Select the variables q1, q2 ,q3, q4                                                                                                                                                                                    `print(mydata[c(3,4,5,6)]); print(mydata[3:6]) `                                                                                                                                                                                     \#4. Exclude q1, q2 ,q3 q4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  `print(mydata[-c(3,4,5,6)]) ; print(mydata[-(3:6)]) `                                                                                                                                                                                                                                                                                      
-\#5. Using indices in a numeric vector:                                         `myQindices <-c (3,4,5,6); print(mydata[myQindices]) `           
+```                                                                                                                                                                                                                                       \#3. Select the variables q1, q2 ,q3, q4     
+```                                                                                                                                                                              print(mydata[c(3,4,5,6)]); print(mydata[3:6])   
+```                                                                                                                                                                                   \#4. Exclude q1, q2 ,q3 q4   
+ ```                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               print(mydata[-c(3,4,5,6)]) ; print(mydata[-(3:6)]) 
+ ```                                                                                                                                                                                                                                                                                     
+\#5. Using indices in a numeric vector: 
+ ```
+ myQindices <-c (3,4,5,6); print(mydata[myQindices])  
+ ```          
 \#6.Display the indices for all variables: 
-`print(data.frame(names(mydata))) ` 
- \#7. Using ncol to find the last index: 
- `print(mydata[1:ncol(mydata)]) `
+```
+print(data.frame(names(mydata))) 
+```
+\#7. Using ncol to find the last index: 
+```
+print(mydata[1:ncol(mydata)]) 
+```
 | Python |  |
 | SAS |  |
 |  | By Column name |
