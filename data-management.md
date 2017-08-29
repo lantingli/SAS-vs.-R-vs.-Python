@@ -572,6 +572,43 @@ names(mydata) [myA:myZ] < myXs(mydata)
 
 
 1. indicator or Dummy variables
+\#R
+
+ load("mydata100.RData")
+ attach(mydata100)
+ r <- as.numeric(workshop == "R")
+ sas <- as.numeric(workshop == "SAS")
+ spss <- as.numeric(workshop == "spss")
+ stata <- as.numeric(workshop == "Stata")
+ head(data.frame(workshop, r, sas, spss, stata))
+ lm(posttest ~ pretest +sas+spss+stata)
+ lm(posttest ~ prestest +workshop)
+ workshop <- relevel (workshop, "SAS")
+ coef(lm(posttest ~ pretest +workshop))
+ library("nmet")
+ head(class.ind(workshop))
+ 
+\#python
+\#SAS 
+
+
+```
+ data temp;
+  set mylib.mydata100;
+    r = workshop = 1;
+    sas = workshop = 2;
+    spss = workshop = 3;
+    stat = workshop = 4;
+  run;
+  
+  proc reg;
+    model posttest = pretest sas spss stata;
+  run;
+```
+
+
+    
+
 2. Keeping and Dropping variables
 3. Stacking/Concatenating/Adding data sets
 4. Joining/Merging datasets
