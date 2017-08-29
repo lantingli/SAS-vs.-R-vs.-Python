@@ -30,6 +30,7 @@ by index number
 ```
 print(mydata[ ]); print (mydata[, ]);```
 
+
 \# 2. Select the 3rd variable:     
 ```                                                                                                   print(mydata [ , 3]); print(mydata[3]); ```                                                                                                                                                                                                                                       
 \#3. Select the variables q1, q2 ,q3, q4    
