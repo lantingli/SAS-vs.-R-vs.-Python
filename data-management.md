@@ -610,10 +610,141 @@ names(mydata) [myA:myZ] < myXs(mydata)
     
 
 2. Keeping and Dropping variables
+
+\# R
+
+\#using variable selection
+
+
+
+```
+myleft <- mydata[, 1:4]
+```
+
+
+
+\#using NULL
+
+
+```
+myleft <- mydata
+myleft$q3 <-mydata$q4 <- NULL
+```
+
+
+
+\# PYTHON
+\# SAS
+
+
+
+```
+data myleft;
+ set mydata;
+ keep id workshop gender q1 q2;
+run;
+
+data myleft;
+  set mydata;
+    drop q3 q4;
+run;
+
+```
+
+  
  
    
 3. Stacking/Concatenating/Adding data sets
+ \# R 
+ 
+
+
+```
+females <- mydata[which(gender =="f"), ]
+males <- mydata[which(gender =="m"), ]
+both <- rbind(females, males)
+```
+
+
+
+\#use plyr rbind.fill
+
+
+```
+library("plyr")
+both <- rbind.fill(females, males)
+```
+
+
+
+!!! rbind requires two sets has the same variables.
+ 
+ \# PYTHON
+ \# SAS
+ 
+
+
+```
+ data males;
+   set mydata;
+     where gender = "m";
+ run;
+ 
+ data females;
+   set mydata;
+    where gender = "f";
+    run;
+    
+data both;
+  set males females;
+run;
+```
+
+
+
 4. Joining/Merging datasets
+
+By default, SAS keep all records regardless of whether or not they match. for observations that do not have matches in the other file, the merge function will fill them in with missing values. R take the opposite approach, keeping only those that have a record in both. to get merge to keep all records, use the argument all = TRUE. you can also use all.x = TURE to keep all record in the first file regardless of whether or not they have matches in the record. the all.y = TRUE argument does the reverse.
+
+\# R
+mydata <- read.table("mydata.csv", header = TURE, sep = ",", na.strings = " ")
+myleft <- mydata[c("id", "workshop", "gender", "q1", "q2")]
+myright <- mydata[c("id", "workshop", "q3", "q4")]
+both <- merge(myleft, myright, by = "id")
+
+both <- merge(myleft, myright, by.x= "id", by.y = "id")
+
+both <- merge(myleft, myright, by = c("id", "workshop"))
+
+both <- merge(myleft, myright, by.x= c("id", "workshop"), by.y = c("id", "workshop"))
+
+\# PYTHON
+\# sas
+
+
+
+```
+ data mylib.myleft;
+   set mylib.mydata;
+     keep id workshop gender q1 q2;
+   proc sort ;
+     by id workshop;
+ run;
+
+data mylib.myright;
+  set mylib.mydata;
+    keep id workshop q3 q4;
+    proc sort;
+      by id workshop;
+  run;
+  
+  data mylib.both;
+    merge mylib.myleft mylib.myright;
+    by id workshop;
+  run;
+```
+
+ 
 5. Creating summarized or aggregated data sets
 
      \# the aggregate function
