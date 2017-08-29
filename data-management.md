@@ -610,6 +610,8 @@ names(mydata) [myA:myZ] < myXs(mydata)
     
 
 2. Keeping and Dropping variables
+ 
+   
 3. Stacking/Concatenating/Adding data sets
 4. Joining/Merging datasets
 5. Creating summarized or aggregated data sets
