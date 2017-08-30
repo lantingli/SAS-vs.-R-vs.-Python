@@ -746,17 +746,71 @@ data mylib.myright;
 
  
 5. Creating summarized or aggregated data sets
+\#R
 
      \# the aggregate function
+     \# mean by workshop and gender 
+     myagg1 <- aggregate (q1, by = data.frame(workshop, gender), mean, na.rm = TRUE)
+     
 
     \# the tapply function
-
-    \# merging aggregates with original data
-
+     myagg2 <- tapply(q1, data.frame(workshop, gender), mean, na.rm = TRUE)
+     
     \# tabular aggregation
+     \#table of counts
+       
+
+```
+table(workshop)
+       table(gender, workshop)
+       mycounts <- table(gender, workshop)
+       mode(mycounts)
+       class(mycounts)
+```
+
+
+     \# counts in summary/aggregate stype
+    `  mycountsDF <- as.data.frame(myCounts)`
+      \# clean up
+     
+
+```
+ mydata["Zq1"] <- NULL
+      rm(myAgg1, myAGG2)
+```
+
+
 
     \# the plyr and reshape2 packages
-
+  \#PYTHON
+  \#SAS
+    \#get means of q1 for each gender
+    proc summary data = lib.mydata mean nway;
+      class gemder;
+      var q1;
+      output out = mylib.myagg;
+    run;
+    
+  data mylib.myag;
+    set mylib.myagg;
+    where _stat_ = 'MEAN';
+    keep gender q1;
+    rename q1 = meanQ1;
+  run;
+  \# merge aggregated data back into mydata;
+    proc sort data = mylib.mydata;
+       by workshop gender;
+     run;
+     
+     proc sort data = mylib.myagg;
+       by workshop gender;
+     run;
+     
+     data mylib.mydata2;
+       merge mylib.mydata mylib.myagg;
+       by workshop gender;
+     run;
+  
 1. By or Split-file processing
 2. Removing duplicate obserations
 3. Selecting first or last observations per group
