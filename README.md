@@ -19,6 +19,7 @@ The contents include below list:
 7. Enhancing your output
 
 8. Generating Data
+
 9. Managing your files and workspace
 10. Graphics \(Traditional graphics and graphics with ggplot2\)
 11. Statistics
