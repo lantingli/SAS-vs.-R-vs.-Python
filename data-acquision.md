@@ -219,41 +219,84 @@ mydata <- sasxport.get("mydata.xpt")
 
 ### \\# 11. write data from SAS and read it into R
 
-LIBNAME mylib 'C:\myRfolder'; LIBNAME To\_R xport '\myRfolder\mydata.xpt'; DATA To\_R.mydata; set mylib.mydata; RUN; \#\# read a SAS data set \# read ssd or sas7bdat if you have SAS installed library\("foreign"\) mydata &lt;- read.ssd\("c:/myRfolder“， ”mydata", sascmd = "C:/program files /SAS/SASFoundation/9.2/sas.exe"\) \# reads SAS export format without installing SAS library\("foreign"\) library\("Hmisc"\) mydata &lt;- sasxport.get\("mydata.xpt"\)
+
+
+```
+LIBNAME mylib 'C:\myRfolder'; 
+LIBNAME To\_R xport '\myRfolder\mydata.xpt'; 
+DATA To_R.mydata; 
+set mylib.mydata; 
+RUN; 
+\#\# read a SAS data set 
+\# read ssd or sas7bdat if you have SAS installed
+library("foreign") 
+mydata <- read.ssd("c:/myRfolder“， ”mydata", sascmd = "C:/program files /SAS/SASFoundation/9.2/sas.exe") 
+\# reads SAS export format without installing SAS library("foreign") 
+library("Hmisc") 
+mydata <- sasxport.get("mydata.xpt")
+```
+
+
 
 ### \\# 12. Writing delimited text files
 
-PROC PRINT DATA = mylib.mydata; run; PROC EXPROT DATA = mylib.mydata outfile = "C"\myFolder\mydataFromSAS.csv" DBMS = CSV REPLACE; PUTNAMES = YES; RUN; PROC EXPORT DATA = mylib.mydata outfile = "C"\myFolder\mydataFromSAS.txt" DBMS = TAB REPLACE; PUTNAMES = YES; RUN;
 
-1. write.csv\(mydata, "mydataFromR.csv"\) 2. write.table\(mydata, "mydataFromR.txt"\) 3. write.table\(mydata, file = "mydataFromR.txt", quote = FALSE, sep = "\t", na = " ", row.names = TRUE, col.names = TRUE\)
+
+```
+PROC PRINT DATA = mylib.mydata; 
+run; 
+PROC EXPROT DATA = mylib.mydata outfile = "C"\myFolder\mydataFromSAS.csv" 
+DBMS = CSV REPLACE; PUTNAMES = YES; 
+RUN; 
+PROC EXPORT DATA = mylib.mydata outfile = "C"\myFolder\mydataFromSAS.txt" 
+DBMS = TAB REPLACE; 
+PUTNAMES = YES; 
+RUN;
+```
+
+
+
+```
+1. write.csv(mydata, "mydataFromR.csv") 
+2. write.table(mydata, "mydataFromR.txt") 
+3. write.table(mydata, file = "mydataFromR.txt", quote = FALSE, sep = "\t", na = " ", row.names = TRUE, col.names = TRUE)
+```
 
 ### \\# 13. Viewing a text fileViewing a text file
 
+```
 file.show\("mydataFromR.csv"\)
-
+```
 ### \\# 14. Writing Excel files
 
-library\("xlsReadWrite"\) xls.getshlib\(\) load\("mydata.RData"\) write.xls \(mydata, "mydataFromR.xls"\)
+```
+library("xlsReadWrite")
+xls.getshlib() 
+load("mydata.RData") 
+write.xls (mydata, "mydataFromR.xls")
+```
 
-LIBNAME mylib "c:\myFolder"; PROC EXPORT DATA = mylib.mydata OUTFILE = "C:\myFolder\mydata.xls" DBMS = EXCELCS LABEL REPLACE; SHEET = "mydata"; RUN;
-
+```
+LIBNAME mylib "c:\myFolder"; 
+PROC EXPORT DATA = mylib.mydata OUTFILE = "C:\myFolder\mydata.xls" 
+DBMS = EXCELCS LABEL REPLACE; 
+SHEET = "mydata"; 
+RUN;
+```
 ### \\# 15. Writing to relational databases
 
-library\("RODBC"\) myConnection &lt;- odbcConnectExcel\("mydataFromR.xls", readOnly = FALSE\) sqlSave\(myConnection, mydata\) close\(myConnection\)
-
-
-
+```
+library("RODBC") 
+myConnection <- odbcConnectExcel("mydataFromR.xls", readOnly = FALSE) 
+sqlSave(myConnection, mydata) 
+close(myConnection)
+```
 ### \\# 16. wirting data to SAS
 
-library\("foreign"\) write.foreign \(mydata, datafile = "mydataFromR.csv", codefile = "mydata.sas", package = "SAS"\)
-
-
-
-
-
-
-
-
+```
+library("foreign") 
+write.foreign (mydata, datafile = "mydataFromR.csv", codefile = "mydata.sas", package = "SAS")
+```
 
 # PYTHON
 
