@@ -59,40 +59,46 @@
 ### \\# 1. comma delimited files
 
 SAS:
-
+```
 proc import out = mylib.mydata 
-
 datafile = "c"\myRfolder\mydataID.csv" 
-
 DBMS = CSV REPLACE; 
-
 GETNAMES = YES; 
-
 DATAROW = 2; RUN;
-
- PROC PRINT; RUN; 
-
+PROC PRINT; RUN; 
+```
 R: 
-
 ### \\# 2. Tab delimited files:
-
 SAS:
 
- PROC IMPORT OUT = mylib.mydata DATAFILE = "C:\myRworkshop\mydataID.tab" DBMS = TAB REPLACE; GETNAMES = YES; DATAROW =2; RUN; 
+
+```
+ PROC IMPORT OUT = mylib.mydata  DATAFILE = "C:\myRworkshop\mydataID.tab" 
+ DBMS = TAB REPLACE; 
+ GETNAMES = YES; 
+ DATAROW =2; 
+ RUN; 
+```
 
 PYTHON:
-
 R:
 
 ### \\# 3. Reading from a web site: FILENAME myURL 
 
 SAS:
 
+
+
+```
 URL "http://sites.google.com/site/r4statistics/mydataID.csv"; 
 
-PROC IMPORT DATAFILE = myURL DBMS = CSV REPLACE OUT = mylib.mydata; GETNAMES = YES; DATAROW =2; 
-
+PROC IMPORT DATAFILE = myURL 
+DBMS = CSV REPLACE OUT = mylib.mydata; GETNAMES = YES; 
+DATAROW =2; 
 RUN;
+```
+
+
 
 PYTHON:
 
@@ -100,101 +106,141 @@ R:
 
 
 
-## reading text data within a program
-
+## \\#4. reading text data within a program
+R:
 1. the stdin approach
-
- mydata &lt;- read.csv\(stdin\(\)\) workshop, gender, q1, q2, q3, q4 1,1,f,1,1,5,1 2. blank line above ends input 3. the testConnection approach mystring &lt;- "workshop, gender, q1, q2, q3, q4 1, 1, f,1 1, 1, 5, 1" mydata &lt;- read.cs\(textConnection\(mystring\)\)1. the stdin approach mydata &lt;- read.csv\(stdin\(\)\) workshop, gender, q1, q2, q3, q4 1,1,f,1,1,5,1 
-
+```
+mydata <- read.csv(stdin()) workshop, gender, q1, q2, q3, q4 1,1,f,1,1,5,1 
+```
 2. blank line above ends input 
 
 3. the testConnection approach 
 
-mystring &lt;- "workshop, gender, q1, q2, q3, q4 1, 1, f,1 1, 1, 5, 1" mydata &lt;- read.cs\(textConnection\(mystring\)\)
+```
+mystring <- "workshop, gender, q1, q2, q3, q4 1, 1, f,1 1, 1, 5, 1" 
+mydata <- read.csv(textConnection(mystring))
+```
+SAS
+```
+LIBNAME myLib 'C:\myRfolder'; 
+DATA mylib.mydata; 
+INFILE DATALINES DELIMITER = ',' MISSOVER DSD firstobs = 2; 
+INPUT id workshop gender $ q1 q2 q3 q4; DATALINES; 
+id, workshop, gender, q1 q2, q3, q4 1,1,f,1,1,5,1 
+PROC PRINT; 
+RUN;
+```
+
+### \\# 5. Reading multiple observations per line
+
+```
+1. mylist <- scan(stdin(), what = list(id = 0, workshop = 0, gender = " ", q1 =0, q2 = 0, q3, = 0, q4 = 0)) 1 1 f 1 1 5 1 
+2. Blank line above ends input mydata <- data.frame(mylist) 
+3. the textConnection approach mystring <- "1 1 f 1 1 5 1"; 
+mylist <- scan(textConnection(mystring), what = list(id =0, workshop = 0, gender = " ", q1 =0, q2 = 0, q3 = 0, q4 =0 )) mydata <- data.frame(mylist)
+```
+SAS:
+```
+DATA mydata; 
+INPUT id workshop gender $q1 - $q4 @@; DATALINES; 1 1 f 1 1 5 1 ; 
+PROC PRINT; RUN;DATA mydata;                                                                                INPUT id workshop gender $q1 - $q4 @@;                                DATALINES;                                                                                   1 1 f 1 1 5 1 ;                                                                                  PROC PRINT; 
+RUN;
+```
+### \\# 6. Reading fixed-width text files : one record per case
 
 
 
+```
+1. mydata <- read.fwf( file = "mydataFWF.txt", width = c(2, -1, 1, 1, 1,1,1 ), col.names = c("id", "gender", "q1", "q2", "q3", "q4"), row.names = "id", na.strings = "", fill = TRUE, strip.white = TRUE) 
+2. myfile <- "mydataFWF.txt" 
+myvariablenames <- c("id", "gender", "q1", "q2", "q3", "q4")
+ myvariablewidths <- c(2, -1, 1,1,1,1,1) 
+ mydata <- read.fwf( file = myfile, width = myVariableWidths, col.names = myVariableNames, row.names = "id", na.strings = " ", fill = TRUE, strip.white = TRUE)
+```
+SAS
+```
+LIBNAME mylib 'C:\myRolder'; 
+DATA myLib.mydata; 
+INFILE '\myRfolder\mydataFWF.txt' MISSOVER; 
+INPUT ID 1-2 WORKSHOP 3 GENDER $ 4 q1 5 q2 6 q3 7 q4 8; 
+RUN;
+```
+### \\# 7. Reading fixed - width text files, two or more records per case
+
+```
+myfile <- "mydataFWF.txt" 
+myVariableNames <- c ("id", "workshop", "gender", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8") 
+myRecord1Widths <- c(2,1,1,1,1,1,1) 
+myRecord2Widths <- c（-2， -1， -1， 1，1，1，1） 
+myVariableWidths <- list(myRecord1Widths, myRecord2Widths) 
+mydata <- read.fwf( file = myfile, width = myVariableWidths, col.names = myVariableWidths, row.names = "id", na.strings = " ", fill = TRUE, strip.white = TRUE)
+```
+SAS:
+```
+DATA temp; 
+INFILE '\myRfolder\mydataFWF.txt' MISSOVER; 
+INPUT \#1 id 1-2 workshop 3 gender 4 q1 5 q2 6 q3 7 q4 8 \#2 q5 5 q6 6 q7 7 q8 8; 
+PROC PRINT; 
+RUN;
+```
+### \\# 8. reading excel files
+
+```
+library("xlsReadWrite") 
+xls.getshlib(): 
+can get a binary file that is not distributed through CRAN mydata <- read.xls("mydata.xls")
+
+LIBNAME mylib "c:\myRfolder"; 
+PROC IMPORT OUT = mylib.mydata 
+DATAFILE = "C:\myRfolder\mydata.xls" DBMS = EXCELCS REPLACE; 
+RANGE = "Sheet1$"; SCANTEXT = YES; 
+USEDATE = YES; SCANTIME = YES;
+```
 
 
-sas
 
-LIBNAME myLib 'C:\myRfolder'; DATA mylib.mydata; INFILE DATALINES DELIMITER = ',' MISSOVER DSD firstobs = 2; INPUT id workshop gender $ q1 q2 q3 q4; DATALINES; id, workshop, gender, q1 q2, q3, q4 1,1,f,1,1,5,1 PROC PRINT; RUN;LIBNAME myLib 'C:\myRfolder'; DATA mylib.mydata; INFILE DATALINES DELIMITER = ',' MISSOVER DSD firstobs = 2; INPUT id workshop gender $ q1 q2 q3 q4; DATALINES; id, workshop, gender, q1 q2, q3, q4 1,1,f,1,1,5,1 PROC PRINT; RUN;
+### \\# 9. Reading from relational databases
 
+```
+library("RODBC") 
+myConnection <- odbcConnectExcel("mydata.xls") 
+mydata <- sqlFetch(myConnection, "Sheet1") 
+close(myConnection)
+```
+### \\# 10. Reading data from SAS
 
-
-### Reading multiple observations per line
-
-1. mylist &lt;- scan\(stdin\(\), what = list\(id = 0, workshop = 0, gender = " ", q1 =0, q2 = 0, q3, = 0, q4 = 0\)\) 1 1 f 1 1 5 1 2. Blank line above ends input mydata &lt;- data.frame\(mylist\) 3. the textConnection approach mystring &lt;- "1 1 f 1 1 5 1"; mylist &lt;- scan\(textConnection\(mystring\), what = list\(id =0, workshop = 0, gender = " ", q1 =0, q2 = 0, q3 = 0, q4 =0 \)\) mydata &lt;- data.frame\(mylist\)
-
-sas
-
-DATA mydata; INPUT id workshop gender $q1 - $q4 @@; DATALINES; 1 1 f 1 1 5 1 ; PROC PRINT; RUN;DATA mydata;                                                                                INPUT id workshop gender $q1 - $q4 @@;                                DATALINES;                                                                                   1 1 f 1 1 5 1 ;                                                                                  PROC PRINT; RUN;
-
-### Reading fixed-width text files : one record per case
-
-1. mydata &lt;- read.fwf\( file = "mydataFWF.txt", width = c\(2, -1, 1, 1, 1,1,1 \), col.names = c\("id", "gender", "q1", "q2", "q3", "q4"\), row.names = "id", na.strings = "", fill = TRUE, strip.white = TRUE\) 2. myfile &lt;- "mydataFWF.txt" myvariablenames &lt;- c\("id", "gender", "q1", "q2", "q3", "q4"\) myvariablewidths &lt;- c\(2, -1, 1,1,1,1,1\) mydata &lt;- read.fwf\( file = myfile, width = myVariableWidths, col.names = myVariableNames, row.names = "id", na.strings = " ", fill = TRUE, strip.white = TRUE\)
-
-sas
-
-
-
-LIBNAME mylib 'C:\myRolder'; DATA myLib.mydata; INFILE '\myRfolder\mydataFWF.txt' MISSOVER; INPUT ID 1-2 WORKSHOP 3 GENDER $ 4 q1 5 q2 6 q3 7 q4 8; RUN;
-
-
-
-### Reading fixed - width text files, two or more records per case
-
-myfile &lt;- "mydataFWF.txt" myVariableNames &lt;- c \("id", "workshop", "gender", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8"\) myRecord1Widths &lt;- c\(2,1,1,1,1,1,1\) myRecord2Widths &lt;- c（-2， -1， -1， 1，1，1，1） myVariableWidths &lt;- list\(myRecord1Widths, myRecord2Widths\) PLUG IN: mydata &lt;- read.fwf\( file = myfile, width = myVariableWidths, col.names = myVariableWidths, row.names = "id", na.strings = " ", fill = TRUE, strip.white = TRUE\)
-
-sas
-
-DATA temp; INFILE '\myRfolder\mydataFWF.txt' MISSOVER; INPUT \#1 id 1-2 workshop 3 gender 4 q1 5 q2 6 q3 7 q4 8 \#2 q5 5 q6 6 q7 7 q8 8; PROC PRINT; RUN;
-
-### reading excel files
-
-library\("xlsReadWrite"\) xls.getshlib\(\): can get a binary file that is not distributed through CRAN mydata &lt;- read.xls\("mydata.xls"\)
-
-LIBNAME mylib "c:\myRfolder"; PROC IMPORT OUT = mylib.mydata DATAFILE = "C:\myRfolder\mydata.xls" DBMS = EXCELCS REPLACE; RANGE = "Sheet1$"; SCANTEXT = YES; USEDATE = YES; SCANTIME = YES;
-
-### Reading from relational databases
-
-library\("RODBC"\) myConnection &lt;- odbcConnectExcel\("mydata.xls"\) mydata &lt;- sqlFetch\(myConnection, "Sheet1"\) close\(myConnection\)
-
-### Reading data from SAS
-
- 
 
 library\("foreign"\)                                                                            mydata &lt;- read.ssd\("c:/myRfolder", "mydata",                               sascmd - "C:/Program files/SAS/SASFoundation/9.2/sas.exe"\)                                                                                                  library\("Hmisc"\)                                                                            mydata &lt;- sasxport.get\("mydata.xpt"\) 
 
 
 
-### write data from SAS and read it into R
+### \\# 11. write data from SAS and read it into R
 
 LIBNAME mylib 'C:\myRfolder'; LIBNAME To\_R xport '\myRfolder\mydata.xpt'; DATA To\_R.mydata; set mylib.mydata; RUN; \#\# read a SAS data set \# read ssd or sas7bdat if you have SAS installed library\("foreign"\) mydata &lt;- read.ssd\("c:/myRfolder“， ”mydata", sascmd = "C:/program files /SAS/SASFoundation/9.2/sas.exe"\) \# reads SAS export format without installing SAS library\("foreign"\) library\("Hmisc"\) mydata &lt;- sasxport.get\("mydata.xpt"\)
 
-### Writing delimited text files
+### \\# 12. Writing delimited text files
 
 PROC PRINT DATA = mylib.mydata; run; PROC EXPROT DATA = mylib.mydata outfile = "C"\myFolder\mydataFromSAS.csv" DBMS = CSV REPLACE; PUTNAMES = YES; RUN; PROC EXPORT DATA = mylib.mydata outfile = "C"\myFolder\mydataFromSAS.txt" DBMS = TAB REPLACE; PUTNAMES = YES; RUN;
 
 1. write.csv\(mydata, "mydataFromR.csv"\) 2. write.table\(mydata, "mydataFromR.txt"\) 3. write.table\(mydata, file = "mydataFromR.txt", quote = FALSE, sep = "\t", na = " ", row.names = TRUE, col.names = TRUE\)
 
-### Viewing a text fileViewing a text file
+### \\# 13. Viewing a text fileViewing a text file
 
 file.show\("mydataFromR.csv"\)
 
-### Writing Excel files
+### \\# 14. Writing Excel files
 
 library\("xlsReadWrite"\) xls.getshlib\(\) load\("mydata.RData"\) write.xls \(mydata, "mydataFromR.xls"\)
 
 LIBNAME mylib "c:\myFolder"; PROC EXPORT DATA = mylib.mydata OUTFILE = "C:\myFolder\mydata.xls" DBMS = EXCELCS LABEL REPLACE; SHEET = "mydata"; RUN;
 
-### Writing to relational databases
+### \\# 15. Writing to relational databases
 
 library\("RODBC"\) myConnection &lt;- odbcConnectExcel\("mydataFromR.xls", readOnly = FALSE\) sqlSave\(myConnection, mydata\) close\(myConnection\)
 
 
 
-### wirting data to SAS
+### \\# 16. wirting data to SAS
 
 library\("foreign"\) write.foreign \(mydata, datafile = "mydataFromR.csv", codefile = "mydata.sas", package = "SAS"\)
 

@@ -13,7 +13,7 @@
 | Double, integer | character | Logic | Complex | NA, NULL |
 | 整型:1,2; 浮点型: 3.14 | 'ABC',  'Mary' | TRUE, FALSE, T, F | 3 + 2i | NA, NULL |
 
-1. ## 不同的数据结构可以存储的数据类型
+2. ## 不同的数据结构可以存储的数据类型
 
 | 维度 | 同质的 \(Homogeneous\) | 异质的 \(Heterogeneous\) |
 | --- | --- | --- |
@@ -21,7 +21,7 @@
 | 2维 | Matrix | Data frame |
 | 多维 | Array |  |
 
-1. ## 数据结构
+3. ## 数据结构
 
 R has several different structures including vectors, factors, data frames, matrices, arrays and lists. The data frame is most like a data set in SAS. R is flexible enough to allow you to create your own data structures.
 
