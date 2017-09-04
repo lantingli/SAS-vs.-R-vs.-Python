@@ -209,10 +209,13 @@ close(myConnection)
 ```
 ### \\# 10. Reading data from SAS
 
-
-library\("foreign"\)                                                                            mydata &lt;- read.ssd\("c:/myRfolder", "mydata",                               sascmd - "C:/Program files/SAS/SASFoundation/9.2/sas.exe"\)                                                                                                  library\("Hmisc"\)                                                                            mydata &lt;- sasxport.get\("mydata.xpt"\) 
-
-
+```
+library("foreign")   
+mydata <- read.ssd("c:/myRfolder", "mydata",   
+sascmd - "C:/Program files/SAS/SASFoundation/9.2/sas.exe")                                                                                                  
+library("Hmisc")                                                                                                                                            
+mydata <- sasxport.get("mydata.xpt")                                                                                                                                                                             
+```
 
 ### \\# 11. write data from SAS and read it into R
 
