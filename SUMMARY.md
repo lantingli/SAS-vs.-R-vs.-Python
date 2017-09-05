@@ -10,7 +10,7 @@
 * [Enhance your output](enhance-your-output.md)
 * Generating data
 * managing your files
-* Graphics
+* [Graphics \(with ggplot2\)](graphics.md)
 * [Statistics](statistics.md)
 * Machine learning
 * [supplmentary](supplmentary.md)
