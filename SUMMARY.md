@@ -11,7 +11,7 @@
 * Generating data
 * managing your files
 * Graphics
-* Statistics
+* [Statistics](statistics.md)
 * Machine learning
 * [supplmentary](supplmentary.md)
 
