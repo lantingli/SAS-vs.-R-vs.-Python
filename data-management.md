@@ -1031,7 +1031,18 @@ myFixed[ , myQs] <- lapply(myFixed[ , myQs], as.numeric)
 
 SAS:
 
+
+
+```
 proc transpose data = mylib.mydata
+  out = mylib.mylong;
+    var q1 - q4;
+    by id workshop gender;
+  run;
+```
+
+
+  
 6. sorting data frames
 7. Converting data structure
 8. Character string manipulations
