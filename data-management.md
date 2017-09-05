@@ -915,7 +915,7 @@ libname mylib 'C:\myRfolder';
 
 
   
-3. Selecting first or last observations per group
+16. Selecting first or last observations per group
 
 SAS:
 
@@ -983,7 +983,21 @@ mydata2$lastgender[is.na(mydata2$lastgender)] <- 0
 
 
                   
-4. Transposing or flipping data sets
+17. Transposing or flipping data sets
+
+SAS:
+
+
+```
+proc transpose data = mylib.mydata out = mycopy;
+run;
+
+proc transpose data = mycopy out = myFixed;
+run;
+```
+
+
+
 5. Reshaping variables to observations and back
 6. sorting data frames
 7. Converting data structure
