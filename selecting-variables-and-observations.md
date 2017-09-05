@@ -1,49 +1,77 @@
-| SAS | data mylib.mymalewq;                                                                    set mylib.mydata;                                                                        where gender = "m";                                                                      keep workshop q1 -q4;                                                            run; |
-| :--- | :--- |
-|  | the subset function |
-| R | myMalesWQ &lt;-  subset\(mydata,                                                                                  subset = gender == "m",                                                               select = c\(workshop, q1 :q4\)\) |
-| Python |  |
-|  | logic for obs, names for vars |
-| R | myMales &lt;- which\(gender == "m"\)                                              myVars &lt;- c\("workshop", paste\(q, 1:4, sep = ""\)\)                       myMalesWQ &lt;- mydata\[myMales, myVars\] |
-| Python |  |
-|  | Row and Variable names |
-| R | myMales &lt;- c\("5", "6", "7", "8"\)                                                       myVars &lt;- c\("workshop", "q1", "q2", "q3", "q4"\) |
-| Python |  |
-|  | Numeric index vectors |
-| R | myMales &lt;- c\(5,6,7,8\)                                                                   myVars &lt;- c\(1,3,6\)                                                                         print\(mydata\[myMales, myVars\) |
-| Python |  |
-|  | Saving and loading subsets |
-| R | myMalesWQ &lt;- subset\(mydata, subset = gender == "m", select = c\(workshop, q1 :q4\)                                                               save\(mydata, myMalesWQ, file = "myboth.RData"\)                    load\("myBoth.RData"\)                                                                 save \(myMalesWQ, file = "myMalesWQ.RData"\)                         load\("myMalesWQ.RData\) |
-| Python |  |
-|  |  |
-
-
-
-
+# Selecting variables and observations
 
 SAS:
 
-data mylib.mymalewq; set mylib.mydata; where gender = "m"; keep workshop q1 -q4; run;
 
-\\# the subset function
 
-myMalesWQ &lt;- subset\(mydata, subset = gender == "m", select = c\(workshop, q1 :q4\)\)
+```
+data mylib.mymalewq; s
+et mylib.mydata; 
+where gender = "m"; 
+keep workshop q1 -q4; 
+run;
+```
 
-\\#logic for obs, names for vars
+R: 
 
-myMales &lt;- which\(gender == "m"\) myVars &lt;- c\("workshop", paste\(q, 1:4, sep = ""\)\) myMalesWQ &lt;- mydata\[myMales, myVars\]
+\\# 1. the subset function
 
-\\# row and variable names
 
-myMales &lt;- c\("5", "6", "7", "8"\) myVars &lt;- c\("workshop", "q1", "q2", "q3", "q4"\)
 
-\\# numeric index vectors
+```
+myMalesWQ <- subset(mydata, subset = gender == "m", select = c(workshop, q1 :q4))
+```
 
-myMales &lt;- c\(5,6,7,8\) myVars &lt;- c\(1,3,6\) print\(mydata\[myMales, myVars\)
 
-\\# saving and loading subsets
 
-myMalesWQ &lt;- subset\(mydata, subset = gender == "m", select = c\(workshop, q1 :q4\) save\(mydata, myMalesWQ, file = "myboth.RData"\) load\("myBoth.RData"\) save \(myMalesWQ, file = "myMalesWQ.RData"\) load\("myMalesWQ.RData\)
+\\# 2. logic for obs, names for vars
+
+
+
+```
+myMales <- which(gender == "m") 
+myVars <- c("workshop", paste(q, 1:4, sep = "")) myMalesWQ <- mydata[myMales, myVars]
+```
+
+
+
+\\#3. row and variable names
+
+
+
+```
+myMales <- c("5", "6", "7", "8") 
+myVars <- c("workshop", "q1", "q2", "q3", "q4")
+```
+
+
+
+\\#4. numeric index vectors
+
+
+
+```
+myMales <- c(5,6,7,8) 
+myVars <- c(1,3,6) 
+print(mydata[myMales, myVars)
+```
+
+
+
+\\#5. saving and loading subsets
+
+
+
+```
+myMalesWQ <- subset(mydata, subset = gender == "m", select = c(workshop, q1 :q4) 
+save\(mydata, myMalesWQ, 
+file = "myboth.RData") 
+load("myBoth.RData') 
+save(myMalesWQ, file = "myMalesWQ.RData") 
+load("myMalesWQ.RData)
+```
+
+
 
 
 
