@@ -2,28 +2,29 @@
 
 \\1. # by index number
 
-   \\#a. Select all variables by default:
+     \\#a. Select all variables by default:
 
 ```
-print(mydata[ ]); print (mydata[, ]);
+         print(mydata[ ]); print (mydata[, ]);
 ```
  
-   \\#b. Select the 3rd variable:                                                                                                                                                                                                                                                                                                                       `print(mydata [ , 3]); print(mydata[3]);`
+    \\#b. Select the 3rd variable: 
+                                                                                                                                                                                                                                                                                                                              `        print(mydata [ , 3]); print(mydata[3]);`
 
    \\#c. Select the variables q1, q2 ,q3, q4  
-`print(mydata[c(3,4,5,6)]); print(mydata[3:6])`
+`        print(mydata[c(3,4,5,6)]); print(mydata[3:6])`
 
    \\#d. Exclude q1, q2 ,q3 q4  
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              `print(mydata[-c(3,4,5,6)]) ; print(mydata[-(3:6)])`
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              `         print(mydata[-c(3,4,5,6)]) ; print(mydata[-(3:6)])`
 
    \\#e. Using indices in a numeric vector:
 
-`myQindices <-c (3,4,5,6); print(mydata[myQindices]) ]`
+`         myQindices <-c (3,4,5,6); print(mydata[myQindices]) ]`
 
    \\#f.Display the indices for all variables:
 
 ```
-print(data.frame(names(mydata)))
+          print(data.frame(names(mydata)))
 ```
 
    \\#g. Using ncol to find the last index:  
@@ -44,31 +45,31 @@ print(mydata[1:ncol(mydata)])
 
  R 
 
-1. Display all variable names:                                                   
+      \#a. Display all variable names:                                                   
 
-`names(mydata)`                                                                     
+`     names(mydata)`                                                                     
 
- 2. Select one variable :                                                               
+      \# b. Select one variable :                                                               
 
   
 
 ```
-print(mydata["q1"]); \# pass q1 as a data frame;                   
+        print(mydata["q1"]); \# pass q1 as a data frame;                   
 
-  print(mydata[ , "q1"]) # pass q1 as a vector 
+        print(mydata[ , "q1"]) # pass q1 as a vector 
 ```
 
                          
 
- 3. Select several:                                                                        
+      \ #c. Select several:                                                                        
 
- ` print(mydata[c("q1", "q2", "q3", "q4")  ])   `                              
+ `      print(mydata[c("q1", "q2", "q3", "q4")  ])   `                              
 
- 4. Save a list of variable names to use:                             
+      \# d. Save a list of variable names to use:                             
 
-` myQnames <- c("q1", "q2", "q3", "q4") ; print (mydata[myQnames] `                                                                                          
+`       myQnames <- c("q1", "q2", "q3", "q4") ; print (mydata[myQnames] `                                                                                          
 
- 5. Generate a list of variable names:                                      
+      \# e. Generate a list of variable names:                                      
 
 
 
