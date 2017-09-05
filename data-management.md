@@ -995,6 +995,35 @@ run;
 proc transpose data = mycopy out = myFixed;
 run;
 ```
+R:
+
+
+
+```
+myQs <- c("q1", "q2", "q3", "q4")
+myQdf <- mydata[ , myQs]
+myFlipped <- t(myQdf)
+class(myFlipped) # coerced into a matrix!
+myFixed <- as.data.frame(t(myFlipped))
+```
+
+
+
+\# again, but with all the data
+
+
+```
+options(width = 60)
+myFlipped <- t(mydata)
+myFixed <- t(myFlipped)
+myFixed <- data.frame(myFixed)
+str(myFixed)
+
+myQs <- c("q1", "q2", "q3", "q4")
+myFixed[ , myQs] <- lapply(myFixed[ , myQs], as.numeric)
+```
+
+
 
 
 
