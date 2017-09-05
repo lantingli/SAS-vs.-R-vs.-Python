@@ -2,13 +2,13 @@
 
 \\1. # by index number
 
-     \\#a. Select all variables by default:
+   \\#a. Select all variables by default:
 
 ```
          print(mydata[ ]); print (mydata[, ]);
 ```
  
-    \\#b. Select the 3rd variable: 
+  \\#b. Select the 3rd variable: 
                                                                                                                                                                                                                                                                                                                               `        print(mydata [ , 3]); print(mydata[3]);`
 
    \\#c. Select the variables q1, q2 ,q3, q4  
