@@ -814,7 +814,11 @@ table(workshop)
 1. By or Split-file processing
 
   SAS:
-  LIBNAME mylib 'C: \myRfolder';
+  
+
+
+```
+LIBNAME mylib 'C: \myRfolder';
   
 proc means data = mylib.mydata;
   run;
@@ -834,8 +838,15 @@ run;
 proc means data = mylib.mydata;
   by  workshop gender;
 run;
+```
+
+
 
 R:
+
+
+
+```
 load(file = "mydata.RData")
 attach(mydata)
 options(width = 64)
@@ -854,16 +865,26 @@ options(width = 64)
      mode(myBYout)
      class(myBYout)
      names(myBYout)
-     myBYout[[1]]
+     myBYout[[1]]`
+```
+
+   \# a data frame the long way
+    
+
+```
+ myBYdata <- data.frame(
+       rbind(myBYout[[1]], myBYout[[2]], 
+             myBYout[[3]], myBYout[[4]])
+     )
+```
+
+
      
- 
-  
-  
-  
-  
-  
-  
-  
+   \# a data frame using do.call
+   
+ `    myBYdata <- data.frame(do. call(rbind, myBYout))`
+     
+       
   
 2. Removing duplicate obserations
 3. Selecting first or last observations per group
