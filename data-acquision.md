@@ -11,11 +11,15 @@ RUN;
  
 ```
 PYTHON:
+
 R: 
+
 \# with id variable not named
+
   `mydata <- read.csv("mydata.csv")`
   
 \# with id named in the header
+
   `mydata <- read.csv("mydataID.csv", row.names = "id")`
   
 ### \\# 2. Tab delimited files:
@@ -29,7 +33,9 @@ SAS:
  RUN; 
 ```
 PYTHON:
+
 R:
+
 \# read a tab delimited file with named ID columns
 
 ```
@@ -48,9 +54,12 @@ mydata <- read.delim("mydataID.tab",row.names = "id")
 
 
 ### \\# 3. Reading from a web site: FILENAME myURL 
+
 SAS:
 ```
-FILENAME myURL URL "http://sites.google.com/site/r4statistics/mydataID.csv"; 
+FILENAME myURL URL 
+
+"http://sites.google.com/site/r4statistics/mydataID.csv"; 
 
 PROC IMPORT DATAFILE = myURL 
 DBMS = CSV REPLACE 
@@ -62,18 +71,27 @@ RUN;
 PYTHON:
 
 R:
+
 myURL <- "http:/sites.google.com/site/r4statistics/mydata.csv"
 mydata<- read.csv(myURL)
 
 \# reading text from the clipboard
+
      \# copy a column of numbers or words, then :
+     
      `myvector <- readClipboard()`
+     
      \# Open mydata.csv, select & copy contents, then :
+     
      `mydata <- read.delim ("clipboard", header = TURE)`
+     
      \# Missing values for character varables
+     
      `mydata <- read.csv("mydataID.csv", row.names = "id", strip.white = TRUE, na.strings = "")`
+     
      \# skipping variables in delimited text files
-     `myCols <- read.delim("mydata.tab", strip.white = TRUE, na.strings = "", colClasses = c("integer", "integer", "character", "NULL", "NULL", "integer", "integer"))`
+     
+     `myCols <- read.delim("mydata.tab", strip.white = TRUE, na.strings = "", colClasses = c("integer", "integer", "character", "NULL", "NULL", "integer", "integer"))
 
 ## \\#4. reading text data within a program
 R:
