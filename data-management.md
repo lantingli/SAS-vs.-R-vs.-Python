@@ -812,6 +812,59 @@ table(workshop)
      run;
   
 1. By or Split-file processing
+
+  SAS:
+  LIBNAME mylib 'C: \myRfolder';
+  
+proc means data = mylib.mydata;
+  run;
+  
+proc sort data = mylib.mydata;
+  by gender;
+run;
+
+proc means data = mylib.mydatal
+  by gender;
+run;
+
+proc sort data = mylib.mydata;
+  by workshop gender;
+run;
+
+proc means data = mylib.mydata;
+  by  workshop gender;
+run;
+
+R:
+load(file = "mydata.RData")
+attach(mydata)
+options(width = 64)
+   \# get means of q variables for all observations
+      mean(mydata[c("q1", "q2", "q3", "q4")], na.rm = TRUE)
+   \# now get means by gender
+      myBYout <- by(mydata[c("q1", "q2", "q3", "q4")], mydata["gender"], mean, na.rm = TRUE)
+      mode(myBYout)
+      class(myBYout)
+      myBYdata <- as.data.frame((as.table(myBYout)))
+   \# get range by workshop and gender
+     myvars<- c("q1", "q2", "q3", "q4")
+     myBys <- mydata[c("workshop", "gender")]
+     myBYout <- by(mydata[myVars], myBys, range, na.rm = TRUE)
+   \# converting output to data frame
+     mode(myBYout)
+     class(myBYout)
+     names(myBYout)
+     myBYout[[1]]
+     
+ 
+  
+  
+  
+  
+  
+  
+  
+  
 2. Removing duplicate obserations
 3. Selecting first or last observations per group
 4. Transposing or flipping data sets
