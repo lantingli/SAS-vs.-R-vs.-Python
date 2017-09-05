@@ -1027,7 +1027,11 @@ myFixed[ , myQs] <- lapply(myFixed[ , myQs], as.numeric)
 
 
 
-5. Reshaping variables to observations and back
+18. Reshaping variables to observations and back
+
+SAS:
+
+proc transpose data = mylib.mydata
 6. sorting data frames
 7. Converting data structure
 8. Character string manipulations
