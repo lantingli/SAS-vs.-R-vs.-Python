@@ -1,61 +1,3 @@
-| SAS | 1. Reading delimited text files:                                                   `proc import out = mylib.mydata                       datafile = "c"\myRfolder\mydataID.csv"              DBMS = CSV    REPLACE;                              GETNAMES = YES;                                    DATAROW = 2;                                        RUN;`                                                                                          `PROC PRINT; RUN;`                                                                2. Tab delimited files:                                                                  `PROC IMPORT OUT = mylib.mydata                     DATAFILE = "C:\myRworkshop\mydataID.tab"            DBMS = TAB  REPLACE;                                 GETNAMES = YES;                                     DATAROW =2;                                         RUN;`                                                                                       3. Reading from a web site:                                                     `FILENAME myURL URL "`[`http://sites.google.com/site/r4statistics/mydataID.csv`](http://sites.google.com/site/r4statistics/mydataID.csv)`";                                                                            PROC IMPORT DATAFILE = myURL                        DBMS = CSV  REPLACE                                 OUT = mylib.mydata;                                 GETNAMES = YES;                                     DATAROW =2;                                         RUN;` |
-| :--- | :--- |
-|  | reading text data within a program |
-| R | 1. the stdin approach                                                                         mydata &lt;- read.csv\(stdin\(\)\)                                                      workshop, gender, q1, q2, q3, q4                                                 1,1,f,1,1,5,1                                                                                2. blank line above ends input                                                    3. the testConnection approach                                                  mystring &lt;- "workshop, gender, q1, q2, q3, q4                                                 1, 1, f,1 1, 1, 5, 1"                                                     mydata &lt;- read.cs\(textConnection\(mystring\)\) |
-| Python |  |
-| SAS | LIBNAME myLib 'C:\myRfolder';                                                         DATA mylib.mydata;                                                                     INFILE DATALINES DELIMITER = ','                                               MISSOVER DSD firstobs = 2;                                                    INPUT id workshop gender $ q1 q2 q3 q4;                               DATALINES;                                                                                   id, workshop, gender, q1 q2, q3, q4                                            1,1,f,1,1,5,1                                                                                 PROC PRINT; RUN; |
-|  | Reading multiple observations per line |
-| R | 1. mylist &lt;- scan\(stdin\(\), what = list\(id = 0, workshop = 0, gender = " ", q1 =0, q2 = 0, q3, = 0, q4 = 0\)\)                                         1 1 f 1 1 5 1                                                                               2. Blank line above ends input                                                    mydata &lt;- data.frame\(mylist\)                                                      3. the textConnection approach                                                 mystring &lt;- "1 1 f 1 1 5 1";                                                            mylist &lt;- scan\(textConnection\(mystring\), what = list\(id =0, workshop = 0, gender = " ", q1 =0, q2 = 0, q3 = 0, q4 =0 \)\)       mydata &lt;- data.frame\(mylist\) |
-| Python |  |
-| SAS | DATA mydata;                                                                                INPUT id workshop gender $q1 - $q4 @@;                                DATALINES;                                                                                   1 1 f 1 1 5 1 ;                                                                                  PROC PRINT; RUN; |
-|  | Reading fixed-width text files : one record per case |
-| R | 1. mydata &lt;- read.fwf\(                                                                         file = "mydataFWF.txt",                                                                 width = c\(2, -1, 1, 1, 1,1,1 \),                                                          col.names = c\("id", "gender", "q1", "q2", "q3", "q4"\),                    row.names = "id",                                                                          na.strings = "",                                                                               fill = TRUE,                                                                                     strip.white = TRUE\)                                                                  2. myfile &lt;- "mydataFWF.txt"                                                            myvariablenames &lt;- c\("id", "gender", "q1", "q2", "q3", "q4"\)       myvariablewidths &lt;- c\(2, -1, 1,1,1,1,1\)                                        mydata &lt;- read.fwf\(                                                                      file = myfile,                                                                                   width = myVariableWidths,                                                          col.names = myVariableNames,                                                 row.names = "id",                                                                          na.strings = " ",                                                                              fill = TRUE,                                                                                     strip.white = TRUE\) |
-| Python |  |
-| SAS | LIBNAME mylib 'C:\myRolder';                                                     DATA myLib.mydata;                                                                    INFILE '\myRfolder\mydataFWF.txt' MISSOVER;                       INPUT ID 1-2 WORKSHOP 3 GENDER $ 4 q1 5 q2 6 q3 7 q4 8;  RUN; |
-|  | Reading fixed - width text files, two or more records per case |
-| R | myfile &lt;- "mydataFWF.txt"                                                             myVariableNames &lt;- c \("id", "workshop", "gender", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8"\)                                                    myRecord1Widths &lt;- c\(2,1,1,1,1,1,1\)                                            myRecord2Widths &lt;- c（-2， -1， -1， 1，1，1，1）            myVariableWidths &lt;- list\(myRecord1Widths, myRecord2Widths\)                                                                                                 PLUG IN:                                                                                        mydata &lt;- read.fwf\(                                                                        file = myfile,                                                                                   width = myVariableWidths,                                                          col.names = myVariableWidths,                                                 row.names = "id",                                                                          na.strings = " ",                                                                              fill = TRUE,                                                                                     strip.white = TRUE\) |
-| Python |  |
-| SAS | DATA temp;                                                                                    INFILE  '\myRfolder\mydataFWF.txt' MISSOVER;                       INPUT                                                                                             \#1 id 1-2 workshop 3 gender 4 q1 5 q2 6 q3 7 q4 8                 \#2                                                 q5 5 q6 6 q7 7 q8 8;                 PROC PRINT;                                                                               RUN; |
-|  | Reading excel files |
-| R | library\("xlsReadWrite"\)                                                                   xls.getshlib\(\): can get a binary file that is not distributed through CRAN                                                                                     mydata &lt;- read.xls\("mydata.xls"\) |
-| Python |  |
-| SAS | LIBNAME mylib "c:\myRfolder";                                                   PROC IMPORT OUT = mylib.mydata                                              DATAFILE = "C:\myRfolder\mydata.xls"                                     DBMS = EXCELCS REPLACE;                                                       RANGE = "Sheet1$";                                                                     SCANTEXT = YES;                                                                         USEDATE = YES;                                                                           SCANTIME = YES; |
-|  | Reading from relational databases |
-| R | library\("RODBC"\)                                                                            myConnection &lt;- odbcConnectExcel\("mydata.xls"\)                  mydata &lt;- sqlFetch\(myConnection, "Sheet1"\)                           close\(myConnection\) |
-| Python |  |
-| SAS |  |
-|  | Reading data from SAS |
-| R | library\("foreign"\)                                                                            mydata &lt;- read.ssd\("c:/myRfolder", "mydata",                               sascmd - "C:/Program files/SAS/SASFoundation/9.2/sas.exe"\)                                                                                                  library\("Hmisc"\)                                                                            mydata &lt;- sasxport.get\("mydata.xpt"\) |
-|  |  |
-| Python |  |
-| SAS |  |
-|  | write data from SAS and read it into R |
-| R | LIBNAME mylib 'C:\myRfolder';                                                    LIBNAME To\_R xport '\myRfolder\mydata.xpt';                           DATA To\_R.mydata;                                                                        set mylib.mydata;                                                                      RUN;                                                                                               \#\# read a SAS data set                                                                \# read ssd or sas7bdat if you have SAS installed                     library\("foreign"\)                                                                           mydata &lt;- read.ssd\("c:/myRfolder“， ”mydata",                            sascmd = "C:/program files /SAS/SASFoundation/9.2/sas.exe"\)                                                                                             \# reads SAS export format without installing SAS                    library\("foreign"\)                                                                           library\("Hmisc"\)                                                                            mydata &lt;- sasxport.get\("mydata.xpt"\) |
-|  | Writing delimited text files |
-| SAS | PROC PRINT DATA = mylib.mydata; run;                                     PROC EXPROT DATA = mylib.mydata                                                  outfile = "C"\myFolder\mydataFromSAS.csv"                           DBMS = CSV REPLACE;                                                               PUTNAMES = YES;                                                              RUN;                                                                                               PROC EXPORT DATA = mylib.mydata                                                 outfile = "C"\myFolder\mydataFromSAS.txt"                             DBMS = TAB REPLACE;                                                               PUTNAMES = YES;                                                                 RUN; |
-| Python |  |
-| R | 1. write.csv\(mydata, "mydataFromR.csv"\)                                  2. write.table\(mydata, "mydataFromR.txt"\)                                3. write.table\(mydata,                                                                          file = "mydataFromR.txt",                                                              quote = FALSE,                                                                              sep = "\t",                                                                                      na = " ",                                                                                           row.names = TRUE,                                                                      col.names = TRUE\) |
-|  | Viewing a text file |
-| R | file.show\("mydataFromR.csv"\) |
-| Python |  |
-| SAS |  |
-|  | Writing Excel files |
-| R | library\("xlsReadWrite"\)                                                                   xls.getshlib\(\)                                                                                 load\("mydata.RData"\)                                                                  write.xls \(mydata, "mydataFromR.xls"\) |
-| Python |  |
-| SAS | LIBNAME mylib "c:\myFolder";                                                     PROC EXPORT DATA = mylib.mydata                                               OUTFILE = "C:\myFolder\mydata.xls"                                        DBMS = EXCELCS LABEL REPLACE;                                          SHEET = "mydata";                                                                  RUN; |
-|  | Writing to relational databases |
-| R | library\("RODBC"\)                                                                              myConnection &lt;- odbcConnectExcel\("mydataFromR.xls", readOnly = FALSE\)                                                                          sqlSave\(myConnection, mydata\)                                                 close\(myConnection\) |
-| Python |  |
-| SAS |  |
-|  | Writing Data to SAS |
-| R | library\("foreign"\)                                                                             write.foreign \(mydata,                                                                      datafile = "mydataFromR.csv",                                                    codefile = "mydata.sas",                                                              package = "SAS"\) |
-
-
-
-
-
-
-
 ### \\# 1. comma delimited files
 
 SAS:
@@ -64,67 +6,101 @@ proc import out = mylib.mydata
 datafile = "c"\myRfolder\mydataID.csv" 
 DBMS = CSV REPLACE; 
 GETNAMES = YES; 
-DATAROW = 2; RUN;
-PROC PRINT; RUN; 
+DATAROW = 2; 
+RUN;
+ 
 ```
+PYTHON:
 R: 
+\# with id variable not named
+  `mydata <- read.csv("mydata.csv")`
+  
+\# with id named in the header
+  `mydata <- read.csv("mydataID.csv", row.names = "id")`
+  
 ### \\# 2. Tab delimited files:
 SAS:
-
-
 ```
- PROC IMPORT OUT = mylib.mydata  DATAFILE = "C:\myRworkshop\mydataID.tab" 
+ PROC IMPORT OUT = mylib.mydata  
+ DATAFILE = "C:\myRworkshop\mydataID.tab" 
  DBMS = TAB REPLACE; 
  GETNAMES = YES; 
  DATAROW =2; 
  RUN; 
 ```
-
 PYTHON:
 R:
-
-### \\# 3. Reading from a web site: FILENAME myURL 
-
-SAS:
-
-
+\# read a tab delimited file with named ID columns
 
 ```
-URL "http://sites.google.com/site/r4statistics/mydataID.csv"; 
+mydata <- read.delim("mydata.tab")
+```
+
+```
+count.fields("mydata.tab", sep = "\t")
+```
+
+\# again with ID named in the header
+
+```
+mydata <- read.delim("mydataID.tab",row.names = "id")
+```
+
+
+### \\# 3. Reading from a web site: FILENAME myURL 
+SAS:
+```
+FILENAME myURL URL "http://sites.google.com/site/r4statistics/mydataID.csv"; 
 
 PROC IMPORT DATAFILE = myURL 
-DBMS = CSV REPLACE OUT = mylib.mydata; GETNAMES = YES; 
+DBMS = CSV REPLACE 
+OUT = mylib.mydata; 
+GETNAMES = YES; 
 DATAROW =2; 
 RUN;
 ```
-
-
-
 PYTHON:
 
 R:
+myURL <- "http:/sites.google.com/site/r4statistics/mydata.csv"
+mydata<- read.csv(myURL)
 
-
+\# reading text from the clipboard
+     \# copy a column of numbers or words, then :
+     `myvector <- readClipboard()`
+     \# Open mydata.csv, select & copy contents, then :
+     `mydata <- read.delim ("clipboard", header = TURE)`
+     \# Missing values for character varables
+     `mydata <- read.csv("mydataID.csv", row.names = "id", strip.white = TRUE, na.strings = "")`
+     \# skipping variables in delimited text files
+     `myCols <- read.delim("mydata.tab", strip.white = TRUE, na.strings = "", colClasses = c("integer", "integer", "character", "NULL", "NULL", "integer", "integer"))`
 
 ## \\#4. reading text data within a program
 R:
 1. the stdin approach
 ```
-mydata <- read.csv(stdin()) workshop, gender, q1, q2, q3, q4 1,1,f,1,1,5,1 
+mydata <- read.csv(stdin())
+ workshop, gender, q1, q2, q3, q4 
+ 1,1,f,1,1,5,1 
 ```
 2. blank line above ends input 
 
 3. the testConnection approach 
 
 ```
-mystring <- "workshop, gender, q1, q2, q3, q4 1, 1, f,1 1, 1, 5, 1" 
+mystring <- "workshop, gender, q1, q2, q3, q4 
+1, 1, f,1 1, 1, 5, 1" 
 mydata <- read.csv(textConnection(mystring))
 ```
+
+PYTHON:
+
 SAS
 ```
 LIBNAME myLib 'C:\myRfolder'; 
 DATA mylib.mydata; 
-INFILE DATALINES DELIMITER = ',' MISSOVER DSD firstobs = 2; 
+INFILE DATALINES DELIMITER = ',' 
+MISSOVER DSD firstobs = 2; 
 INPUT id workshop gender $ q1 q2 q3 q4; DATALINES; 
 id, workshop, gender, q1 q2, q3, q4 1,1,f,1,1,5,1 
 PROC PRINT; 
@@ -132,31 +108,67 @@ RUN;
 ```
 
 ### \\# 5. Reading multiple observations per line
+R:
 
 ```
-1. mylist <- scan(stdin(), what = list(id = 0, workshop = 0, gender = " ", q1 =0, q2 = 0, q3, = 0, q4 = 0)) 1 1 f 1 1 5 1 
-2. Blank line above ends input mydata <- data.frame(mylist) 
-3. the textConnection approach mystring <- "1 1 f 1 1 5 1"; 
-mylist <- scan(textConnection(mystring), what = list(id =0, workshop = 0, gender = " ", q1 =0, q2 = 0, q3 = 0, q4 =0 )) mydata <- data.frame(mylist)
+1. mylist <- scan(stdin(), 
+
 ```
+what = list(id = 0, workshop = 0, gender = " ",
+ q1 =0, q2 = 0, q3, = 0, q4 = 0)) 
+ 1 1 f 1 1 5 1 
+```
+
+2. Blank line above ends input mydata <- `data.frame(mylist) `
+3. the textConnection approach 
+
+```
+mystring <- "1 1 f 1 1 5 1"; 
+mylist <- scan(textConnection(mystring), 
+what = list(id =0, workshop = 0, gender = " ", 
+q1 =0, q2 = 0, q3 = 0, q4 =0 )) 
+mydata <- data.frame(mylist)
+```
+PYTHON:
+
 SAS:
 ```
 DATA mydata; 
-INPUT id workshop gender $q1 - $q4 @@; DATALINES; 1 1 f 1 1 5 1 ; 
-PROC PRINT; RUN;DATA mydata;                                                                                INPUT id workshop gender $q1 - $q4 @@;                                DATALINES;                                                                                   1 1 f 1 1 5 1 ;                                                                                  PROC PRINT; 
+INPUT id workshop gender $q1 - $q4 @@; 
+DATALINES; 1 1 f 1 1 5 1 ; 
+PROC PRINT; 
 RUN;
+
 ```
 ### \\# 6. Reading fixed-width text files : one record per case
 
 
 
 ```
-1. mydata <- read.fwf( file = "mydataFWF.txt", width = c(2, -1, 1, 1, 1,1,1 ), col.names = c("id", "gender", "q1", "q2", "q3", "q4"), row.names = "id", na.strings = "", fill = TRUE, strip.white = TRUE) 
-2. myfile <- "mydataFWF.txt" 
+1. mydata <- read.fwf( 
+
+
+```
+file = "mydataFWF.txt",
+ width = c(2, -1, 1, 1, 1,1,1 ), 
+ col.names = c("id", "gender", "q1", "q2", "q3", "q4"), row.names = "id", 
+ na.strings = "", 
+ fill = TRUE, 
+ strip.white = TRUE) 
+```
+2. using "macro substitution".
+
+
+```
+myfile <- "mydataFWF.txt" 
 myvariablenames <- c("id", "gender", "q1", "q2", "q3", "q4")
  myvariablewidths <- c(2, -1, 1,1,1,1,1) 
- mydata <- read.fwf( file = myfile, width = myVariableWidths, col.names = myVariableNames, row.names = "id", na.strings = " ", fill = TRUE, strip.white = TRUE)
+ mydata <- read.fwf( file = myfile, width = myVariableWidths, col.names = myVariableNames, 
+ row.names = "id", na.strings = " ", fill = TRUE, strip.white = TRUE)
 ```
+
+PYTHON:
+
 SAS
 ```
 LIBNAME mylib 'C:\myRolder'; 
@@ -184,20 +196,33 @@ PROC PRINT;
 RUN;
 ```
 ### \\# 8. reading excel files
+R: 
 
 ```
 library("xlsReadWrite") 
-xls.getshlib(): 
-can get a binary file that is not distributed through CRAN mydata <- read.xls("mydata.xls")
-
-LIBNAME mylib "c:\myRfolder"; 
-PROC IMPORT OUT = mylib.mydata 
-DATAFILE = "C:\myRfolder\mydata.xls" DBMS = EXCELCS REPLACE; 
-RANGE = "Sheet1$"; SCANTEXT = YES; 
-USEDATE = YES; SCANTIME = YES;
+xls.getshlib():
 ```
 
+\#can get a binary file that is not distributed through CRAN 
 
+```
+mydata <- read.xls("mydata.xls")
+```
+PYTHON:
+
+SAS:
+
+```
+LIBNAME mylib "c:\myRfolder"; 
+PROC IMPORT OUT = mylib.mydata 
+DATAFILE = "C:\myRfolder\mydata.xls" 
+DBMS = EXCELCS REPLACE; 
+RANGE = "Sheet1$"; 
+SCANTEXT = YES; 
+USEDATE = YES; 
+SCANTIME = YES;
+run;
+```
 
 ### \\# 9. Reading from relational databases
 
@@ -240,34 +265,40 @@ mydata <- sasxport.get("mydata.xpt")
 
 ### \\# 12. Writing delimited text files
 
-
+SAS: 
 
 ```
 PROC PRINT DATA = mylib.mydata; 
 run; 
-PROC EXPROT DATA = mylib.mydata outfile = "C"\myFolder\mydataFromSAS.csv" 
-DBMS = CSV REPLACE; PUTNAMES = YES; 
+PROC EXPROT DATA = mylib.mydata 
+outfile = "C"\myFolder\mydataFromSAS.csv" 
+DBMS = CSV REPLACE; 
+PUTNAMES = YES; 
 RUN; 
-PROC EXPORT DATA = mylib.mydata outfile = "C"\myFolder\mydataFromSAS.txt" 
+PROC EXPORT DATA = mylib.mydata 
+outfile = "C"\myFolder\mydataFromSAS.txt" 
 DBMS = TAB REPLACE; 
 PUTNAMES = YES; 
 RUN;
 ```
 
-
+R:
 
 ```
 1. write.csv(mydata, "mydataFromR.csv") 
 2. write.table(mydata, "mydataFromR.txt") 
-3. write.table(mydata, file = "mydataFromR.txt", quote = FALSE, sep = "\t", na = " ", row.names = TRUE, col.names = TRUE)
+3. write.table(mydata, file = "mydataFromR.txt", 
+quote = FALSE, sep = "\t", na = " ", 
+row.names = TRUE, col.names = TRUE)
 ```
 
 ### \\# 13. Viewing a text fileViewing a text file
 
 ```
-file.show\("mydataFromR.csv"\)
+file.show("mydataFromR.csv")
 ```
 ### \\# 14. Writing Excel files
+R:
 
 ```
 library("xlsReadWrite")
@@ -275,10 +306,11 @@ xls.getshlib()
 load("mydata.RData") 
 write.xls (mydata, "mydataFromR.xls")
 ```
-
+SAS: 
 ```
 LIBNAME mylib "c:\myFolder"; 
-PROC EXPORT DATA = mylib.mydata OUTFILE = "C:\myFolder\mydata.xls" 
+PROC EXPORT DATA = mylib.mydata 
+OUTFILE = "C:\myFolder\mydata.xls" 
 DBMS = EXCELCS LABEL REPLACE; 
 SHEET = "mydata"; 
 RUN;
