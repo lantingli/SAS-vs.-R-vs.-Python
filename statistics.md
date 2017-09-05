@@ -65,6 +65,7 @@
     proc corr;
       var q1 -q4;
       run;
+      
     \\# spearman correlations;
    proc corr spearman;
      var q1 -q4;
@@ -94,19 +95,19 @@
         var q1;
         run;
         
-      \\# nonparametric version of above
+ \\# nonparametric version of above
           using Wilcoxon/Mann-WHitney test;
       proc npar1way;
         class gender;
         var q1;
         run;
         
-        \\# paried samples t-test;
+  \\# paried samples t-test;
         proc ttest;
           paried pretest * posttest;
         run;
         
-        \\# nonparametric version of above using
+  \\# nonparametric version of above using
           both signed rank test and sign test
         proc univariate;
           var mydiff;
@@ -115,7 +116,7 @@
 
 
           
-    \# oneway analysis of variance(ANONVA)
+\# oneway analysis of variance(ANONVA)
     
 
 ```
@@ -128,7 +129,7 @@ proc glm;
 
 
     
-    \# nonparametric version of above using 
+\# nonparametric version of above using 
      Kruskal-wallis test
   
 
@@ -154,7 +155,8 @@ proc glm;
   R:
   
   \# frequencies & univariate statistics
-     \\# deducer's frequencies() function
+  
+ \\# deducer's frequencies() function
         
 
 ```
@@ -163,7 +165,7 @@ proc glm;
 ```
 
 
-     \\# R's build-in function
+ \\# R's build-in function
      
 
 ```
@@ -171,7 +173,7 @@ proc glm;
 
 ```
 
-     \\# the flexible way using build-in functions
+ \\# the flexible way using build-in functions
     
 
 ```
@@ -180,11 +182,11 @@ proc glm;
 ```
 
 
-     \\# proportions of valid values
+ \\# proportions of valid values
       
 
 ```
- prop.table(table(workshop))
+       prop.table(table(workshop))
        prop.table(table(gender))
 ```
 
@@ -215,18 +217,19 @@ proc glm;
              
 \# 2. Cross-Tabulation
 
-       \\# using the gmodels package
+   \\# using the gmodels package
       
 
 ```
- library("gmodels")
+       library("gmodels")
        CrossTable(workshop, gender, chisq = TRUE, format = "SAS")
 ```
 
 
        
-       \\# using build-in functions
-         # counts
+ \\# using build-in functions
+ 
+   \# counts
         
 
 ```
@@ -237,18 +240,23 @@ proc glm;
 
 
    \\# row proportions
+   
        `prop.table(myWG, 1)`
          
    \\# column proportions
+   
         `prop.table(myWG, 2)`
          
    \\# Total proportions
+   
          `prop.table(myWG)`
          
    \\# Rounding off proportions
+   
         `round(prop.table(myWG, 1), 2)`
         
    \\# row percents
+   
         ` round(100 * prop.table(myWG, 1)))`
          
    \\# adding row and column totals
@@ -262,6 +270,7 @@ proc glm;
 
          
 \# 3. Correlation
+
    \\# the rcorr.adjust function from the R commander package
        
 
@@ -273,10 +282,15 @@ proc glm;
 
 
    \\# spearman correlations
+   
        ` rcorr.adjust(mydata[3:6], type = "spearman")`
+       
    \\# the built-in cor function
+   
       ` cor(mydata[3:6], method = "pearson", use = "pairwise")`
+      
    \\# the built -in cor.test function
+   
        `cor.test(mydata$q1, mydata$q2, use = "pairwise")`
          
       
@@ -296,9 +310,11 @@ proc glm;
    not complete!!! will add later!!!
    
 \# 5. t -Test independent groups
+
    \\# independent samples t-test
       `t.test(q1 ~ gender, data = mydata100)`
-    \\# same test; requires attached data;
+      
+  \\# same test; requires attached data;
        
 
 ```
@@ -331,6 +347,7 @@ with(mydata100,
 
     
   \\# paired samples t-test
+  
      ` t.test(posttest, pretest, paired = TRUE)`
   
         
