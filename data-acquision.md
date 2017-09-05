@@ -72,35 +72,65 @@ PYTHON:
 
 R:
 
+
+
+```
 myURL <- "http:/sites.google.com/site/r4statistics/mydata.csv"
 mydata<- read.csv(myURL)
+```
 
-\# reading text from the clipboard
 
-     \# copy a column of numbers or words, then :
-     
-     `myvector <- readClipboard()`
-     
-     \# Open mydata.csv, select & copy contents, then :
-     
-     `mydata <- read.delim ("clipboard", header = TURE)`
-     
-     \# Missing values for character varables
-     
-     `mydata <- read.csv("mydataID.csv", row.names = "id", strip.white = TRUE, na.strings = "")`
-     
-     \# skipping variables in delimited text files
-     
-     `myCols <- read.delim("mydata.tab", strip.white = TRUE, na.strings = "", colClasses = c("integer", "integer", "character", "NULL", "NULL", "integer", "integer"))
 
-## \\#4. reading text data within a program
+### \\#4. reading text from the clipboard
+
+   \# copy a column of numbers or words, then :
+     
+    
+
+```
+ myvector <- readClipboard()
+
+```
+
+     
+   \# Open mydata.csv, select & copy contents, then :
+   
+     
+
+
+```
+ mydata <- read.delim ("clipboard", header = TURE)
+```
+
+
+     
+     
+   \# Missing values for character varables
+     
+
+
+```
+ mydata <- read.csv("mydataID.csv", row.names = "id", strip.white = TRUE, na.strings = "")
+```
+
+
+     
+   \# skipping variables in delimited text files
+     
+  `myCols <- read.delim("mydata.tab", strip.white = TRUE, na.strings = "", colClasses = c("integer", "integer", "character", "NULL", "NULL", "integer", "integer"))`
+
+### \\#5. reading text data within a program
+
 R:
+
 1. the stdin approach
+
 ```
 mydata <- read.csv(stdin())
  workshop, gender, q1, q2, q3, q4 
  1,1,f,1,1,5,1 
 ```
+
 2. blank line above ends input 
 
 3. the testConnection approach 
@@ -125,7 +155,7 @@ PROC PRINT;
 RUN;
 ```
 
-### \\# 5. Reading multiple observations per line
+### \\# 6. Reading multiple observations per line
 R:
 
 ```
@@ -137,7 +167,16 @@ what = list(id = 0, workshop = 0, gender = " ",
  1 1 f 1 1 5 1 
 ```
 
-2. Blank line above ends input mydata <- `data.frame(mylist) `
+2. Blank line above ends input 
+
+
+
+```
+mydata <- data.frame(mylist) 
+```
+
+
+
 3. the textConnection approach 
 
 ```
@@ -158,15 +197,12 @@ PROC PRINT;
 RUN;
 
 ```
-### \\# 6. Reading fixed-width text files : one record per case
+### \\# 7. Reading fixed-width text files : one record per case
 
-
+R:
 
 ```
 1. mydata <- read.fwf( 
-
-
-```
 file = "mydataFWF.txt",
  width = c(2, -1, 1, 1, 1,1,1 ), 
  col.names = c("id", "gender", "q1", "q2", "q3", "q4"), row.names = "id", 
@@ -195,7 +231,10 @@ INFILE '\myRfolder\mydataFWF.txt' MISSOVER;
 INPUT ID 1-2 WORKSHOP 3 GENDER $ 4 q1 5 q2 6 q3 7 q4 8; 
 RUN;
 ```
-### \\# 7. Reading fixed - width text files, two or more records per case
+
+### \\# 8. Reading fixed - width text files, two or more records per case
+
+R:
 
 ```
 myfile <- "mydataFWF.txt" 
@@ -205,6 +244,9 @@ myRecord2Widths <- c（-2， -1， -1， 1，1，1，1）
 myVariableWidths <- list(myRecord1Widths, myRecord2Widths) 
 mydata <- read.fwf( file = myfile, width = myVariableWidths, col.names = myVariableWidths, row.names = "id", na.strings = " ", fill = TRUE, strip.white = TRUE)
 ```
+
+PYTHON:
+
 SAS:
 ```
 DATA temp; 
@@ -213,7 +255,7 @@ INPUT \#1 id 1-2 workshop 3 gender 4 q1 5 q2 6 q3 7 q4 8 \#2 q5 5 q6 6 q7 7 q8 8
 PROC PRINT; 
 RUN;
 ```
-### \\# 8. reading excel files
+### \\# 9. reading excel files
 R: 
 
 ```
@@ -242,7 +284,7 @@ SCANTIME = YES;
 run;
 ```
 
-### \\# 9. Reading from relational databases
+### \\# 10. Reading from relational databases
 
 ```
 library("RODBC") 
@@ -250,7 +292,7 @@ myConnection <- odbcConnectExcel("mydata.xls")
 mydata <- sqlFetch(myConnection, "Sheet1") 
 close(myConnection)
 ```
-### \\# 10. Reading data from SAS
+### \\# 11. Reading data from SAS
 
 ```
 library("foreign")   
@@ -260,9 +302,9 @@ library("Hmisc")
 mydata <- sasxport.get("mydata.xpt")                                                                                                                                                                             
 ```
 
-### \\# 11. write data from SAS and read it into R
+### \\# 12. write data from SAS and read it into R
 
-
+R:
 
 ```
 LIBNAME mylib 'C:\myRfolder'; 
@@ -281,7 +323,7 @@ mydata <- sasxport.get("mydata.xpt")
 
 
 
-### \\# 12. Writing delimited text files
+### \\# 13. Writing delimited text files
 
 SAS: 
 
@@ -310,12 +352,12 @@ quote = FALSE, sep = "\t", na = " ",
 row.names = TRUE, col.names = TRUE)
 ```
 
-### \\# 13. Viewing a text fileViewing a text file
+### \\# 14. Viewing a text fileViewing a text file
 
 ```
 file.show("mydataFromR.csv")
 ```
-### \\# 14. Writing Excel files
+### \\# 15. Writing Excel files
 R:
 
 ```
@@ -333,7 +375,7 @@ DBMS = EXCELCS LABEL REPLACE;
 SHEET = "mydata"; 
 RUN;
 ```
-### \\# 15. Writing to relational databases
+### \\# 16. Writing to relational databases
 
 ```
 library("RODBC") 
@@ -341,7 +383,7 @@ myConnection <- odbcConnectExcel("mydataFromR.xls", readOnly = FALSE)
 sqlSave(myConnection, mydata) 
 close(myConnection)
 ```
-### \\# 16. wirting data to SAS
+### \\# 17. wirting data to SAS
 
 ```
 library("foreign") 
