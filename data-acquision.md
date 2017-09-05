@@ -89,7 +89,6 @@ mydata<- read.csv(myURL)
 
 ```
  myvector <- readClipboard()
-
 ```
 
      
@@ -160,8 +159,6 @@ R:
 
 ```
 1. mylist <- scan(stdin(), 
-
-```
 what = list(id = 0, workshop = 0, gender = " ",
  q1 =0, q2 = 0, q3, = 0, q4 = 0)) 
  1 1 f 1 1 5 1 
@@ -169,33 +166,32 @@ what = list(id = 0, workshop = 0, gender = " ",
 
 2. Blank line above ends input 
 
-
-
 ```
 mydata <- data.frame(mylist) 
 ```
-
-
-
 3. the textConnection approach 
 
 ```
 mystring <- "1 1 f 1 1 5 1"; 
+
 mylist <- scan(textConnection(mystring), 
+
 what = list(id =0, workshop = 0, gender = " ", 
+
 q1 =0, q2 = 0, q3 = 0, q4 =0 )) 
+
 mydata <- data.frame(mylist)
 ```
 PYTHON:
 
 SAS:
+
 ```
 DATA mydata; 
 INPUT id workshop gender $q1 - $q4 @@; 
 DATALINES; 1 1 f 1 1 5 1 ; 
 PROC PRINT; 
 RUN;
-
 ```
 ### \\# 7. Reading fixed-width text files : one record per case
 
