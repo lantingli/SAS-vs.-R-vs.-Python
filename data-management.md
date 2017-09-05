@@ -916,6 +916,73 @@ libname mylib 'C:\myRfolder';
 
   
 3. Selecting first or last observations per group
+
+SAS:
+
+
+
+```
+proc sort data = sasuser.mydata;
+  by workshop gender;
+run;
+
+data sasuser.mylast;
+  set sasuser.mydata;
+  by workshop gender;
+  if last.gender;
+run;
+```
+
+
+
+R: 
+
+
+
+```
+mydata$id <- row.names(mydata)
+mybys <- data.frame(mydata$workshop, mydata$gender)
+mylastlist <- by(mydata, myBys, tail, n = 1)
+```
+
+
+
+
+
+
+\# back into a data frame
+
+
+```
+mylastDF <- do.call(rbind, mylastlist)
+```
+
+
+
+\# another way to create the data frame)
+
+
+```
+mylastDF <- rbind(mylastlist[[1]], 
+                  mylastlist[[2]],
+                  mylastlist[[3]],
+                  mylastlist[[4]])
+```
+
+
+  
+\# generating just an indicator variable
+
+
+```
+mylastDF$lastgender <- rep(1, nrow(mylastDF))
+mylastDF2 <- mylastDF[ c("id", "lastgender")]
+mydata2 <- merge(mydata, mylasDF2, by = "id", all = TRUE)
+mydata2$lastgender[is.na(mydata2$lastgender)] <- 0
+```
+
+
+                  
 4. Transposing or flipping data sets
 5. Reshaping variables to observations and back
 6. sorting data frames
