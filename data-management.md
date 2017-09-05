@@ -169,7 +169,7 @@ c. SAS:
 ```
 
 
-1. Conditional transformations
+3. Conditional transformations
 
      \# the ifelse function
      
@@ -210,7 +210,7 @@ c. SAS:
 
 
 
-  \# cutting functions
+  \# 4.  cutting functions
   \#a. R
   
   `attach(mydata100)`
@@ -288,7 +288,7 @@ postgroup <- cut2(postest, m =25)
 
      
 
-1. Multiple conditional transformation
+5. Multiple conditional transformation
 
 \#R
 
@@ -348,7 +348,7 @@ postgroup <- cut2(postest, m =25)
 
 
 
-2. Missing values
+6. Missing values
 \# when importing numeric data, R reads blanks as missing(except when blanks are delimiters). R reads the string NA as missing for both numeric and character variables. when importing a text file, both SAS and SPSS would recognize a period as a missing value for numeric variables. R will instead read the whole variable as a character vector!
 \# SAS 
 
@@ -432,7 +432,7 @@ mydataNA <- read.table("mydataNA.txt")
 
 
 
-1. Renaming variables
+7. Renaming variables
  
     \# R
 
@@ -506,7 +506,7 @@ names(mydata) [myA:myZ] < myXs(mydata)
 
 
 
-1. Recording variables
+8. Recording variables
 
       \# recoding a few variables
 
@@ -571,7 +571,7 @@ names(mydata) [myA:myZ] < myXs(mydata)
 ```
 
 
-1. indicator or Dummy variables
+9. indicator or Dummy variables
 \#R
 
  load("mydata100.RData")
@@ -609,7 +609,7 @@ names(mydata) [myA:myZ] < myXs(mydata)
 
     
 
-2. Keeping and Dropping variables
+10. Keeping and Dropping variables
 
 \# R
 
@@ -654,7 +654,7 @@ run;
   
  
    
-3. Stacking/Concatenating/Adding data sets
+11. Stacking/Concatenating/Adding data sets
  \# R 
  
 
@@ -702,7 +702,7 @@ run;
 
 
 
-4. Joining/Merging datasets
+12.  Joining/Merging datasets
 
 By default, SAS keep all records regardless of whether or not they match. for observations that do not have matches in the other file, the merge function will fill them in with missing values. R take the opposite approach, keeping only those that have a record in both. to get merge to keep all records, use the argument all = TRUE. you can also use all.x = TURE to keep all record in the first file regardless of whether or not they have matches in the record. the all.y = TRUE argument does the reverse.
 
@@ -745,7 +745,7 @@ data mylib.myright;
 ```
 
  
-5. Creating summarized or aggregated data sets
+13. Creating summarized or aggregated data sets
 \#R
 
      \# the aggregate function
@@ -811,7 +811,7 @@ table(workshop)
        by workshop gender;
      run;
   
-1. By or Split-file processing
+14. By or Split-file processing
 
   SAS:
   
@@ -886,7 +886,35 @@ options(width = 64)
      
        
   
-2. Removing duplicate obserations
+15. Removing duplicate obserations
+
+SAS:
+
+
+```
+libname mylib 'C:\myRfolder';
+  data mycopy;
+    set mylib.mydata;
+  data lasttwo;
+    set mylib.mydata;
+      if id get 7;
+  run;
+  
+  data duplicates;
+    set mycopy lasttwo;
+  run;
+  
+  proc sort noduprec data = duplicates;
+    by id workshop gender q1 -q4;
+  run;
+  
+  proc sort nodupkey equals data= mycopy;
+    by workshop gender;
+  run;
+```
+
+
+  
 3. Selecting first or last observations per group
 4. Transposing or flipping data sets
 5. Reshaping variables to observations and back

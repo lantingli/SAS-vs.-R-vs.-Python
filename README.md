@@ -22,7 +22,7 @@ The contents include below list:
 
 9. Managing your files and workspace
 
-10. Graphics \(Traditional graphics and graphics with ggplot2\)
+10. Graphics (Traditional graphics and graphics with ggplot2)
 11. Statistics
 12. Machine learning
 
