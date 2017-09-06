@@ -106,6 +106,11 @@
         var q1;
         run;
         
+        \\# 适用场景:
+            1) 适合完全随机设计两组独立样本比较
+            2）两样本为连续性变量，来自非正态总体或方差不齐
+            3）两样本为有序多分类变量
+        
   \\# paried samples t-test;
         proc ttest;
           paried pretest * posttest;
@@ -135,6 +140,10 @@ proc glm;
     
 \# nonparametric version of above using 
      Kruskal-wallis test
+   \\# 适用场景：
+   1）适合完全随机设计多组独立样本比较
+   2）多组独立样本为连续型变量值，来自非正态总体或方差不齐，；或进行数据变化扔不忙族正态性或方差齐性
+   3）各样本为有序多分类变量
   
 
 ```
