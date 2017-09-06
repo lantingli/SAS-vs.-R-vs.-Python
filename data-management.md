@@ -1064,7 +1064,8 @@ proc transpose data = mylib.mydata
 
    \# date-time conclusion
    
- 23. 循环与条件
+ 23. Loops
+ 24. Functions
    
    
    
