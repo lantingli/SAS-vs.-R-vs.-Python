@@ -428,3 +428,5 @@ pairwise.t.test(posttest, workshop)
   \\3 nonparametric oneway ANOVA using kruskal.test(posttest~ workshop)
   pairwise.wilcox.test(posttest, workshop)
   aggregate(posttest, data.frame(workshop), median, na.rm = TRUE)
+  
+  14. PSM
