@@ -14,4 +14,5 @@
 * [Statistics](statistics.md)
 * Machine learning
 * [supplmentary](supplmentary.md)
+* [Data management 2](data-management-2.md)
 
