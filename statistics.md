@@ -66,10 +66,14 @@
       var q1 -q4;
       run;
       
+      ## pearson 相关系数为直线相关系数，要求变量X 和Y 服从双变量正态分布，并且在作相关分析时，一般先做散点图， 考察是否有可能直线相关
+      
     \\# spearman correlations;
    proc corr spearman;
      var q1 -q4;
    run;
+   
+    \\# 如果变量X和Y 不服从双变量正态分布，可以用spearman 秩相关进行相关分析；如果变量X 和Y 均为多分类有序资料，可以用spearman 秩相关进行相关分析
 
 ```
 
@@ -359,6 +363,8 @@ with(mydata100,
       library("car")
       levene.test(posttest, gender)
       var.test(posttest ~ gender)
+      
+      \\# 判断两总体方差是否相等的方法常用的有F 检验，Bartlett 检验，Levene 检验，F检验，Bartlett 检验要求资料服从正态分布；Levene 检验不依赖总体分布具体形式，更为稳健。F 检验只用于两样本方差齐性检验，Bartlett 和 Levene检验即可用于两样本方差齐性检验，，也可用于多样本方差齐性检验。
 ```
 
 
