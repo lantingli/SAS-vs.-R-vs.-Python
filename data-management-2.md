@@ -288,6 +288,31 @@ infile '\myRfolder\giants.txt'
  format died born mmddyy10. age longAgo 5.2;
  run;
  
+ R:
+ 
+ giants<- read.fwf(
+   file = "giants.txt",
+   width = c(15,11, 11)
+   col.names = c("name", "born", "died")
+   colClasses = c("character", "character", "POSIXct"),
+   row.names = "name",
+   strip.white = TRUE;
+ )
+ 
+ library("lubridate")
+ giants$born <- mdy(giants$born)
+ 
+ as.POSIXct(
+ c(-2520460800, -3558556800, -2207952000, -1721347200, -2952201600), 
+ origin = "1960-01-01, tz = "UTC")
+ 
+ age<- difftime(died, born, units = "secs")
+ age <- difftime(died, born) # default age in days
+ 
+ giants$age <- round(as.numeric(age/365.2425), 2)
+ 
+ difftime(now(), died)/365.2425
+ 
  
 
 \# adding durations to date-time variables
@@ -296,16 +321,28 @@ data mylib.giants;
   set mylib.giants;
    died  = born +age;
    run;
-   
+ 
+ R: 
+ age <- as.duration(
+ c(2286057600, 2495664000, 2485382400, 2685916800, 1935705600)
+ )
+ 
 
 \# accessing date-time elements
-
+SAS:
 data mylib.giants;
   set mylib.giants;
  myYear = YEAR(born);
  myMonth =MONTH(born);
  myDay = DAY(born);
  
+R:
+
+year(born)
+month(born)
+day(born) # day of month
+wday(born) # day of week
+
 
 \# creating date-time variables from elements
 SAS: 
@@ -314,6 +351,13 @@ data mylib.giants;
   born = MDY(myMonth, myDay, myYear);
 run;
 
+R:
+myYear <- year(died)
+myMonth <- month(died)
+myDay <- day(died)
+
+myDateString <<- paste(myYear, myMonth, myDay, SEP = "/")
+died2 <- ymd(myDateString)
 
 \# logical comparisons with date-time variables
 
@@ -323,8 +367,28 @@ data born1900s;
    if born > "01jan1900"d;
  run;
  
+ R:
+ 
+ giants[born >mdy("1/1/1900"), ]
+ 
 
 \# formatting date-time output
+proc format;
+picture myFormatI
+LOW-HIGH = '%B %d, %Y is day %j of %Y'
+(DATATYPE = DATE)
+RUN;
+
+proc print data = mylib.giants;
+  var born;
+  format born myFormatI40.;
+run;
+
+data null;
+  set mylib.giants;
+   put name $char14. born myFormatII34.;
+ run;
+ 
 
 \# two-digit years
 
