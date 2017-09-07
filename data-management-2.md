@@ -113,17 +113,216 @@ proc sort data = mylib.mydata;
 
 20. Converting data structure
 21. Character string manipulations
+
+SAS:
+
+
+
+```
+data mylib.giants;
+  infile '\myRfolder\giants.txt'
+  MISSOVER DSD LRECL = 32767
+  INPUT name $char 14. @16 born mmddyy10. @27 died yymmdd10.;
+  format born mmddyy10. died yymmdd10.;
+  myVarlength = length(name)
+  born= strip(born)
+  
+  data mylib.giants;
+    set mylib.giants;
+   mylower = lowcase(name);
+   myupper = upcase(name)
+   myproper = propcase(name)
+ run;
+ 
+ data mylib.giants;
+   set mylib.giants;
+   myFirst5 = substr(name, 1 ,5)
+     \# split names using substr;
+       myblank = find(name, " ");
+       myfirst = strip(substr(name, 1, myBlank));
+       mylast = strip(substr(name, myBlank));
+     \# splip name using scan;
+       myfirst = scan(name, 1, " ");
+       mylast = scan(name, 2, " ");
+       myfirst = tranwrd(myfirst, "R.A.", "Ronald A.");
+       length mylastfirst $ 17;
+       mylastfirst = strip(mylast)||","||strip(myfirst);
+         or call CATX(",", mylastfirst, mylast, myfirst);
+         
+      data tukey;
+        set mylib.giants;
+          where mylast = "Tukey";
+      run;
+      
+      data tukey;
+        set mylib.giants;
+          where find(mylast, "key");
+      run;
+      
+      data mysubset;
+        set mylib.giants;
+        where mylast in ("Box", "Bayes", "Fisher", "Tukey");
+      run;
+      
+      data fishorkey;
+        set mylib.giants;
+        if find(mylast, "Box") |
+           find(mylast, "Bayes") |
+           find(mylast, "Fish")|
+           find(mylast, "key");
+           run;
+           
+       data ArthruM;
+         set mylib.giants;
+           firstletter = substr(mylast, 1,1);
+           if "A" <= firstletter <= "M";
+           run;
+```
+
+R:
+
+
+
+```
+gender <- c("m", “f", "m", NA, "m", "f", "m", "f")
+options(width = 58)
+library("stringr")
+myVars <- str_c("Var", LETTERS[1:6])
+```
+
+
+
+
+
+```
+setwd("c:/myRfolder")
+giants <- read.fwf(
+  file  = "giants.txt",
+  width = c(15, 11, 11),
+  col.names = c("name", "born", "died"),
+  colClasses = c("character", "character", "POSIXct")
+  
+  str_length(giants$name)
+  giants[giants$name =="R.A. Fisher", ]
+  giants[giants$name == "R.A. Fisher   ", ]
+  giant$name <- str_trim(giants$name)
+  attach(giants)
+  str_length(name)
+```
+
+
+  
+
+
+```
+  toupper(name)
+  tolower(name)
+  library("ggplot2")
+  firstupper(tolower(name))
+  str_sub(name, 1, 5)
+  myNamesMatrix <- str_split_fixed(name, " ", 2)
+  myfirst <- myNamesMatrix [ ,1 ]
+  myLast <- myNamesMatrix [, 2]
+  myFirst <- str_replace_all(myfirst, "R.A.", "Ronald A.")
+  mylastFirst <- str_c(mylast, ",", "myfirst)
+```
+
+
+  
+  
+
+
+```
+  myobs <myLast =="Tukey"
+  myObs <- which(myLast == "Tukey")
+  giants[myObs, ]
+```
+
+
+  
+  `myObs <- str_detect(myLast, "key")`
+  
+ 
+
+```
+ myTable<- c("Box", "Bayes", "Fisher", "Tukey")
+  myObs <- mylast %in% myTable
+```
+
+
+  
+  `myObs <- str_detect(mylast, "Box|Bayes|Fish|key")`
+  
+  
+ ` myAthruM <- str_detect(myLastFirst, "^[A-M]")`
+  
+
+
+           
+           
+       
 22. Dates and Times
+
 
 \# Calculating durations
 
+SAS:
+
+infile '\myRfolder\giants.txt'
+ MISSOVER DSD LRECL = 32767
+ input name $char14. @16 born mmddyy10. @27 died mmddyy10.;
+ proc print;
+ run;
+ 
+ proc print;
+ format died born mmddyy10.;
+ run;
+ 
+ data mylib.giants;
+   set mylib.giants;
+    age  = (died - born)/365.2425;
+    longAgo = (today() - died)/365.2425;
+ run;
+ 
+ proc print;
+ format died born mmddyy10. age longAgo 5.2;
+ run;
+ 
+ 
+
 \# adding durations to date-time variables
+SAS:
+data mylib.giants;
+  set mylib.giants;
+   died  = born +age;
+   run;
+   
 
 \# accessing date-time elements
 
+data mylib.giants;
+  set mylib.giants;
+ myYear = YEAR(born);
+ myMonth =MONTH(born);
+ myDay = DAY(born);
+ 
+
 \# creating date-time variables from elements
+SAS: 
+data mylib.giants;
+  set mylib.giants;
+  born = MDY(myMonth, myDay, myYear);
+run;
+
 
 \# logical comparisons with date-time variables
+
+SAS:
+data born1900s;
+  set mylib.giants;
+   if born > "01jan1900"d;
+ run;
+ 
 
 \# formatting date-time output
 
