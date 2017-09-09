@@ -79,6 +79,9 @@ mylong <- melt(mydata,
 19. sorting data frames
 
 SAS :
+
+
+```
 proc sort data = mylib.mydata;
   by workshop;
 run;
@@ -86,6 +89,45 @@ run;
 proc sort data = mylib.mydata;
   by descending gender workshop;
   run;
+```
+
+PYTHON:
+
+obj = series(range(4), index = ['d', 'a', 'b', 'c'])
+obj.sort_index ()
+
+with a dataframe, you can sort by index on either axis:
+
+frame = dataframe(np.arrange(8). reshape((2, 4)), index = ['three', 'one'], columns = ['d', 'a', 'b', 'c'])
+
+frame.sort_index()
+
+frame.sort_index(axis = 1)
+
+frame.sort_index(axis = 1, ascending = False)
+
+\\# To sort a series by its values, use its order method:
+in : obj = series(4,7,-3, 2])
+obj.order()
+
+\\# any missing values are sorted to the end of the series by default
+
+in: obj = series([4, np.nan, 7, np.nan, -3, 2])
+obj.order()
+
+\\# on dataframe, you may want to sort by the values in one or more columns. to do so, pass one or more column names to the by options:
+
+in : frame = dataframe({'b': [4,7,-3, 2], 'a': [0, 1, 0, 1]})
+
+frame.sort_index(by  ='b')
+frame.sort_index (by = 'a', 'b'])
+
+
+  
+  
+  
+  
+  
   
   R:
   
