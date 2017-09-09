@@ -11,6 +11,74 @@ RUN;
  
 ```
 PYTHON:
+read_csv: load delimited data from a file, URL, or file-like object.use comma as default delimiter;
+read_table: load delimited data from a file, URL, or file-like object. use tab('\t') as default delimiter;
+read_fwf: read data in fixed-width column format(that is, no delimiters);
+read_clipboard: version of read_table that reads data from the clipboard. useful for converting tables from web pages.
+
+
+
+```
+df= pd.read_csv('ch06/ex1.csv')
+```
+
+
+
+or 
+
+
+
+```
+df = pd.table('ch06/ex1.csv', sep =",")
+```
+
+
+
+\\# assign column names
+
+
+```
+pd.read_csv('ch06/ex2.csv', names  = ['a','b', 'c', 'message']) 
+```
+
+
+\\# or assign the index 
+
+
+```
+names = ['a', 'b', 'c', 'd', 'message']
+pd.read_csv('ch06/ex2.csv', names = names, index_col = 'message')  # or can assign two index_col 
+```
+
+
+\\# skip specified rows:
+
+
+```
+pd.read_csv('ch06/ex4.csv', skiprows = [0, 2,3])
+```
+
+
+\\# handling missing values;
+
+
+```
+result = pd.read_csv('ch06/ex5.csv', na_values = ['NULL'])
+```
+
+
+
+different NA sentinesl can be specified for each column in a dict:
+
+
+```
+sentinels = {'message': ['foo', 'NA'], 'something': ['two']}
+pd.read_csv('ch06/exe5.csv', na_values = sentinels)
+```
+
+\\# only read out a small number of rows
+pd.read_csv('ch06/ex6.csv', nrows = 5)
+
 
 R: 
 
