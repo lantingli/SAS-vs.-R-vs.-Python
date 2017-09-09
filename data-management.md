@@ -349,6 +349,7 @@ postgroup <- cut2(postest, m =25)
 
 
 6. Missing values
+
 \# when importing numeric data, R reads blanks as missing(except when blanks are delimiters). R reads the string NA as missing for both numeric and character variables. when importing a text file, both SAS and SPSS would recognize a period as a missing value for numeric variables. R will instead read the whole variable as a character vector!
 \# SAS 
 
@@ -429,6 +430,14 @@ mydataNA <- read.table("mydataNA.txt")
        mydataNA[3:4] <- lapply(mydataNA[3:4, my9isNA)
        mydataNA[5:6] <- lapply(mydataNA[5:6], my99isNA)
 ```
+
+PYTHON
+
+pandas uses floating value NaN to represent missing data in both floating as well as in non-floating point arrays.
+
+In: string_data = series(['aardvark', 'articoke', np.nan, 'avocado'])
+
+string_data.isnull()
 
 
 
