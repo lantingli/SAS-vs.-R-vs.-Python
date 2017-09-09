@@ -61,6 +61,9 @@ run;
 By default, SAS keep all records regardless of whether or not they match. for observations that do not have matches in the other file, the merge function will fill them in with missing values. R take the opposite approach, keeping only those that have a record in both. to get merge to keep all records, use the argument all = TRUE. you can also use all.x = TURE to keep all record in the first file regardless of whether or not they have matches in the record. the all.y = TRUE argument does the reverse.
 
 \# R
+
+
+```
 mydata <- read.table("mydata.csv", header = TURE, sep = ",", na.strings = " ")
 myleft <- mydata[c("id", "workshop", "gender", "q1", "q2")]
 myright <- mydata[c("id", "workshop", "q3", "q4")]
@@ -71,24 +74,48 @@ both <- merge(myleft, myright, by.x= "id", by.y = "id")
 both <- merge(myleft, myright, by = c("id", "workshop"))
 
 both <- merge(myleft, myright, by.x= c("id", "workshop"), by.y = c("id", "workshop"))
+```
+
+
 
 \# PYTHON
 
+
+
+```
 df1 = dataframe({'key': ['b', 'b', 'a', 'c', 'a', 'a', 'b'], 'data1' : range(7)})
 df2 = dataframe({'key': ['a', 'b', 'd'], 'data2': range(3)})
 
 pd.merge(df1, df2, on = 'key')
+```
+
+
 
 \# if the column names are different in each object, you can specify them seperately:
+
+
+```
 df3 = dataframe({'lkey': ['b', 'b', 'a', 'c', 'a', 'a', 'b'], 'data1': range(7)})
 df4 = dataframe(({[rkey': ['a', 'b', 'd'], 'data2': range(3)})
 
 pd.merge(df3, df4, left_on = 'lkey', right_on = 'rkey')
+```
+
+
 
 \# in the situation above, the 'c' and 'd' values and associated data are missing from the result. by default merge does an 'inner' join; the keys in the result are the intersection. other possible options are 'left', 'right', and 'outer'. the outer join takes the union of the keys, combining the effect of applying both left and right joins.
+
+
+```
 pd.merge(df1, df2, how = 'outer')
+```
+
+
 
 \# many to many merges have well-defined though not necessarily intuitive behavior 
+
+
+```
 df1 = dataframe('key': ['b', 'b', 'a', 'c', 'a', 'b'], 'data1': range(6))})
 df2 = dataframe('key': ['a', 'b', 'a', 'b', 'd'], 'data2' : range(5)})
 
@@ -97,6 +124,9 @@ pd.merge(df1, df2, on = 'key', how = 'left')
 or pd.merge(left, right, on = ['key1', 'key2', how = outer')
 
 or pd.merge(left, right, on = 'key1', suffixes = ('_left', '_right')) # used for overlapping column names
+```
+
+
 
 \# Merging on index 
 what is difference between merging on variables and merging on index?
@@ -168,9 +198,40 @@ table(workshop)
 
 
     \# the plyr and reshape2 packages
+    
+    
   \#PYTHON
+  
+   another kind of data combination operation is alternatively referred to as concatenation, binding, or stacking. Numpy has a concatenate function for doing this with raw Numpy arrays:
+   
+
+
+```
+     arr = np.arrange(12). reshape((3,4))
+     np.concatenate([arr, arr], axis =1)
+```
+
+
+ the concat function in pandas provides a consistent way to address each of these concerns.
+ 
+
+
+```
+ s1 = series([0,1], index = [;a', 'b')
+ s2 = series([2,3,4], index = ['c', 'd', 'e'])
+ s3 = series([5,6], index = 'f', 'g'])
+ pd.concat([s1, s2, s3]) \# by default concat works along axis = 0, producing another series. if you pass axis = 1, the result will instead be a dataframe(axis = 1 is the columns)
+```
+
+
+
+       
+           
   \#SAS
-    \#get means of q1 for each gender
+  
+
+```
+  \#get means of q1 for each gender
     proc summary data = lib.mydata mean nway;
       class gemder;
       var q1;
@@ -183,8 +244,14 @@ table(workshop)
     keep gender q1;
     rename q1 = meanQ1;
   run;
+```
+
+
   \# merge aggregated data back into mydata;
-    proc sort data = mylib.mydata;
+  
+
+```
+  proc sort data = mylib.mydata;
        by workshop gender;
      run;
      
@@ -196,6 +263,9 @@ table(workshop)
        merge mylib.mydata mylib.myagg;
        by workshop gender;
      run;
+```
+
+
   
 14. By or Split-file processing
 
@@ -298,7 +368,80 @@ libname mylib 'C:\myRfolder';
     by workshop gender;
   run;
 ```
+PYTHON:
 
+
+
+```
+data = dataframe({'k1': ['one'] *3 +['two'] *4, 
+                  'k2': [1,1,2,3,3,4,4]})
+```
+
+
+
+the dataframe method duplicated returns a boolean series indicating whether each row is a duplicate or not:
+
+
+```
+data.duplicated() \#return true or false
+```
+
+
+
+relatively, drop_duplicates returns a dataframe where the duplicated array is true:
+
+
+```
+data.drop_duplicates()
+```
+
+
+
+both of these methods by default consider all of the columns; alternatively you can specify any subset of the them to detect duplicates. suppose we had a addtional column of values and wanted to filter duplicates only based on the 'k1' column :
+
+
+```
+data['v1'] = range(7)
+data.drop_duplicates(['k1'])
+```
+
+
+
+duplicated and drop_duplicated by default keep the first observed value combination. passing take_last = true will return the last one:
+
+
+```
+data.drop_duplicates(['k1', 'k2'], take_last = true)
+```
+
+R:
+
+load("mydata.RData")
+
+\\# create some duplicates
+   myDuplicates <- rbind (mydata, mydata[1:2, ])
+   
+   \# get rid of duplicates without seeing them
+   
+   myNoDuplicates <- unique(myDuplicates)
+   
+   \# before getting rid of them, need to check the location of duplicates
+   
+   myDuplicates <- duplicated(myDuplicates)
+   
+   \# print a report of just the duplicate records
+   
+   attach(myDuplicates)
+   myDuplicates[DupRecs, ]
+   
+   \# Remove duplicates and duplicated variable
+   myNoDuplicates <- myDuplicates[!DupRecs, -7]
+   
+   or according to more than one variable
+   
+   mykeys <- c("workshop", "gender")
+   mydata$DupKeys <- duplicated(mydata[ , myKeys])
+   
 
   
 16. Selecting first or last observations per group
