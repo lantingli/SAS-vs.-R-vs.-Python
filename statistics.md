@@ -376,6 +376,44 @@ with(mydata100,
       \\# 判断两总体方差是否相等的方法常用的有F 检验，Bartlett 检验，Levene 检验，F检验，Bartlett 检验要求资料服从正态分布；Levene 检验不依赖总体分布具体形式，更为稳健。F 检验只用于两样本方差齐性检验，Bartlett 和 Levene检验即可用于两样本方差齐性检验，，也可用于多样本方差齐性检验。
 ```
 
+PYTHON
+
+\\# 1/ descriptive statistics
+
+df = dataframe([[1.4, np.nan], [7.1, -4.5], [np.nan, np.nan], [0.75, -1.3]], index = ['a', 'b', 'c', 'd'], columns = ['one', 'two'])
+
+calling dataframe's sum method returns a series containing column sums:
+in : df.sum()
+
+out : 
+one  9.25
+two -5.8
+
+df.sum(axis = 1)
+
+out: 
+
+a 1.4
+b 2.6
+c NaN
+d -0.55
+
+NA values are excluded unless the entire slice(row or column in this case) is NA. this can be disabled using the skipna option:
+df.mean(axis =1, skipna = False)
+
+out :
+
+a NaN
+b 1.300
+c NaN
+d -0.275
+
+describe is producing multiple summary statistics in one shot:
+df.describe
+
+on non-numeric data, describe produces alternate summary statistics
+
+
 
       
       
