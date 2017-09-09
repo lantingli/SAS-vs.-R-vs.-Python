@@ -179,6 +179,58 @@ data mylib.giants;
            run;
 ```
 
+PYTHON：
+\#1. split a commma-separated string into a broken pieces
+
+val = 'a,b, guido'
+val.split(,)
+
+out : ['a', 'b', 'guido']
+
+split is often combined with strip to trim whitespace(including newlines)
+
+pieces = [x.strip() for x in val.split(',')
+
+ out : ['a', 'b', 'guido']
+ 
+ \\# 2. join together
+ in : first + '::' + second '::' + third
+ out : 'a::b::guido'
+ 
+ \\# 3. detect a substring, through index and find
+ in : 'guido' in val
+ val.index(,) 
+ out : 1
+ val.find(':')
+ out : -1
+ 
+ note the difference between find and index is that index raises an exception if the string isn't found(versus returning -1)
+ 
+ \\# 4. relatively, count returns the number of occurrences of a particular substring
+ in: val.count(',')
+ out : 2
+ 
+ \\#5. replace will substitute occurrences of one pattern for another. this is commonly used to delete patterns, too, by passing an empty string:
+ in: val.replace(',', '::')
+ out: 'a::b:: guido'
+ 
+ in: val.place(',', '')
+ out: 'ab guido'
+ 
+ \\# 6. python built-in string methods
+ count: return the number of non-overlapping occurrences of substring in the string
+ endwith, startwith: returns true if sting ends with suffix
+ join: use string as delimiter for concatenating a sequence of other strings
+ index: return position of first character in substring if found in the string. raises valueError if not found.
+ find: return position of first character of first occurrence of substring in the string. like index, but return -1 if not found
+ rfind: return position of first character of last occurrence of substring in the string, returens -1 if not found
+ replace: replace occurrences of string with another string
+ strip,rstrip, lstrip: trim whitespace, including newlines;
+ 
+ split: break string into list of substrings using passed delimiter
+ lower, upper
+ ljust, rjust: left justify or right justify, respectively. pad opposite side of string with spaces to return a string a minimum width. 
+ 
 R:
 
 
