@@ -1,6 +1,6 @@
-# 1. Comma delimited files
+## 1. Comma delimited files
 
-## **SAS:**
+### **SAS:**
 
 ```
 proc import out = mylib.mydata 
@@ -11,7 +11,7 @@ DATAROW = 2;
 RUN;
 ```
 
-## **PYTHON:**
+### **PYTHON:**
 
 read\_csv: load delimited data from a file, URL, or file-like object.use comma as default delimiter;  
 read\_table: load delimited data from a file, URL, or file-like object. use tab\('\t'\) as default delimiter;  
@@ -66,19 +66,19 @@ pd.read_csv('ch06/exe5.csv', na_values = sentinels)
 pd.read_csv('ch06/ex6.csv', nrows = 5)
 ```
 
-## ** R: **
+### ** R: **
 
-### ** a. With id variable not named**
+#### ** a. With id variable not named**
 
 `mydata <- read.csv("mydata.csv")`
 
-### ** b. With id named in the header**
+#### ** b. With id named in the header**
 
 `mydata <- read.csv("mydataID.csv", row.names = "id")`
 
-# 2. Tab delimited files:
+## 2. Tab delimited files:
 
-## **SAS:**
+### **SAS:**
 
 ```
  PROC IMPORT OUT = mylib.mydata  
@@ -89,11 +89,11 @@ pd.read_csv('ch06/ex6.csv', nrows = 5)
  RUN;
 ```
 
-## **PYTHON:\(NEED TO CONFRIM\)**
+### **PYTHON:\(NEED TO CONFRIM\)**
 
-## **R:**
+### **R:**
 
-### **a. Read a tab delimited file with named ID columns**
+#### **a. Read a tab delimited file with named ID columns**
 
 ```
 mydata <- read.delim("mydata.tab")
@@ -103,15 +103,15 @@ mydata <- read.delim("mydata.tab")
 count.fields("mydata.tab", sep = "\t")
 ```
 
-### **b. With ID named in the header**
+#### **b. With ID named in the header**
 
 ```
 mydata <- read.delim("mydataID.tab",row.names = "id")
 ```
 
-# 3. Reading from a web site: FILENAME myURL
+## 3. Reading from a web site: FILENAME myURL
 
-## **SAS:**
+### **SAS:**
 
 ```
 FILENAME myURL URL 
@@ -125,44 +125,44 @@ DATAROW =2;
 RUN;
 ```
 
-## **PYTHON:\(NEED TO CONFIRM !!!\)**
+### **PYTHON:\(NEED TO CONFIRM !!!\)**
 
-## **R:**
+### **R:**
 
 ```
 myURL <- "http:/sites.google.com/site/r4statistics/mydata.csv"
 mydata<- read.csv(myURL)
 ```
 
-# 4. Reading text from the clipboard
+## 4. Reading text from the clipboard
 
-### ** a. Copy a column of numbers or words, then :**
+#### ** a. Copy a column of numbers or words, then :**
 
 ```
  myvector <- readClipboard()
 ```
 
-### ** b. Open mydata.csv, select & copy contents, then :**
+#### ** b. Open mydata.csv, select & copy contents, then :**
 
 ```
  mydata <- read.delim ("clipboard", header = TURE)
 ```
 
-### ** c. Missing values for character varables**
+#### ** c. Missing values for character varables**
 
 ```
  mydata <- read.csv("mydataID.csv", row.names = "id", strip.white = TRUE, na.strings = "")
 ```
 
-###  **d. Skipping variables in delimited text files**
+#### **d. Skipping variables in delimited text files**
 
 `myCols <- read.delim("mydata.tab", strip.white = TRUE, na.strings = "", colClasses = c("integer", "integer", "character", "NULL", "NULL", "integer", "integer"))`
 
-# 5. Reading text data within a program
+## 5. Reading text data within a program
 
-## **R:**
+### **R:**
 
-### **a. The stdin approach**
+#### **a. The stdin approach**
 
 ```
 mydata <- read.csv(stdin())
@@ -170,9 +170,9 @@ mydata <- read.csv(stdin())
  1,1,f,1,1,5,1
 ```
 
-### **b. Blank line above ends input**
+#### **b. Blank line above ends input**
 
-### **c. The testConnection approach **
+#### **c. The testConnection approach **
 
 ```
 mystring <- "workshop, gender, q1, q2, q3, q4 
@@ -180,9 +180,9 @@ mystring <- "workshop, gender, q1, q2, q3, q4
 mydata <- read.csv(textConnection(mystring))
 ```
 
-## **PYTHON:\(NEED TO CONFIRM!!!\)**
+### **PYTHON:\(NEED TO CONFIRM!!!\)**
 
-## **SAS:**
+### **SAS:**
 
 ```
 LIBNAME myLib 'C:\myRfolder'; 
@@ -195,11 +195,11 @@ PROC PRINT;
 RUN;
 ```
 
-# 6. Reading multiple observations per line
+## 6. Reading multiple observations per line
 
-## **R:**
+### **R:**
 
-### **a. The stdin approach**
+#### **a. The stdin approach**
 
 ```
 mylist <- scan(stdin(), 
@@ -208,13 +208,13 @@ what = list(id = 0, workshop = 0, gender = " ",
  1 1 f 1 1 5 1
 ```
 
-### **b. Blank line above ends input**
+#### **b. Blank line above ends input**
 
 ```
 mydata <- data.frame(mylist)
 ```
 
-### **c. The textConnection approach **
+#### **c. The textConnection approach **
 
 ```
 mystring <- "1 1 f 1 1 5 1"; 
@@ -228,9 +228,9 @@ q1 =0, q2 = 0, q3 = 0, q4 =0 ))
 mydata <- data.frame(mylist)
 ```
 
-## **PYTHON:\(NEED TO CONFIRM\)**
+### **PYTHON:\(NEED TO CONFIRM\)**
 
-## **SAS:**
+### **SAS:**
 
 ```
 DATA mydata; 
@@ -240,11 +240,11 @@ PROC PRINT;
 RUN;
 ```
 
-# 7. Reading fixed-width text files : one record per case
+## 7. Reading fixed-width text files : one record per case
 
-## **R:**
+### **R:**
 
-### **a. **
+#### **a. **
 
 ```
 mydata <- read.fwf( 
@@ -256,7 +256,7 @@ file = "mydataFWF.txt",
  strip.white = TRUE)
 ```
 
-### **b. Using "macro substitution".**
+#### **b. Using "macro substitution".**
 
 ```
 myfile <- "mydataFWF.txt" 
@@ -266,9 +266,9 @@ myvariablenames <- c("id", "gender", "q1", "q2", "q3", "q4")
  row.names = "id", na.strings = " ", fill = TRUE, strip.white = TRUE)
 ```
 
-## **PYTHON: \(NEED TO CONFIRM\)**
+### **PYTHON: \(NEED TO CONFIRM\)**
 
-## **SAS:**
+### **SAS:**
 
 ```
 LIBNAME mylib 'C:\myRolder'; 
@@ -279,9 +279,9 @@ INPUT ID 1-2 WORKSHOP 3 GENDER $ 4 q1 5 q2 6 q3 7 q4 8;
 RUN;
 ```
 
-# 8. Reading fixed - width text files, two or more records per case
+## 8. Reading fixed - width text files, two or more records per case
 
-## **R:**
+### **R:**
 
 ```
 myfile <- "mydataFWF.txt" 
@@ -292,9 +292,9 @@ myVariableWidths <- list(myRecord1Widths, myRecord2Widths)
 mydata <- read.fwf( file = myfile, width = myVariableWidths, col.names = myVariableWidths, row.names = "id", na.strings = " ", fill = TRUE, strip.white = TRUE)
 ```
 
-## **PYTHON:\(NEED TO CONFIRM\)**
+### **PYTHON:\(NEED TO CONFIRM\)**
 
-## **SAS:**
+### **SAS:**
 
 ```
 DATA temp; 
@@ -304,9 +304,9 @@ PROC PRINT;
 RUN;
 ```
 
-# 9. Reading excel files
+## 9. Reading excel files
 
-## **R: **
+### **R: **
 
 ```
 library("xlsReadWrite") 
@@ -319,9 +319,9 @@ can get a binary file that is not distributed through CRAN
 mydata <- read.xls("mydata.xls")
 ```
 
-## **PYTHON:\(NEED TO CONFIRM\)**
+### **PYTHON:\(NEED TO CONFIRM\)**
 
-## **SAS:**
+### **SAS:**
 
 ```
 LIBNAME mylib "c:\myRfolder"; 
@@ -335,7 +335,7 @@ SCANTIME = YES;
 run;
 ```
 
-# 10. Reading from relational databases
+## 10. Reading from relational databases
 
 ```
 library("RODBC") 
@@ -344,7 +344,7 @@ mydata <- sqlFetch(myConnection, "Sheet1")
 close(myConnection)
 ```
 
-# 11. Reading data from SAS
+## 11. Reading data from SAS
 
 ```
 library("foreign")   
@@ -354,7 +354,7 @@ library("Hmisc")
 mydata <- sasxport.get("mydata.xpt")
 ```
 
-# 12. Write data from SAS and read it into R
+## 12. Write data from SAS and read it into R
 
 ```
 LIBNAME mylib 'C:\myRfolder'; 
@@ -375,9 +375,9 @@ library("Hmisc")
 mydata <- sasxport.get("mydata.xpt")
 ```
 
-# 13. Writing delimited text files
+## 13. Writing delimited text files
 
-## **SAS: **
+### **SAS: **
 
 ```
 PROC PRINT DATA = mylib.mydata; 
@@ -394,7 +394,7 @@ PUTNAMES = YES;
 RUN;
 ```
 
-## **PYTHON:**
+### **PYTHON:**
 
 ```
 data.to_csv('ch06/out.csv')
@@ -402,7 +402,7 @@ or
 data.to_csv(sys.stdout,sep = '|')
 ```
 
- demote the missing value by some other sentinel value;
+demote the missing value by some other sentinel value;
 
 ```
 data.to_csv(sys.stdout, na_rep = 'NULL')
@@ -418,7 +418,7 @@ or
 dat.to_csv(sys.dout,index = False, cols = ['a', 'b', 'c'])
 ```
 
-## **R:**
+### **R:**
 
 ```
 1. write.csv(mydata, "mydataFromR.csv") 
@@ -428,15 +428,15 @@ quote = FALSE, sep = "\t", na = " ",
 row.names = TRUE, col.names = TRUE)
 ```
 
-# 14. Viewing a text fileViewing a text file
+## 14. Viewing a text fileViewing a text file
 
 ```
 file.show("mydataFromR.csv")
 ```
 
-# 15. Writing Excel files
+## 15. Writing Excel files
 
-## **R:**
+### **R:**
 
 ```
 library("xlsReadWrite")
@@ -445,7 +445,7 @@ load("mydata.RData")
 write.xls (mydata, "mydataFromR.xls")
 ```
 
-## **SAS: **
+### **SAS: **
 
 ```
 LIBNAME mylib "c:\myFolder"; 
@@ -456,9 +456,9 @@ SHEET = "mydata";
 RUN;
 ```
 
-## **PYTHON: NEED TO CONFIRM**
+### **PYTHON: NEED TO CONFIRM**
 
-# 16. Writing to relational databases
+## 16. Writing to relational databases
 
 ```
 library("RODBC") 
@@ -467,14 +467,14 @@ sqlSave(myConnection, mydata)
 close(myConnection)
 ```
 
-# 17. Writing data to SAS
+## 17. Writing data to SAS
 
 ```
 library("foreign") 
 write.foreign (mydata, datafile = "mydataFromR.csv", codefile = "mydata.sas", package = "SAS")
 ```
 
-# 18. library
+## 18. library
 
 
 
