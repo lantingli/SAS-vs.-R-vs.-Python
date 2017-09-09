@@ -634,6 +634,84 @@ myleft$q3 <-mydata$q4 <- NULL
 
 
 \# PYTHON
+
+\\#1. reindexing:
+
+
+```
+
+in: obj = series [(4.5, 7.2, -5.3, 3.6], index = ['d', 'b', 'a', 'c'])
+```
+
+
+
+calling reindex on this series rearranges the data according to the new index, introducing missing if any index values were not already present:
+
+
+
+```
+in: obj2 = obj.reindex(['a', 'b', 'c', 'd', 'e'])
+
+out :
+
+a -5.3
+b 7.2
+c 3.6
+d 4.5
+e NaN
+
+or obj.reindex(['a', 'b', 'c', 'd', 'e'], fill_value = 0)
+
+or 
+in: obj3 = series(['blue', 'purple', 'yellow'], index = [0,2,4])
+obj3.reindex (range(6), method = 'ffill')
+```
+
+
+
+reindex method (interpolation) options
+
+ffill or pad: fill (or carry) values forward
+bfill or backfill: fill(or carry) values backford
+
+With dataframe, reindex can alter either the (row) index, columns, or both. when passed just a sequence, the rows are reindexed in the result:
+
+\\# dropping entries from an axis
+
+dropping one or more entries from an axis is easy if you have an index array or list without those entries. as that can require a bit of munging and set logic, the drop method will return a new object with the indicated value or values deleted from an axis:
+
+
+
+```
+in: obj= series(np.arrange(5.), index = ['a', 'b', 'c', 'd', 'e'])
+new_obj = obj.drop ('c')
+```
+
+
+
+with dataframe, index values can be deleted from either axis:
+
+
+
+```
+in : data = dataframe(np.arrange(16).reshape((4,4)),
+ index = ['ohio', 'colorado', 'utah', 'new york'], columns = ['one' , 'two', 'three', 'four'])
+ 
+ data.drop (['Colorado', 'ohio']
+ data.drop('two', axis = 1)
+ data.drop('two', 'four'], axis = 1)
+
+```
+
+
+
+
+
+
+
+
+
+
 \# SAS
 
 
