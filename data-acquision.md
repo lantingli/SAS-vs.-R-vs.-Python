@@ -1,6 +1,7 @@
-### \\# 1. comma delimited files
+### \\# 1. Comma delimited files
 
-SAS:
+**SAS:**
+
 ```
 proc import out = mylib.mydata 
 datafile = "c"\myRfolder\mydataID.csv" 
@@ -10,65 +11,48 @@ DATAROW = 2;
 RUN;
  
 ```
-PYTHON:
+**PYTHON:**
+
 read_csv: load delimited data from a file, URL, or file-like object.use comma as default delimiter;
 read_table: load delimited data from a file, URL, or file-like object. use tab('\t') as default delimiter;
 read_fwf: read data in fixed-width column format(that is, no delimiters);
 read_clipboard: version of read_table that reads data from the clipboard. useful for converting tables from web pages.
 
-
-
 ```
 df= pd.read_csv('ch06/ex1.csv')
 ```
-
-
-
 or 
-
-
 
 ```
 df = pd.table('ch06/ex1.csv', sep =",")
 ```
 
-
-
-\\# assign column names
-
+**\\# a. Assign column names**
 
 ```
 pd.read_csv('ch06/ex2.csv', names  = ['a','b', 'c', 'message']) 
 ```
 
-
-\\# or assign the index 
-
+**\\# b. Assign the index **
 
 ```
 names = ['a', 'b', 'c', 'd', 'message']
 pd.read_csv('ch06/ex2.csv', names = names, index_col = 'message')  # or can assign two index_col 
 ```
 
-
-\\# skip specified rows:
-
+**\\# c. Skip specified rows:**
 
 ```
 pd.read_csv('ch06/ex4.csv', skiprows = [0, 2,3])
 ```
 
-
-\\# handling missing values;
-
+**\\# d. Handling missing values;**
 
 ```
 result = pd.read_csv('ch06/ex5.csv', na_values = ['NULL'])
 ```
 
-
-
-different NA sentinesl can be specified for each column in a dict:
+Different NA sentinesl can be specified for each column in a dict:
 
 
 ```
@@ -76,28 +60,28 @@ sentinels = {'message': ['foo', 'NA'], 'something': ['two']}
 pd.read_csv('ch06/exe5.csv', na_values = sentinels)
 ```
 
-\\# only read out a small number of rows
+**\\# e. Only read out a small number of rows**
 
 
 ```
 pd.read_csv('ch06/ex6.csv', nrows = 5)
 ```
 
+** R: **
 
-
-
-R: 
-
-\# with id variable not named
+**\# a. With id variable not named**
 
   `mydata <- read.csv("mydata.csv")`
   
-\# with id named in the header
+**\# b. With id named in the header**
 
   `mydata <- read.csv("mydataID.csv", row.names = "id")`
   
+  
+  
 ### \\# 2. Tab delimited files:
-SAS:
+
+**SAS:**
 ```
  PROC IMPORT OUT = mylib.mydata  
  DATAFILE = "C:\myRworkshop\mydataID.tab" 
@@ -106,11 +90,11 @@ SAS:
  DATAROW =2; 
  RUN; 
 ```
-PYTHON:
+**PYTHON:(NEED TO CONFRIM)**
 
-R:
+** R:**
 
-\# read a tab delimited file with named ID columns
+**\# a. Read a tab delimited file with named ID columns**
 
 ```
 mydata <- read.delim("mydata.tab")
@@ -120,7 +104,7 @@ mydata <- read.delim("mydata.tab")
 count.fields("mydata.tab", sep = "\t")
 ```
 
-\# again with ID named in the header
+**\# b. With ID named in the header**
 
 ```
 mydata <- read.delim("mydataID.tab",row.names = "id")
@@ -129,12 +113,12 @@ mydata <- read.delim("mydataID.tab",row.names = "id")
 
 ### \\# 3. Reading from a web site: FILENAME myURL 
 
-SAS:
+ **SAS:**
+
 ```
 FILENAME myURL URL 
 
 "http://sites.google.com/site/r4statistics/mydataID.csv"; 
-
 PROC IMPORT DATAFILE = myURL 
 DBMS = CSV REPLACE 
 OUT = mylib.mydata; 
@@ -142,11 +126,9 @@ GETNAMES = YES;
 DATAROW =2; 
 RUN;
 ```
-PYTHON:
+**PYTHON:(NEED TO CONFIRM !!!)**
 
-R:
-
-
+**R:**
 
 ```
 myURL <- "http:/sites.google.com/site/r4statistics/mydata.csv"
@@ -155,48 +137,34 @@ mydata<- read.csv(myURL)
 
 
 
-### \\#4. reading text from the clipboard
+### \\#4. Reading text from the clipboard
 
-   \# copy a column of numbers or words, then :
-     
-    
-
+   **\# a. Copy a column of numbers or words, then :**
+        
 ```
  myvector <- readClipboard()
-```
-
-     
-   \# Open mydata.csv, select & copy contents, then :
+```    
+   **\# b. Open mydata.csv, select & copy contents, then :**
    
-     
-
-
 ```
  mydata <- read.delim ("clipboard", header = TURE)
 ```
-
-
+    
+  ** \# c. Missing values for character varables**
      
-     
-   \# Missing values for character varables
-     
-
-
 ```
  mydata <- read.csv("mydataID.csv", row.names = "id", strip.white = TRUE, na.strings = "")
 ```
-
-
      
-   \# skipping variables in delimited text files
+   **\# d. Skipping variables in delimited text files**
      
   `myCols <- read.delim("mydata.tab", strip.white = TRUE, na.strings = "", colClasses = c("integer", "integer", "character", "NULL", "NULL", "integer", "integer"))`
 
-### \\#5. reading text data within a program
+### \\#5. Reading text data within a program
 
-R:
+**R:**
 
-1. the stdin approach
+**\# a. The stdin approach**
 
 ```
 mydata <- read.csv(stdin())
@@ -204,9 +172,11 @@ mydata <- read.csv(stdin())
  1,1,f,1,1,5,1 
 ```
 
-2. blank line above ends input 
+  **\# b. Blank line above ends input** 
+  
+  
 
-3. the testConnection approach 
+   **\# c. The testConnection approach **
 
 ```
 mystring <- "workshop, gender, q1, q2, q3, q4 
@@ -214,9 +184,10 @@ mystring <- "workshop, gender, q1, q2, q3, q4
 mydata <- read.csv(textConnection(mystring))
 ```
 
-PYTHON:
+**PYTHON:(NEED TO CONFIRM!!!)**
 
-SAS
+**SAS:**
+
 ```
 LIBNAME myLib 'C:\myRfolder'; 
 DATA mylib.mydata; 
@@ -229,21 +200,24 @@ RUN;
 ```
 
 ### \\# 6. Reading multiple observations per line
-R:
+
+**R:**
+
+**\# a. The stdin approach**
 
 ```
-1. mylist <- scan(stdin(), 
+mylist <- scan(stdin(), 
 what = list(id = 0, workshop = 0, gender = " ",
  q1 =0, q2 = 0, q3, = 0, q4 = 0)) 
  1 1 f 1 1 5 1 
 ```
 
-2. Blank line above ends input 
+**\# b. Blank line above ends input** 
 
 ```
 mydata <- data.frame(mylist) 
 ```
-3. the textConnection approach 
+**\# c. The textConnection approach **
 
 ```
 mystring <- "1 1 f 1 1 5 1"; 
@@ -256,9 +230,9 @@ q1 =0, q2 = 0, q3 = 0, q4 =0 ))
 
 mydata <- data.frame(mylist)
 ```
-PYTHON:
+**PYTHON:(NEED TO CONFIRM)**
 
-SAS:
+**SAS:**
 
 ```
 DATA mydata; 
@@ -269,10 +243,12 @@ RUN;
 ```
 ### \\# 7. Reading fixed-width text files : one record per case
 
-R:
+ **R:**
+
+**\# a. **
 
 ```
-1. mydata <- read.fwf( 
+mydata <- read.fwf( 
 file = "mydataFWF.txt",
  width = c(2, -1, 1, 1, 1,1,1 ), 
  col.names = c("id", "gender", "q1", "q2", "q3", "q4"), row.names = "id", 
@@ -280,7 +256,7 @@ file = "mydataFWF.txt",
  fill = TRUE, 
  strip.white = TRUE) 
 ```
-2. using "macro substitution".
+**\# b. Using "macro substitution".**
 
 
 ```
@@ -291,20 +267,22 @@ myvariablenames <- c("id", "gender", "q1", "q2", "q3", "q4")
  row.names = "id", na.strings = " ", fill = TRUE, strip.white = TRUE)
 ```
 
-PYTHON:
+**PYTHON: (NEED TO CONFIRM)**
 
-SAS
+**SAS:**
+
 ```
 LIBNAME mylib 'C:\myRolder'; 
 DATA myLib.mydata; 
-INFILE '\myRfolder\mydataFWF.txt' MISSOVER; 
+INFILE '\myRfolder\mydataFWF.txt' 
+MISSOVER; 
 INPUT ID 1-2 WORKSHOP 3 GENDER $ 4 q1 5 q2 6 q3 7 q4 8; 
 RUN;
 ```
 
 ### \\# 8. Reading fixed - width text files, two or more records per case
 
-R:
+**R:**
 
 ```
 myfile <- "mydataFWF.txt" 
@@ -315,9 +293,10 @@ myVariableWidths <- list(myRecord1Widths, myRecord2Widths)
 mydata <- read.fwf( file = myfile, width = myVariableWidths, col.names = myVariableWidths, row.names = "id", na.strings = " ", fill = TRUE, strip.white = TRUE)
 ```
 
-PYTHON:
+**PYTHON:(NEED TO CONFIRM)**
 
-SAS:
+**SAS:**
+
 ```
 DATA temp; 
 INFILE '\myRfolder\mydataFWF.txt' MISSOVER; 
@@ -325,22 +304,22 @@ INPUT \#1 id 1-2 workshop 3 gender 4 q1 5 q2 6 q3 7 q4 8 \#2 q5 5 q6 6 q7 7 q8 8
 PROC PRINT; 
 RUN;
 ```
-### \\# 9. reading excel files
-R: 
+### \\# 9. Reading excel files
+
+**R: **
 
 ```
 library("xlsReadWrite") 
 xls.getshlib():
 ```
-
-\#can get a binary file that is not distributed through CRAN 
+can get a binary file that is not distributed through CRAN 
 
 ```
 mydata <- read.xls("mydata.xls")
 ```
-PYTHON:
+**PYTHON:(NEED TO CONFIRM)**
 
-SAS:
+**SAS:**
 
 ```
 LIBNAME mylib "c:\myRfolder"; 
@@ -372,9 +351,7 @@ library("Hmisc")
 mydata <- sasxport.get("mydata.xpt")                                                                                                                                                                             
 ```
 
-### \\# 12. write data from SAS and read it into R
-
-R:
+### \\# 12. Write data from SAS and read it into R
 
 ```
 LIBNAME mylib 'C:\myRfolder'; 
@@ -382,20 +359,22 @@ LIBNAME To\_R xport '\myRfolder\mydata.xpt';
 DATA To_R.mydata; 
 set mylib.mydata; 
 RUN; 
-\#\# read a SAS data set 
+
+\# read a SAS data set 
 \# read ssd or sas7bdat if you have SAS installed
+
 library("foreign") 
+
 mydata <- read.ssd("c:/myRfolder“， ”mydata", sascmd = "C:/program files /SAS/SASFoundation/9.2/sas.exe") 
+
 \# reads SAS export format without installing SAS library("foreign") 
 library("Hmisc") 
 mydata <- sasxport.get("mydata.xpt")
 ```
 
-
-
 ### \\# 13. Writing delimited text files
 
-SAS: 
+**SAS: **
 
 ```
 PROC PRINT DATA = mylib.mydata; 
@@ -412,31 +391,19 @@ PUTNAMES = YES;
 RUN;
 ```
 
-PYTHON:
-
-
+**PYTHON:**
 
 ```
 data.to_csv('ch06/out.csv')
-to 
+or
 data.to_csv(sys.stdout,sep = '|')
 ```
 
-
-
 \\# demote the missing value by some other sentinel value;
-
-
 
 ```
 data.to_csv(sys.stdout, na_rep = 'NULL')
 ```
-
-
-
-
-
-
 
 ```
 or 
@@ -448,11 +415,7 @@ or
 dat.to_csv(sys.dout,index = False, cols = ['a', 'b', 'c'])
 ```
 
-
-
-
-
-R:
+**R:**
 
 ```
 1. write.csv(mydata, "mydataFromR.csv") 
@@ -468,7 +431,8 @@ row.names = TRUE, col.names = TRUE)
 file.show("mydataFromR.csv")
 ```
 ### \\# 15. Writing Excel files
-R:
+
+**R:**
 
 ```
 library("xlsReadWrite")
@@ -476,7 +440,8 @@ xls.getshlib()
 load("mydata.RData") 
 write.xls (mydata, "mydataFromR.xls")
 ```
-SAS: 
+**SAS: **
+
 ```
 LIBNAME mylib "c:\myFolder"; 
 PROC EXPORT DATA = mylib.mydata 
@@ -485,6 +450,9 @@ DBMS = EXCELCS LABEL REPLACE;
 SHEET = "mydata"; 
 RUN;
 ```
+
+**PYTHON: NEED TO CONFIRM**
+
 ### \\# 16. Writing to relational databases
 
 ```
@@ -493,7 +461,7 @@ myConnection <- odbcConnectExcel("mydataFromR.xls", readOnly = FALSE)
 sqlSave(myConnection, mydata) 
 close(myConnection)
 ```
-### \\# 17. wirting data to SAS
+### \\# 17. Wirting data to SAS
 
 ```
 library("foreign") 
@@ -503,100 +471,6 @@ write.foreign (mydata, datafile = "mydataFromR.csv", codefile = "mydata.sas", pa
 ### \\# 18. library
 
 
-
-
-
-# PYTHON
-
-# Data loading, storage, and file formats
-
-Input and output typically falls into a few categories: reading text files and other more efficient on-disk formats, loading data from databases, and interacting with network sources like web APIs.
-
-Parsing functions in pandas
-
-Read\_csv： loading delimited data from a file, URL, or file-like object. Use comma as default delimiter
-
-Read\_table: loading delimited data from a file, URL, or file-like object. Use tab \(‘\t’\) as fault delimiter.
-
-Read\_rwf: read data in fixed-width column format \(that is, no delimiters\)
-
-Read\_clipboard: version of read\_table that reads data from the clipboard. Useful for converting tables from web pages.
-
-These function are meant to convert text data into a data frame. The options for these functions fall into a few categories:
-
-Indexing: can treat one or more columns as the returned data frame, and whether to get column names from the file, the user, or not at all.
-
-Type inference and data conversion: this includes the user-defined value conversions and custom list of missing value markers.
-
-Datetime parsing: includes combining capability, including combining date and time information spread over multiple columns into a single column in the result.
-
-Iterating: support for iterating over chunks of very large files.
-
-Uncleaning data issues: skipping rows or a footer, comments, or other minor things like numeric data with thousands separated by commas.
-
-Type inference is one of the more important features of these functions; that means you do not have to specify which columns are numeric, integer, Boolean, or string. Handling dates and other custom types requires a bit more effort though.
-
-1\) example:
-
-Df = pd.read\_csv\(‘ch06\/ex1.csv’\)
-
-Pd.read\_table\(‘ch06\/ex1.csv’, sep = ‘,’\) \/\/ specifying the delimiter
-
-Pd.read\_csv\(‘ch06\/ex2.csv’, header = None\)
-
-Pd.read\_csv\(‘ch06\/ex2.csv’, names = \[‘a’, ‘b’, ‘c’, ‘d’, ‘message’\]\)
-
-Suppose you wanted the message column to be the index of the returned dataframe. You can either indicate you want the column at index 4 or named ‘message’ using the index\_col argument:
-
-Names = \[‘a’, ‘b’, ‘c’, ‘d’. ‘message’\]
-
-Pd.read\_csv\(‘ch06\/ex2.csv’, names = names, index\_col = ‘message’\)
-
-In the event that you want to form a hierarchical index from multiple columns, just pass a list of column numbers or names:
-
-Parsed = pd.read\_csv\(‘ch06\/csv\_mindex.csv’, index\_col = \[‘key1’, ‘key2’\]\)
-
-In some cases, a table might not have a fixed delimiter, using whitespace or some other pattern to separate fields. In these cases, you can pass a regular expression as a delimiter for read\_table.
-
-Result = pd.read\_table \(‘ch06\/ex3.txt’, sep = ‘\s+’\)
-
-Pd.read\_csv \(‘ch06\/ex4.csv’, skiprows = \[0,2,3\]\) \/\/ skip the rows
-
-Result = pd.read\_csv\(‘ch06\/ex5.csv’, na\_values = \[‘NULL’\]\)
-
-1. reading text files in pieces
-
-pd.read\_csv\(‘ch06\/ex6.csv’, nrows = 5\)
-
-chunker = pd.read\_csv\(‘ch06\/ex6.csv’, chunksize = 1000\)
-
-1. writing data out to text format
-
-data.to\_csv\(‘ch06\/out.csv’\)
-
-data.to\_csv\(sys.stdout, sep = ‘\|’\)
-
-data.to\_csv\(sys.stdout, na\_rep = ‘NULL’\)
-
-data.to\_csv\(sys.stdout, index = false, header = false\)
-
-data.to\_csv\(sys.stdout, index = false, cols = \[‘a’, ‘b’, ‘c’’\]\)
-
-1. for series:
-
-dates = pd.date\_range\(‘1\/1\/2000’, periods = 7\)
-
-ts = series \(np.arrange\(7\), index = dates\)
-
-ts.to\_csv\(‘ch06\/tseries.csv’\)
-
-1. Reading Microsoft excel files
-
-Xls\_file = pd.ExcelFile\(‘data.xls’\)
-
-Table = xls\_file.parse\(‘Sheet1’\)
-
-# SAS
 
 
 
