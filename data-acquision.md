@@ -77,7 +77,13 @@ pd.read_csv('ch06/exe5.csv', na_values = sentinels)
 ```
 
 \\# only read out a small number of rows
+
+
+```
 pd.read_csv('ch06/ex6.csv', nrows = 5)
+```
+
+
 
 
 R: 
@@ -405,6 +411,46 @@ DBMS = TAB REPLACE;
 PUTNAMES = YES; 
 RUN;
 ```
+
+PYTHON:
+
+
+
+```
+data.to_csv('ch06/out.csv')
+to 
+data.to_csv(sys.stdout,sep = '|')
+```
+
+
+
+\\# demote the missing value by some other sentinel value;
+
+
+
+```
+data.to_csv(sys.stdout, na_rep = 'NULL')
+```
+
+
+
+
+
+
+
+```
+or 
+
+data.to_csv(sys.stdout,index = False, header = False)
+
+or
+
+dat.to_csv(sys.dout,index = False, cols = ['a', 'b', 'c'])
+```
+
+
+
+
 
 R:
 
