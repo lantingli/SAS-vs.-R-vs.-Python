@@ -36,9 +36,6 @@ print(mydata[1:ncol(mydata)])
 ```
 
 
-
-\# Python  
-
 \# SAS
 
 \\# 2. By Column name   
@@ -77,9 +74,6 @@ print(mydata[1:ncol(mydata)])
   myQnames <- paste("q", 1:4, sep = " ") ; print(mydata\[myQnames])
 ```
 
-
-   
-PYTHON:
   
 SAS:
 
@@ -113,7 +107,6 @@ SAS:
 
  ` myQtf <- names(mydata) %in% c("q1", "q2", "q3", "q4")` 
   
-PYTHON: 
 
 SAS:
 
@@ -132,8 +125,7 @@ SAS:
 \# c. use %in% to create a logical vector                 
 
  `yQtf <- names (mydata) %in% myQnames; print;`
- 
- PYTHON:
+
 
  SAS:  
  
@@ -156,8 +148,6 @@ R
 with(mydata, summary(data.frame(q1, q2, q3, q4)))
 ```
 
-
-PYTHON:
  
 SAS:
   
@@ -181,7 +171,6 @@ R
 
 `  print(mydata[[3]] ` 
    
-PYTHON:
  
 SAS:
    
@@ -195,9 +184,6 @@ myqZ <- which(names(mydata) =="q4")
 print(mydata[myqA : myqZ) 
 ```
 
-
-
-PYTHON:
 
 SAS:
  
@@ -225,8 +211,6 @@ myA <- which(names(mydata) == "gender")
   print (mydata[myNums & myRange]) 
 ```
 
-PYTHON:
-
 SAS:
   
 \\# 12. Create a new data frame of selected variables 
@@ -249,10 +233,38 @@ myqs <- mydata[ c ("q1", "q2", "q3", "q4")]
 ```
 
 
-  
-PYTHON:
-  
-SAS :
+PTYHON:
+
+indexing, selection, and filtering 
+
+\\# 1. use the series's index
+in: obj = series(np.arrange(4.), index = ['a', 'b', 'c', 'd'])
+
+obj['b']
+
+or 
+
+obj[1]
+
+or 
+
+obj[2:4]
+
+or 
+
+obj[[ 'b', 'a', 'd']]
+
+or 
+
+obj[[1, 3]]
+
+or 
+
+obj[obj <2]
+
+or obj['b':'c'] = 5
+
+
 
 
 
