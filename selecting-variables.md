@@ -33,8 +33,7 @@
 print(mydata[1:ncol(mydata)]) 
 ```
 
-
-\\# 2. By Column name   
+**\\# 2. By Column name**   
 
  R 
 
