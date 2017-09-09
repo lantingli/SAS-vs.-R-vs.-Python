@@ -1,42 +1,38 @@
 # Selecting variables
 
-\\1. # by index number
+**\\# 1. By index number**
 
-   \\#a. Select all variables by default:
+   **\\#a. Select all variables by default:**
 
 ```
-         print(mydata[ ]); print (mydata[, ]);
+         print(mydata[ ]); 
+         print (mydata[, ]);
 ```
  
-  \\#b. Select the 3rd variable: 
+ ** \\#b. Select the 3rd variable:  ** 
                                                                                                                                                                                                                                                                                                                               `        print(mydata [ , 3]); print(mydata[3]);`
 
-   \\#c. Select the variables q1, q2 ,q3, q4  
+   **\\#c. Select the variables q1, q2 ,q3, q4**  
+   
 `        print(mydata[c(3,4,5,6)]); print(mydata[3:6])`
 
-   \\#d. Exclude q1, q2 ,q3 q4  
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              `         print(mydata[-c(3,4,5,6)]) ; print(mydata[-(3:6)])`
+   **\\#d. Exclude q1, q2 ,q3 q4**  
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               `         print(mydata[-c(3,4,5,6)]) ; print(mydata[-(3:6)])`
 
-   \\#e. Using indices in a numeric vector:
+   **\\#e. Using indices in a numeric vector:**
 
 `         myQindices <-c (3,4,5,6); print(mydata[myQindices]) ]`
 
-   \\#f.Display the indices for all variables:
+   **\\#f. Display the indices for all variables:**
 
+``print(data.frame(names(mydata)))
 ```
-          print(data.frame(names(mydata)))
-```
-
-   \\#g. Using ncol to find the last index:  
-   
-
-
+   **\\#g. Using ncol to find the last index: ** 
+  
 ```
 print(mydata[1:ncol(mydata)]) 
 ```
 
-
-\# SAS
 
 \\# 2. By Column name   
 
