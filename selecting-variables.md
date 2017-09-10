@@ -19,7 +19,9 @@
 
 #### **d. Exclude q1, q2 ,q3 q4**
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        print\(mydata\[-c\(3,4,5,6\)\]\) ; 
+```
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    print\(mydata\[-c\(3,4,5,6\)\]\) ; 
+```
 
 `print(mydata[-(3:6)])`
 
@@ -37,43 +39,43 @@
 
 ### **2. By Column name**
 
-#### a. Display all variable names:                                                   
+#### a. Display all variable names:
 
-`names(mydata)  `                                                                 
+`names(mydata)`
 
 #### b. Select one variable :
 
-`print(mydata["q1"]); \# pass q1 as a data frame;                   `
+`print(mydata["q1"]); \# pass q1 as a data frame;`
 
 `print(mydata[ , "q1"]) # pass q1 as a vector`
 
-#### c. Select several:                                                                       
+#### c. Select several:
 
-`print(mydata[c("q1", "q2", "q3", "q4")  ])   `                           
+`print(mydata[c("q1", "q2", "q3", "q4")  ])`
 
-#### d. Save a list of variable names to use:                             
+#### d. Save a list of variable names to use:
 
-`myQnames <- c("q1", "q2", "q3", "q4") ; print (mydata[myQnames]     `                                                                                 
+`myQnames <- c("q1", "q2", "q3", "q4") ; print (mydata[myQnames]`
 
 #### e. Generate a list of variable names:
 
-`myQnames <- paste("q", 1:4, sep = " ") ; `
+`myQnames <- paste("q", 1:4, sep = " ") ;`
 
 `print(mydata[myQnames])`
 
-### 3. By logic   
+### 3. By logic
 
-#### a. Select q1 by entering TRUE/FALSE values:                            
+#### a. Select q1 by entering TRUE/FALSE values:
 
-`print(mydata[c(FALSE, FALSE, TRUE, FALSE, FALSE)])  `      
+`print(mydata[c(FALSE, FALSE, TRUE, FALSE, FALSE)])`
 
-#### b. Manually create a vector to get just q1:                               
+#### b. Manually create a vector to get just q1:
 
-`print(mydata[as.logial(c(0,0,1,0,0,0))])   `                          
+`print(mydata[as.logial(c(0,0,1,0,0,0))])`
 
-#### c. Automatically create a logical vector to get just q1:    
+#### c. Automatically create a logical vector to get just q1:
 
-`print(mydata[names(mydata) == "q1"]) or !names(mydata) == “q1"])  `           
+`print(mydata[names(mydata) == "q1"]) or !names(mydata) == “q1"])`
 
 #### d. Use the OR operator, "\|" to select q1 through q4:
 
@@ -81,49 +83,49 @@
 
 `print(mydata[myQtf]`
 
-#### e. Use the %in% operator to select q1 through q4             
+#### e. Use the %in% operator to select q1 through q4
 
 `myQtf <- names(mydata) %in% c("q1", "q2", "q3", "q4")`
 
-### 4. By string search   
+### 4. By string search
 
-#### a. use grep to save the q variable indices:                  
+#### a. use grep to save the q variable indices:
 
-`myQindices <- grep("^q", names(mydata), value = FALSE)       `
+`myQindices <- grep("^q", names(mydata), value = FALSE)`
 
 #### b. use grep to save the q variable names :
 
-`value = TRUE   `   
+`value = TRUE`
 
-#### c. use %in% to create a logical vector                 
+#### c. use %in% to create a logical vector
 
 `yQtf <- names (mydata) %in% myQnames; print;`
 
-### 5. By $notation   
+### 5. By $notation
 
-`print(mydata$q1)                                                                    `
+`print(mydata$q1)`
 
-`print(data.frame(mydata$q1, mydata$q2)    ` 
+`print(data.frame(mydata$q1, mydata$q2)`
 
 ### 6.  By simple name
 
-`using attach function     `      
+`using attach function`
 
 ### 7. Using "with" function
 
 `with(mydata, summary(data.frame(q1, q2, q3, q4)))`
 
-### 8. with subset function  
+### 8. with subset function
 
 `print(subset(mydata, select = q1: q4))`
 
 `print(subset(mydata, select = c(workshop, q1:q4)`
 
-### 9. Select variables by list subscript  
+### 9. Select variables by list subscript
 
 `print(mydata[[3]] )`
 
-### 10. Generate indices A to Z from two variables   
+### 10. Generate indices A to Z from two variables
 
 `myqA <- which(names (mydata) == "q1")`
 
@@ -131,13 +133,13 @@
 
 `print(mydata[myqA : myqZ)`
 
-### 11. Select numeric or character variables 
+### 11. Select numeric or character variables
 
 `is. numeric (mydata$workshop)`
 
 `find numeric variables:`
 
-`mynums <- sapply(mydata, is.numeric);  
+`mynums <- sapply(mydata, is.numeric);    
  print(mydata[myNums]`
 
 `myA <- which(names(mydata) == "gender")`
@@ -150,7 +152,7 @@
 
 `print (mydata[myNums & myRange])`
 
-### 12. Create a new data frame of selected variables 
+### 12. Create a new data frame of selected variables
 
 `myqs <- mydata[3:6]`
 
@@ -160,14 +162,12 @@
 
 `myqs <- data.frame(q1 = mydata$q1, q2 = mydata$q2, q3 = mydata$q3, q4= mydata $q4)`
 
-`myqs <- subset(mydata, select = q1 :q4)`  
-
+`myqs <- subset(mydata, select = q1 :q4)`
 
 ## PTYHON:
 
 ### 1. use the series's index
 
-  
 `in: obj = series(np.arrange(4.), index = ['a', 'b', 'c', 'd'])`
 
 `obj['b']`
@@ -192,10 +192,13 @@ or
 
 `obj[obj <2]`
 
-or 
+or
 
 `obj['b':'c'] = 5`
 
-* 
+## SAS:
+
+
+
 
 
