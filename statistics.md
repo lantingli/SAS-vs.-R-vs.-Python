@@ -34,383 +34,367 @@
        run;
 ```
 
-### R：
-
 \# using build-in functions
 
 \# counts
 
-
-
-         myWG &lt;- table\(workshop, gender\)\#crosstabulation format
+```
+     myWG <- table(workshop, gender) \#crosstabulation format
+```
 
 \\# row proportions
 
-   prop.table\(myWG, 1\)
+ `prop.table(myWG, 1)`
 
 \\# column proportions
 
-    prop.table\(myWG, 2\)
+```
+prop.table(myWG, 2)
+```
 
 \\# Total proportions
 
-     prop.table\(myWG\)
+```
+ prop.table(myWG)
+```
 
 \\# Rounding off proportions
 
-    round\(prop.table\(myWG, 1\), 2\)
+```
+round(prop.table(myWG, 1), 2)
+```
 
 \\# row percents
 
-    round\(100 \* prop.table\(myWG, 1\)\)\)
+```
+round(100 * prop.table(myWG, 1)))
+```
 
 \\# adding row and column totals
 
-         addmargins\(myWG, 1\)
+```
+     addmargins(myWG, 1)
 
-         addmargins\(myWG, 2\)
+     addmargins(myWG, 2)
+```
 
 \# frequencies & univariate statistics
 
 \\# deducer's frequencies\(\) function
 
- library\("Hmisc"\)
+            `library("Hmisc")`
 
-         describe\(mydata100\)
+```
+     describe(mydata100)
+```
 
 \\# R's build-in function
 
-  summary\(mydata100\)
+`summary(mydata100)`
 
 \\# the flexible way using build-in functions
 
-   table\(workshop\)
+        `table(workshop)`
 
-       table\(gender\)
+```
+   table(gender)
+```
 
 \\# proportions of valid values
 
-       prop.table\(table\(workshop\)\)
+```
+   prop.table(table(workshop))
 
-       prop.table\(table\(gender\)\)
+   prop.table(table(gender))
+```
 
 \\# rounding off proportions
 
-round\(prop.table\(table\(gender\)\), 2\)
+`round(prop.table(table(gender)), 2)`
 
 \\# converting proportions to percents
 
-round\(100\* \(prop.table\(table\(gender\)\)\)\)
-
-\\# frequencies & univariate
-
-summary\(mydata100\)
+`round(100* (prop.table(table(gender))))`
 
 \\# means & std deviations
 
-       options\(width = 63\)
+```
+   options(width = 63)
 
-       sapply\(mydata100\[3:8\], mean, na.rm = TRUE\)
+   sapply(mydata100[3:8], mean, na.rm = TRUE)
 
-       sapply\(mydata100\[3:8\], sd, na.rm = TRUE\)
+   sapply(mydata100[3:8], sd, na.rm = TRUE)
+```
 
 PYTHON
 
-df = dataframe\(\[\[1.4, np.nan\], \[7.1, -4.5\], \[np.nan, np.nan\], \[0.75, -1.3\]\], index = \['a', 'b', 'c', 'd'\], columns = \['one', 'two'\]\)
+`df = dataframe([[1.4, np.nan], [7.1, -4.5], [np.nan, np.nan], [0.75, -1.3]], index = ['a', 'b', 'c', 'd'], columns = ['one', 'two'])`
 
-calling dataframe's sum method returns a series containing column sums: in : df.sum\(\)
+calling dataframe's sum method returns a series containing column sums:
 
-out : one 9.25 two -5.8
+ `in : df.sum()`
 
-df.sum\(axis = 1\)
+`out : one 9.25`
 
-out:
+`         two -5.8`
 
-a 1.4 b 2.6 c NaN d -0.55
+`df.sum(axis = 1)`
+
+`out:`
+
+`a 1.4 `
+
+`b 2.6 `
+
+`c NaN `
+
+`d -0.55`
 
 NA values are excluded unless the entire slice\(row or column in this case\) is NA. this can be disabled using the skipna option: df.mean\(axis =1, skipna = False\)
 
-out :
+`out :`
 
-a NaN b 1.300 c NaN d -0.275
+`a NaN `
+
+`b 1.300 `
+
+`c NaN `
+
+`d -0.275`
 
 describe is producing multiple summary statistics in one shot: df.describe
 
 ## 2. Hypothesis test\(group comparsion\)
 
-chi-square
+### a. T test
 
+#### 1. Independent samples t-test
 
+##### SAS: 
 
-  proc freq;
+  proc ttest;
 
-      tables workshop \*gender/chisq;
+    class gender;
 
-      run;\#
+    var q1;
 
+    run;
 
+##### PYTHON:
 
- \\\# independent samples t-test
+##### R:
 
-      proc ttest;
-
-        class gender;
-
-        var q1;
-
-        run;
-
-
-
- \\\# nonparametric version of above
-
-          using Wilcoxon/Mann-WHitney test;
-
-      proc npar1way;
-
-        class gender;
-
-        var q1;
-
-        run;
-
-nonparametric version of above using Kruskal-wallis test \\# 适用场景： 1）适合完全随机设计多组独立样本比较 2）多组独立样本为连续型变量值，来自非正态总体或方差不齐，；或进行数据变化扔不忙族正态性或方差齐性 3）各样本为有序多分类变量
-
-            1\) 适合完全随机设计两组独立样本比较
-
-            2）两样本为连续性变量，来自非正态总体或方差不齐
-
-            3）两样本为有序多分类变量
-
-
-
-  \\\# paried samples t-test;
-
-        proc ttest;
-
-          paried pretest \* posttest;
-
-        run;
-
-
-
-  \\\# nonparametric version of above using
-
-          both signed rank test and sign test
-
-        proc univariate;
-
-          var mydiff;
-
-          run;\#
-
-
-
-
-
-
-
-
-
- \\\# nonparametric version of above
-
-          using Wilcoxon/Mann-WHitney test;
-
-      proc npar1way;
-
-        class gender;
-
-        var q1;
-
-        run;
-
-
-
-        \\\# 适用场景:
-
-            1\) 适合完全随机设计两组独立样本比较
-
-            2）两样本为连续性变量，来自非正态总体或方差不齐
-
-            3）两样本为有序多分类变量
-
-
-
-
-
-## 
-
-
-
-
-
-
-
-2. Cross-Tabulation
-
-
-
-\\# using the gmodels package
-
-
-
-       library\("gmodels"\)
-
-       CrossTable\(workshop, gender, chisq = TRUE, format = "SAS"\)
-
-\#
-
-5. t -Test independent groups
-
-
-
-\\# independent samples t-test t.test\(q1 ~ gender, data = mydata100\)
-
-
+t.test\(q1 ~ gender, data = mydata100\)
 
 \\# same test; requires attached data;
 
-
-
-       t.test\(q1\[gender =="Male"\], 
-
-              q1 \[gender == "Female"\]\)
+   t.test\(q1\[gender =="Male"\], q1\[gender == "Female"\]\)
 
 \\# same test using with\(\) function
 
-
-
-with\(mydata100,
-
-         t.test\(q4\[which\(gender =="m"\)\],
-
-                q4\[which\(gender =="f"\)\]\)
-
-        \)
+  with\(mydata100,  t.test\(q4\[which\(gender =="m"\)\], q4\[which\(gender =="f"\)\]\)\)
 
 \\# same test using subset\(\) function
 
+t.test\(subset\(mydata100, gender =="m", select = q4\), subset\(mydata100, gender == "f", select = q4\)
+
+#####   
+
+#### 2. paired samples test
+
+##### SAS:
+
+`proc ttest;`
+
+`paried pretest * posttest;`
+
+`run;`
+
+##### PYTHON:
+
+##### R:
+
+ t.test\(posttest, pretest, paired = TRUE\)
+
+#### b. Nonparametric test
+
+#### 1. Nonparametric test for continuous variable
+
+##### SAS: 
+
+###### using Wilcoxon/Mann-WHitney test;
+
+`proc npar1way;`
+
+`class gender;`
+
+`var q1;`
+
+`run;`
+
+`\\\# 适用场景:`
+
+`1\) 适合完全随机设计两组独立样本比较`
+
+`2）两样本为连续性变量，来自非正态总体或方差不齐`
+
+`3）两样本为有序多分类变量`
+
+###### both signed rank test and sign test
+
+`proc univariate;`
+
+`var mydiff;`
+
+`run;`
 
 
- t.test\(
 
-      subset\(mydata100, gender =="m", select = q4\),
+##### PYTHON:
 
-      subset\(mydata100, gender == "f", select = q4\)
+##### R: 
 
-      \)
+Wilcoxon/Mann-Whitney test 
 
-\\# paired samples t-test
+wilcox.test\(q1 ~ gender, data = mydata100\) 
 
+\\# same test specified differently 
 
+wilcox.test\(q1\[gender =='Male‘\]， q1\[gender =='Female'\]\) 
 
- \` t.test\(posttest, pretest, paired = TRUE\)\`
+aggregate\(q1, data.frame\(gender\), median, na.rm = TRUE\)W
 
-\# 6. equality of variance
+\# wilcoxon signed rank test wilcox.test\(posttest, pretest, paired = TRUE\) median\(pretest\) median\(posttest\) \#10. sign test: paried groups \ \# sign test library\("PASWR"\) sign.test\(posttest, pretest, conf.level = .95\)
 
+#### 2. Nonparametric test for category variables
 
+SAS:
 
-      library\("car"\)
-
-      levene.test\(posttest, gender\)
-
-      var.test\(posttest ~ gender\)
-
-
-
-      \\\# 判断两总体方差是否相等的方法常用的有F 检验，Bartlett 检验，Levene 检验，F检验，Bartlett 检验要求资料服从正态分布；Levene 检验不依赖总体分布具体形式，更为稳健。F 检验只用于两样本方差齐性检验，Bartlett 和 Levene检验即可用于两样本方差齐性检验，，也可用于多样本方差齐性检验。3. measures of associations;
-
-```
-  \\# pearson correlations;
-    proc corr;
-      var q1 -q4;
-      run;
-
-      ## pearson 相关系数为直线相关系数，要求变量X 和Y 服从双变量正态分布，并且在作相关分析时，一般先做散点图， 考察是否有可能直线相关
-
-    \\# spearman correlations;
-   proc corr spearman;
-     var q1 -q4;
-   run;
-
-    \\# 如果变量X和Y 不服从双变量正态分布，可以用spearman 秩相关进行相关分析；如果变量X 和Y 均为多分类有序资料，可以用spearman 秩相关进行相关分析
-```
-
-## 
+R:
 
 
 
+#### C. eqality of variance
+
+  library\("car"\)
+
+  levene.test\(posttest, gender\)
+
+  var.test\(posttest ~ gender\)
+
+  \\\\# 判断两总体方差是否相等的方法常用的有F 检验，Bartlett 检验，Levene 检验，F检验，Bartlett 检验要求资料服从正态分布；Levene 检验不依赖总体分布具体形式，更为稳健。F 检验只用于两样本方差齐性检验，Bartlett 和 Levene检验即可用于两样本方差齐性检验，，也可用于多样本方差齐性检验。  library\\("car"\\)
+
+1. analysis of variance\\# analysis of variance \(ANOVA\) aggregate\(posttest, data.frame\(workshop\), mean, na.rm = TRUE\) library\("car"\) levene.test\(posttest, workshop\) myModel &lt;- aov\(posttest ~ workshop, data = mydata100\) anova\(myModel\) summary\(myModel\) \\# type III sums of squares library\("car"\) Anova\(myModel, type = "III"\) pairwise.t.test\(posttest, workshop\)\#1. 
 
 
-### 3. Correlation
+
+## 3. Correlation
 
 ### 
 
 \\# the rcorr.adjust function from the R commander package
 
+```
+    library\("Rcmdr"\)
 
+    load\("mydata.RData"\)
 
-        library\("Rcmdr"\)
-
-        load\("mydata.RData"\)
-
-        rcorr.adjust\(mydata\[3:6\]\)
+    rcorr.adjust\(mydata\[3:6\]\)
+```
 
 \\# spearman correlations
 
-
-
-   \` rcorr.adjust\(mydata\[3:6\], type = "spearman"\)\`
+\` rcorr.adjust\(mydata\[3:6\], type = "spearman"\)\`
 
 \\# the built-in cor function
 
-
-
-  \` cor\(mydata\[3:6\], method = "pearson", use = "pairwise"\)\`
+\` cor\(mydata\[3:6\], method = "pearson", use = "pairwise"\)\`
 
 \\# the built -in cor.test function
 
-
-
 exit: ⌘ ↩
 
-   \`cor.test\(mydata$q1, mydata$q2, use = "pairwise"\)\`\#
+\`cor.test\(mydata$q1, mydata$q2, use = "pairwise"\)\`\#
 
-3. Correlation
-
-
+1. Correlation
 
 \\# the rcorr.adjust function from the R commander package
 
+```
+    library\("Rcmdr"\)
 
+    load\("mydata.RData"\)
 
-        library\("Rcmdr"\)
-
-        load\("mydata.RData"\)
-
-        rcorr.adjust\(mydata\[3:6\]\)
+    rcorr.adjust\(mydata\[3:6\]\)
+```
 
 \\# spearman correlations
 
-
-
-   \` rcorr.adjust\(mydata\[3:6\], type = "spearman"\)\`
+\` rcorr.adjust\(mydata\[3:6\], type = "spearman"\)\`
 
 \\# the built-in cor function
 
-
-
-  \` cor\(mydata\[3:6\], method = "pearson", use = "pairwise"\)\`
+\` cor\(mydata\[3:6\], method = "pearson", use = "pairwise"\)\`
 
 \\# the built -in cor.test function
 
-
-
 exit: ⌘ ↩
 
-   \`cor.test\(mydata$q1, mydata$q2, use = "pairwise"\)\`
+\`cor.test\(mydata$q1, mydata$q2, use = "pairwise"\)\`
 
-## 4. linear regression;
+
+
+\\\# pearson correlations;
+
+proc corr;
+
+var q1 -q4;
+
+run;
+
+
+
+\#\# pearson 相关系数为直线相关系数，要求变量X 和Y 服从双变量正态分布，并且在作相关分析时，一般先做散点图， 考察是否有可能直线相关
+
+
+
+\\\# spearman correlations;
+
+proc corr spearman;
+
+var q1 -q4;
+
+run;
+
+
+
+\\\# 如果变量X和Y 不服从双变量正态分布，可以用spearman 秩相关进行相关分析；如果变量X 和Y 均为多分类有序资料，可以用spearman 秩相关进行相关分析\\\# pearson correlations;
+
+proc corr;
+
+var q1 -q4;
+
+run;
+
+
+
+\#\# pearson 相关系数为直线相关系数，要求变量X 和Y 服从双变量正态分布，并且在作相关分析时，一般先做散点图， 考察是否有可能直线相关
+
+
+
+\\\# spearman correlations;
+
+proc corr spearman;
+
+var q1 -q4;
+
+run;
+
+
+
+\\\# 如果变量X和Y 不服从双变量正态分布，可以用spearman 秩相关进行相关分析；如果变量X 和Y 均为多分类有序资料，可以用spearman 秩相关进行相关分析
+
+#### 4. linear regression;
 
 ```
  proc reg;
@@ -420,23 +404,19 @@ exit: ⌘ ↩
 
 \#
 
-4. Linear regression
+1. Linear regression
 
+lm\(q4 ~ q1 +q2+ q3, data = mydata100\)
 
+mymodel &lt;- lm\(q4 ~ q1 +q2+ q3, data = mydata100\)
 
- lm\(q4 ~ q1 +q2+ q3, data = mydata100\)
+summary\(mymodel\)
 
-   mymodel &lt;- lm\(q4 ~ q1 +q2+ q3, data = mydata100\)
-
-   summary\(mymodel\)
-
-   anova\(mymodel\) \# same as summary result
+anova\(mymodel\) \# same as summary result
 
 not complete!!! will add later!!!\#
 
-
-
-5. oneway analysis of variance\(ANONVA\)
+1. oneway analysis of variance\(ANONVA\)
 
 ```
 proc glm;
@@ -448,57 +428,9 @@ proc glm;
 
 
 
-PYTHON:
 
 
 
-
-
-
-
-
-
-
-
-
-
-\# 7. paired or repeated measures  
-\# 8. wilcoxon-mann-whitney rank sum  
-\  
-\# Wilcoxon/Mann-Whitney test  
-wilcox.test\(q1 ~ gender, data = mydata100\)  
-\\# same test specified differently  
-wilcox.test\(q1\[gender =='Male‘\]，  
-q1\[gender =='Female'\]\)  
-aggregate\(q1, data.frame\(gender\),  
-median, na.rm = TRUE\)
-
-\# 9. Wilcoxon signed-rank test: paired groups
-
-\\# wilcoxon signed rank test  
-wilcox.test\(posttest, pretest, paired = TRUE\)  
-median\(pretest\)  
-median\(posttest\)  
-\#10. sign test: paried groups  
-\  
-\# sign test  
-library\("PASWR"\)  
-sign.test\(posttest, pretest, conf.level = .95\)\# 11. analysis of variance\\# analysis of variance \(ANOVA\)  
-aggregate\(posttest, data.frame\(workshop\), mean, na.rm = TRUE\)  
-library\("car"\)  
-levene.test\(posttest, workshop\)  
-myModel &lt;- aov\(posttest ~ workshop, data = mydata100\)  
-anova\(myModel\)  
-summary\(myModel\)  
-\\# type III sums of squares  
-library\("car"\)  
-Anova\(myModel, type = "III"\)  
-pairwise.t.test\(posttest, workshop\)
-
-\# 13. the kruskal - wallis test  
-  \3 nonparametric oneway ANOVA using kruskal.test\(posttest~ workshop\)  
-  pairwise.wilcox.test\(posttest, workshop\)  
-  aggregate\(posttest, data.frame\(workshop\), median, na.rm = TRUE\)
 
 1. PSM
 
