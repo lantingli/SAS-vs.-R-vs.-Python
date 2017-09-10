@@ -1,6 +1,6 @@
 ## 16. Stacking/Concatenating/Adding data sets
 
-\# R 
+### R: 
 
 ```
 females <- mydata[which(gender =="f"), ]
@@ -8,7 +8,7 @@ males <- mydata[which(gender =="m"), ]
 both <- rbind(females, males)
 ```
 
-\#use plyr rbind.fill
+use plyr rbind.fill
 
 ```
 library("plyr")
@@ -17,9 +17,9 @@ both <- rbind.fill(females, males)
 
 !!! rbind requires two sets has the same variables.
 
-\# PYTHON
+### PYTHON:
 
-\# SAS
+### SAS:
 
 ```
  data males;
@@ -41,7 +41,7 @@ run;
 
 By default, SAS keep all records regardless of whether or not they match. for observations that do not have matches in the other file, the merge function will fill them in with missing values. R take the opposite approach, keeping only those that have a record in both. to get merge to keep all records, use the argument all = TRUE. you can also use all.x = TURE to keep all record in the first file regardless of whether or not they have matches in the record. the all.y = TRUE argument does the reverse.
 
-\# R
+### R:
 
 ```
 mydata <- read.table("mydata.csv", header = TURE, sep = ",", na.strings = " ")
@@ -56,7 +56,7 @@ both <- merge(myleft, myright, by = c("id", "workshop"))
 both <- merge(myleft, myright, by.x= c("id", "workshop"), by.y = c("id", "workshop"))
 ```
 
-\# PYTHON
+### PYTHON
 
 ```
 df1 = dataframe({'key': ['b', 'b', 'a', 'c', 'a', 'a', 'b'], 'data1' : range(7)})
@@ -93,10 +93,10 @@ or pd.merge(left, right, on = ['key1', 'key2', how = outer')
 or pd.merge(left, right, on = 'key1', suffixes = ('_left', '_right')) # used for overlapping column names
 ```
 
-\# Merging on index   
+\# Merging on index  
 what is difference between merging on variables and merging on index?
 
-\# SAS
+### SAS:
 
 ```
  data mylib.myleft;
@@ -121,42 +121,43 @@ data mylib.myright;
 
 ## 18. Creating summarized or aggregated data sets
 
-##  \#R
+## R:
 
 \# the aggregate function  
- \# mean by workshop and gender   
+ \# mean by workshop and gender  
  myagg1 &lt;- aggregate \(q1, by = data.frame\(workshop, gender\), mean, na.rm = TRUE\)
 
-```
-\# the tapply function
- myagg2 <- tapply(q1, data.frame(workshop, gender), mean, na.rm = TRUE)
+a. the tapply function
 
-\# tabular aggregation
- \#table of counts
-```
+`myagg2 <- tapply(q1, data.frame(workshop, gender), mean, na.rm = TRUE)`
 
-```
-table(workshop)
-       table(gender, workshop)
-       mycounts <- table(gender, workshop)
-       mode(mycounts)
-       class(mycounts)
-```
+b. tabular aggregation
 
-     \# counts in summary/aggregate stype
-    `  mycountsDF <- as.data.frame(myCounts)`
-      \# clean up
+`table of counts`
 
-```
- mydata["Zq1"] <- NULL
-      rm(myAgg1, myAGG2)
-```
+`table(workshop)`
 
-```
-\# the plyr and reshape2 packages
-```
+`table(gender, workshop)`
 
-\#PYTHON
+`mycounts <- table(gender, workshop)`
+
+`mode(mycounts)`
+
+`class(mycounts)`
+
+counts in summary/aggregate stype
+
+`mycountsDF <- as.data.frame(myCounts)`
+
+clean up
+
+`mydata["Zq1"] <- NULL`
+
+`rm(myAgg1, myAGG2)`
+
+the plyr and reshape2 packages
+
+### PYTHON:
 
 another kind of data combination operation is alternatively referred to as concatenation, binding, or stacking. Numpy has a concatenate function for doing this with raw Numpy arrays:
 
@@ -174,10 +175,11 @@ the concat function in pandas provides a consistent way to address each of these
  pd.concat([s1, s2, s3]) \# by default concat works along axis = 0, producing another series. if you pass axis = 1, the result will instead be a dataframe(axis = 1 is the columns)
 ```
 
-\#SAS
+### SAS:
+
+\\# get means of q1 for each gender
 
 ```
-  \#get means of q1 for each gender
     proc summary data = lib.mydata mean nway;
       class gemder;
       var q1;
@@ -192,7 +194,7 @@ the concat function in pandas provides a consistent way to address each of these
   run;
 ```
 
-\# merge aggregated data back into mydata;
+\\# merge aggregated data back into mydata;
 
 ```
   proc sort data = mylib.mydata;
@@ -211,7 +213,7 @@ the concat function in pandas provides a consistent way to address each of these
 
 ## 19. By or Split-file processing
 
-SAS:
+### SAS:
 
 ```
 LIBNAME mylib 'C: \myRfolder';
@@ -236,7 +238,7 @@ proc means data = mylib.mydata;
 run;
 ```
 
-R:
+### R:
 
     load(file = "mydata.RData")
     attach(mydata)
@@ -273,7 +275,7 @@ R:
 
 ## 20. Removing duplicate observations
 
-SAS:
+### SAS:
 
 ```
 libname mylib 'C:\myRfolder';
@@ -297,7 +299,7 @@ libname mylib 'C:\myRfolder';
   run;
 ```
 
-PYTHON:
+### PYTHON:
 
 ```
 data = dataframe({'k1': ['one'] *3 +['two'] *4, 
@@ -329,37 +331,37 @@ duplicated and drop\_duplicated by default keep the first observed value combina
 data.drop_duplicates(['k1', 'k2'], take_last = true)
 ```
 
-R:
+### R:
 
-load\("mydata.RData"\)
+`load("mydata.RData")`
 
 \\# create some duplicates  
-   myDuplicates &lt;- rbind \(mydata, mydata\[1:2, \]\)
+ `myDuplicates <- rbind (mydata, mydata[1:2, ])`
 
 \# get rid of duplicates without seeing them
 
-myNoDuplicates &lt;- unique\(myDuplicates\)
+`myNoDuplicates <- unique(myDuplicates)`
 
 \# before getting rid of them, need to check the location of duplicates
 
-myDuplicates &lt;- duplicated\(myDuplicates\)
+`myDuplicates <- duplicated(myDuplicates)`
 
 \# print a report of just the duplicate records
 
-attach\(myDuplicates\)  
-   myDuplicates\[DupRecs, \]
+  ` attach(myDuplicates)  
+   myDuplicates[DupRecs, ]`
 
 \# Remove duplicates and duplicated variable  
-   myNoDuplicates &lt;- myDuplicates\[!DupRecs, -7\]
+   `myNoDuplicates <- myDuplicates[!DupRecs, -7]`
 
 or according to more than one variable
 
-mykeys &lt;- c\("workshop", "gender"\)  
-   mydata$DupKeys &lt;- duplicated\(mydata\[ , myKeys\]\)
+   `mykeys <- c("workshop", "gender")  
+   mydata$DupKeys <- duplicated(mydata[ , myKeys])`
 
 ## 21. Selecting first or last observations per group
 
-SAS:
+### SAS:
 
 ```
 proc sort data = sasuser.mydata;
@@ -373,7 +375,7 @@ data sasuser.mylast;
 run;
 ```
 
-R:
+### R:
 
 ```
 mydata$id <- row.names(mydata)
@@ -407,7 +409,7 @@ mydata2$lastgender[is.na(mydata2$lastgender)] <- 0
 
 ## 22. Transposing or flipping data sets
 
-SAS:
+### SAS:
 
 ```
 proc transpose data = mylib.mydata out = mycopy;
@@ -417,7 +419,7 @@ proc transpose data = mycopy out = myFixed;
 run;
 ```
 
-R:
+### R:
 
 ```
 myQs <- c("q1", "q2", "q3", "q4")
