@@ -1,12 +1,8 @@
-18. Reshaping variables to observations and back
+## 23. Reshaping variables to observations and back
 
 SAS:
 
-
-
-
 ```
-
 \\# wide to long
 proc transpose data = mylib.mydata
 out = mylib.mylong;
@@ -30,12 +26,9 @@ run;
 data mylib.mywide;
   set mylib.mywide(drop = _name_);
 run;
-
-
 ```
+
 R:
-
-
 
 ```
 library("reshap2")
@@ -48,38 +41,28 @@ mychanges <- c(
   mydata$subject <- factor(1:8)
 ```
 
-
-  
-  \\# reshaping from wide to long
- 
+\\# reshaping from wide to long
 
 ```
  library("reshap2")
   mylong <- melt(mydata)
 ```
 
-
-  \\# again, specifying arguments
-  
+\\# again, specifying arguments
 
 ```
 mylong <- melt(mydata, 
     id.vars = c("subject", "workshop", "gender"),
     measure.vars = c("time1", "time2", "time3", "time4"),
     value.name = "variable")
-    
+
     \\# reshaping from long to wide 
      mywide <- dcast(mylong, subject + workshop + gender ~ variable)
 ```
 
-
-     
-     
-
-19. sorting data frames
+### 24. sorting data frames
 
 SAS :
-
 
 ```
 proc sort data = mylib.mydata;
@@ -93,45 +76,36 @@ proc sort data = mylib.mydata;
 
 PYTHON:
 
-obj = series(range(4), index = ['d', 'a', 'b', 'c'])
-obj.sort_index ()
+obj = series\(range\(4\), index = \['d', 'a', 'b', 'c'\]\)  
+obj.sort\_index \(\)
 
 with a dataframe, you can sort by index on either axis:
 
-frame = dataframe(np.arrange(8). reshape((2, 4)), index = ['three', 'one'], columns = ['d', 'a', 'b', 'c'])
+frame = dataframe\(np.arrange\(8\). reshape\(\(2, 4\)\), index = \['three', 'one'\], columns = \['d', 'a', 'b', 'c'\]\)
 
-frame.sort_index()
+frame.sort\_index\(\)
 
-frame.sort_index(axis = 1)
+frame.sort\_index\(axis = 1\)
 
-frame.sort_index(axis = 1, ascending = False)
+frame.sort\_index\(axis = 1, ascending = False\)
 
-\\# To sort a series by its values, use its order method:
-in : obj = series(4,7,-3, 2])
-obj.order()
+\\# To sort a series by its values, use its order method:  
+in : obj = series\(4,7,-3, 2\]\)  
+obj.order\(\)
 
 \\# any missing values are sorted to the end of the series by default
 
-in: obj = series([4, np.nan, 7, np.nan, -3, 2])
-obj.order()
+in: obj = series\(\[4, np.nan, 7, np.nan, -3, 2\]\)  
+obj.order\(\)
 
 \\# on dataframe, you may want to sort by the values in one or more columns. to do so, pass one or more column names to the by options:
 
-in : frame = dataframe({'b': [4,7,-3, 2], 'a': [0, 1, 0, 1]})
+in : frame = dataframe\({'b': \[4,7,-3, 2\], 'a': \[0, 1, 0, 1\]}\)
 
-frame.sort_index(by  ='b')
-frame.sort_index (by = 'a', 'b'])
+frame.sort\_index\(by  ='b'\)  
+frame.sort\_index \(by = 'a', 'b'\]\)
 
-
-  
-  
-  
-  
-  
-  
-  R:
-  
-
+R:
 
 ```
   \\# show first four observations in order
@@ -148,17 +122,11 @@ frame.sort_index (by = 'a', 'b'])
     mydataSorted <- mydata[myWdG, ]
 ```
 
+## 25. Converting data structure
 
-    
-    
-
-
-20. Converting data structure
-21. Character string manipulations
+## 26. Character string manipulations
 
 SAS:
-
-
 
 ```
 data mylib.giants;
@@ -168,14 +136,14 @@ data mylib.giants;
   format born mmddyy10. died yymmdd10.;
   myVarlength = length(name)
   born= strip(born)
-  
+
   data mylib.giants;
     set mylib.giants;
    mylower = lowcase(name);
    myupper = upcase(name)
    myproper = propcase(name)
  run;
- 
+
  data mylib.giants;
    set mylib.giants;
    myFirst5 = substr(name, 1 ,5)
@@ -190,22 +158,22 @@ data mylib.giants;
        length mylastfirst $ 17;
        mylastfirst = strip(mylast)||","||strip(myfirst);
          or call CATX(",", mylastfirst, mylast, myfirst);
-         
+
       data tukey;
         set mylib.giants;
           where mylast = "Tukey";
       run;
-      
+
       data tukey;
         set mylib.giants;
           where find(mylast, "key");
       run;
-      
+
       data mysubset;
         set mylib.giants;
         where mylast in ("Box", "Bayes", "Fisher", "Tukey");
       run;
-      
+
       data fishorkey;
         set mylib.giants;
         if find(mylast, "Box") |
@@ -213,7 +181,7 @@ data mylib.giants;
            find(mylast, "Fish")|
            find(mylast, "key");
            run;
-           
+
        data ArthruM;
          set mylib.giants;
            firstletter = substr(mylast, 1,1);
@@ -221,61 +189,59 @@ data mylib.giants;
            run;
 ```
 
-PYTHON：
+PYTHON：  
 \#1. split a commma-separated string into a broken pieces
 
-val = 'a,b, guido'
-val.split(,)
+val = 'a,b, guido'  
+val.split\(,\)
 
-out : ['a', 'b', 'guido']
+out : \['a', 'b', 'guido'\]
 
-split is often combined with strip to trim whitespace(including newlines)
+split is often combined with strip to trim whitespace\(including newlines\)
 
-pieces = [x.strip() for x in val.split(',')
+pieces = \[x.strip\(\) for x in val.split\(','\)
 
- out : ['a', 'b', 'guido']
- 
- \\# 2. join together
- in : first + '::' + second '::' + third
+out : \['a', 'b', 'guido'\]
+
+\\# 2. join together  
+ in : first + '::' + second '::' + third  
  out : 'a::b::guido'
- 
- \\# 3. detect a substring, through index and find
- in : 'guido' in val
- val.index(,) 
- out : 1
- val.find(':')
+
+\\# 3. detect a substring, through index and find  
+ in : 'guido' in val  
+ val.index\(,\)   
+ out : 1  
+ val.find\(':'\)  
  out : -1
- 
- note the difference between find and index is that index raises an exception if the string isn't found(versus returning -1)
- 
- \\# 4. relatively, count returns the number of occurrences of a particular substring
- in: val.count(',')
+
+note the difference between find and index is that index raises an exception if the string isn't found\(versus returning -1\)
+
+\\# 4. relatively, count returns the number of occurrences of a particular substring  
+ in: val.count\(','\)  
  out : 2
- 
- \\#5. replace will substitute occurrences of one pattern for another. this is commonly used to delete patterns, too, by passing an empty string:
- in: val.replace(',', '::')
+
+\\#5. replace will substitute occurrences of one pattern for another. this is commonly used to delete patterns, too, by passing an empty string:  
+ in: val.replace\(',', '::'\)  
  out: 'a::b:: guido'
- 
- in: val.place(',', '')
+
+in: val.place\(',', ''\)  
  out: 'ab guido'
- 
- \\# 6. python built-in string methods
- count: return the number of non-overlapping occurrences of substring in the string
- endwith, startwith: returns true if sting ends with suffix
- join: use string as delimiter for concatenating a sequence of other strings
- index: return position of first character in substring if found in the string. raises valueError if not found.
- find: return position of first character of first occurrence of substring in the string. like index, but return -1 if not found
- rfind: return position of first character of last occurrence of substring in the string, returens -1 if not found
- replace: replace occurrences of string with another string
+
+\\# 6. python built-in string methods  
+ count: return the number of non-overlapping occurrences of substring in the string  
+ endwith, startwith: returns true if sting ends with suffix  
+ join: use string as delimiter for concatenating a sequence of other strings  
+ index: return position of first character in substring if found in the string. raises valueError if not found.  
+ find: return position of first character of first occurrence of substring in the string. like index, but return -1 if not found  
+ rfind: return position of first character of last occurrence of substring in the string, returens -1 if not found  
+ replace: replace occurrences of string with another string  
  strip,rstrip, lstrip: trim whitespace, including newlines;
- 
- split: break string into list of substrings using passed delimiter
- lower, upper
- ljust, rjust: left justify or right justify, respectively. pad opposite side of string with spaces to return a string a minimum width. 
- 
+
+split: break string into list of substrings using passed delimiter  
+ lower, upper  
+ ljust, rjust: left justify or right justify, respectively. pad opposite side of string with spaces to return a string a minimum width.
+
 R:
-
-
 
 ```
 gender <- c("m", “f", "m", NA, "m", "f", "m", "f")
@@ -284,10 +250,6 @@ library("stringr")
 myVars <- str_c("Var", LETTERS[1:6])
 ```
 
-
-
-
-
 ```
 setwd("c:/myRfolder")
 giants <- read.fwf(
@@ -295,7 +257,7 @@ giants <- read.fwf(
   width = c(15, 11, 11),
   col.names = c("name", "born", "died"),
   colClasses = c("character", "character", "POSIXct")
-  
+
   str_length(giants$name)
   giants[giants$name =="R.A. Fisher", ]
   giants[giants$name == "R.A. Fisher   ", ]
@@ -303,10 +265,6 @@ giants <- read.fwf(
   attach(giants)
   str_length(name)
 ```
-
-
-  
-
 
 ```
   toupper(name)
@@ -321,179 +279,153 @@ giants <- read.fwf(
   mylastFirst <- str_c(mylast, ",", "myfirst)
 ```
 
-
-  
-  
-
-
 ```
   myobs <myLast =="Tukey"
   myObs <- which(myLast == "Tukey")
   giants[myObs, ]
 ```
 
-
-  
-  `myObs <- str_detect(myLast, "key")`
-  
- 
+`myObs <- str_detect(myLast, "key")`
 
 ```
  myTable<- c("Box", "Bayes", "Fisher", "Tukey")
   myObs <- mylast %in% myTable
 ```
 
+`myObs <- str_detect(mylast, "Box|Bayes|Fish|key")`
 
-  
-  `myObs <- str_detect(mylast, "Box|Bayes|Fish|key")`
-  
-  
- ` myAthruM <- str_detect(myLastFirst, "^[A-M]")`
-  
+`myAthruM <- str_detect(myLastFirst, "^[A-M]")`
 
-
-           
-           
-       
-22. Dates and Times
-
+## 27. Dates and Times
 
 \# Calculating durations
 
 SAS:
 
-infile '\myRfolder\giants.txt'
- MISSOVER DSD LRECL = 32767
- input name $char14. @16 born mmddyy10. @27 died mmddyy10.;
- proc print;
+infile '\myRfolder\giants.txt'  
+ MISSOVER DSD LRECL = 32767  
+ input name $char14. @16 born mmddyy10. @27 died mmddyy10.;  
+ proc print;  
  run;
- 
- proc print;
- format died born mmddyy10.;
- run;
- 
- data mylib.giants;
-   set mylib.giants;
-    age  = (died - born)/365.2425;
-    longAgo = (today() - died)/365.2425;
- run;
- 
- proc print;
- format died born mmddyy10. age longAgo 5.2;
- run;
- 
- R:
- 
- giants<- read.fwf(
-   file = "giants.txt",
-   width = c(15,11, 11)
-   col.names = c("name", "born", "died")
-   colClasses = c("character", "character", "POSIXct"),
-   row.names = "name",
-   strip.white = TRUE;
- )
- 
- library("lubridate")
- giants$born <- mdy(giants$born)
- 
- as.POSIXct(
- c(-2520460800, -3558556800, -2207952000, -1721347200, -2952201600), 
- origin = "1960-01-01, tz = "UTC")
- 
- age<- difftime(died, born, units = "secs")
- age <- difftime(died, born) # default age in days
- 
- giants$age <- round(as.numeric(age/365.2425), 2)
- 
- difftime(now(), died)/365.2425
- 
- 
 
-\# adding durations to date-time variables
-SAS:
-data mylib.giants;
-  set mylib.giants;
-   died  = born +age;
-   run;
- 
- R: 
- age <- as.duration(
- c(2286057600, 2495664000, 2485382400, 2685916800, 1935705600)
- )
- 
+proc print;  
+ format died born mmddyy10.;  
+ run;
 
-\# accessing date-time elements
-SAS:
-data mylib.giants;
-  set mylib.giants;
- myYear = YEAR(born);
- myMonth =MONTH(born);
- myDay = DAY(born);
- 
+data mylib.giants;  
+   set mylib.giants;  
+    age  = \(died - born\)/365.2425;  
+    longAgo = \(today\(\) - died\)/365.2425;  
+ run;
+
+proc print;  
+ format died born mmddyy10. age longAgo 5.2;  
+ run;
+
 R:
 
-year(born)
-month(born)
-day(born) # day of month
-wday(born) # day of week
+giants&lt;- read.fwf\(  
+   file = "giants.txt",  
+   width = c\(15,11, 11\)  
+   col.names = c\("name", "born", "died"\)  
+   colClasses = c\("character", "character", "POSIXct"\),  
+   row.names = "name",  
+   strip.white = TRUE;  
+ \)
 
+library\("lubridate"\)  
+ giants$born &lt;- mdy\(giants$born\)
 
-\# creating date-time variables from elements
-SAS: 
-data mylib.giants;
-  set mylib.giants;
-  born = MDY(myMonth, myDay, myYear);
+as.POSIXct\(  
+ c\(-2520460800, -3558556800, -2207952000, -1721347200, -2952201600\),   
+ origin = "1960-01-01, tz = "UTC"\)
+
+age&lt;- difftime\(died, born, units = "secs"\)  
+ age &lt;- difftime\(died, born\) \# default age in days
+
+giants$age &lt;- round\(as.numeric\(age/365.2425\), 2\)
+
+difftime\(now\(\), died\)/365.2425
+
+\# adding durations to date-time variables  
+SAS:  
+data mylib.giants;  
+  set mylib.giants;  
+   died  = born +age;  
+   run;
+
+R:   
+ age &lt;- as.duration\(  
+ c\(2286057600, 2495664000, 2485382400, 2685916800, 1935705600\)  
+ \)
+
+\# accessing date-time elements  
+SAS:  
+data mylib.giants;  
+  set mylib.giants;  
+ myYear = YEAR\(born\);  
+ myMonth =MONTH\(born\);  
+ myDay = DAY\(born\);
+
+R:
+
+year\(born\)  
+month\(born\)  
+day\(born\) \# day of month  
+wday\(born\) \# day of week
+
+\# creating date-time variables from elements  
+SAS:   
+data mylib.giants;  
+  set mylib.giants;  
+  born = MDY\(myMonth, myDay, myYear\);  
 run;
 
-R:
-myYear <- year(died)
-myMonth <- month(died)
-myDay <- day(died)
+R:  
+myYear &lt;- year\(died\)  
+myMonth &lt;- month\(died\)  
+myDay &lt;- day\(died\)
 
-myDateString <<- paste(myYear, myMonth, myDay, SEP = "/")
-died2 <- ymd(myDateString)
+myDateString &lt;&lt;- paste\(myYear, myMonth, myDay, SEP = "/"\)  
+died2 &lt;- ymd\(myDateString\)
 
 \# logical comparisons with date-time variables
 
-SAS:
-data born1900s;
-  set mylib.giants;
-   if born > "01jan1900"d;
+SAS:  
+data born1900s;  
+  set mylib.giants;  
+   if born &gt; "01jan1900"d;  
  run;
- 
- R:
- 
- giants[born >mdy("1/1/1900"), ]
- 
 
-\# formatting date-time output
-proc format;
-picture myFormatI
-LOW-HIGH = '%B %d, %Y is day %j of %Y'
-(DATATYPE = DATE)
+R:
+
+giants\[born &gt;mdy\("1/1/1900"\), \]
+
+\# formatting date-time output  
+proc format;  
+picture myFormatI  
+LOW-HIGH = '%B %d, %Y is day %j of %Y'  
+\(DATATYPE = DATE\)  
 RUN;
 
-proc print data = mylib.giants;
-  var born;
-  format born myFormatI40.;
+proc print data = mylib.giants;  
+  var born;  
+  format born myFormatI40.;  
 run;
 
-data null;
-  set mylib.giants;
-   put name $char14. born myFormatII34.;
+data null;  
+  set mylib.giants;  
+   put name $char14. born myFormatII34.;  
  run;
- 
 
 \# two-digit years
 
-\# date-time conclusion
-23. Loops
-24. Functions1
+\# date-time conclusion  
+23. Loops  
+24. Functions1  
 8. Reshaping variables to observations and back
 
 SAS:
-
-
 
 ```
 proc transpose data = mylib.mydata
@@ -503,11 +435,10 @@ by id workshop gender;
 run;
 ```
 
-
-19. sorting data frames
-20. Converting data structure
-21. Character string manipulations
-22. Dates and Times
+1. sorting data frames
+2. Converting data structure
+3. Character string manipulations
+4. Dates and Times
 
 \# Calculating durations
 
@@ -523,6 +454,7 @@ run;
 
 \# two-digit years
 
-\# date-time conclusion
-23. Loops
+\# date-time conclusion  
+23. Loops  
 24. Functions
+
