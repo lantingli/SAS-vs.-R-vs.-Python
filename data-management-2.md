@@ -76,7 +76,7 @@ proc sort data = mylib.mydata;
 
 ### PYTHON:
 
-`obj = series(range(4), index = ['d', 'a', 'b', 'c'])  
+`obj = series(range(4), index = ['d', 'a', 'b', 'c'])    
 obj.sort_index ()`
 
 `with a dataframe, you can sort by index on either axis:`
@@ -90,19 +90,19 @@ obj.sort_index ()`
 `frame.sort_index(axis = 1, ascending = False)`
 
 \\# To sort a series by its values, use its order method:  
-`in : obj = series(4,7,-3, 2])  
+`in : obj = series(4,7,-3, 2])    
  obj.order()`
 
 \\# any missing values are sorted to the end of the series by default
 
-`in: obj = series([4, np.nan, 7, np.nan, -3, 2])  
+`in: obj = series([4, np.nan, 7, np.nan, -3, 2])    
 obj.order()`
 
 \\# on dataframe, you may want to sort by the values in one or more columns. to do so, pass one or more column names to the by options:
 
 `in : frame = dataframe({'b': [4,7,-3, 2], 'a': [0, 1, 0, 1]})`
 
-`frame.sort_index(by  ='b')  
+`frame.sort_index(by  ='b')    
 frame.sort_index (by = 'a', 'b'])`
 
 ### R:
@@ -191,9 +191,9 @@ data mylib.giants;
 
 ### PYTHON：
 
-####  1. split a commma-separated string into a broken pieces
+#### 1. split a commma-separated string into a broken pieces
 
-`val = 'a,b, guido'  
+`val = 'a,b, guido'    
  val.split(,)`
 
 `out : ['a', 'b', 'guido']`
@@ -206,33 +206,37 @@ data mylib.giants;
 
 #### 2. join together
 
-  
-` in : first + '::' + second '::' + third  
+`in : first + '::' + second '::' + third    
   out : 'a::b::guido'`
 
 #### 3. detect a substring, through index and find
 
-  
-`in : 'guido' in val  
- val.index(,)  
- out : 1  
- val.find(':')  
+`in : 'guido' in val    
+ val.index(,)    
+ out : 1    
+ val.find(':')    
  out : -1`
 
 note the difference between find and index is that index raises an exception if the string isn't found\(versus returning -1\)
 
-\\# 4. relatively, count returns the number of occurrences of a particular substring  
- in: val.count\(','\)  
- out : 2
+#### 4. relatively, count returns the number of occurrences of a particular substring
 
-\\#5. replace will substitute occurrences of one pattern for another. this is commonly used to delete patterns, too, by passing an empty string:  
- in: val.replace\(',', '::'\)  
- out: 'a::b:: guido'
+  
+` in: val.count(',')  
+  out : 2`
 
-in: val.place\(',', ''\)  
- out: 'ab guido'
+#### 5. replace will substitute occurrences of one pattern for another. this is commonly used to delete patterns, too, by passing an empty string:
 
-\\# 6. python built-in string methods  
+  
+`in: val.replace(',', '::')  
+ out: 'a::b:: guido'`
+
+`in: val.place(',', '')  
+ out: 'ab guido'`
+
+#### 6. python built-in string methods
+
+  
  count: return the number of non-overlapping occurrences of substring in the string  
  endwith, startwith: returns true if sting ends with suffix  
  join: use string as delimiter for concatenating a sequence of other strings  
@@ -246,7 +250,7 @@ split: break string into list of substrings using passed delimiter
  lower, upper  
  ljust, rjust: left justify or right justify, respectively. pad opposite side of string with spaces to return a string a minimum width.
 
-R:
+### R:
 
 ```
 gender <- c("m", “f", "m", NA, "m", "f", "m", "f")
@@ -303,163 +307,160 @@ giants <- read.fwf(
 
 ## 27. Dates and Times
 
-\# Calculating durations
+#### 1. Calculating durations
 
-SAS:
+##### SAS:
 
-infile '\myRfolder\giants.txt'  
+`Infile '\myRfolder\giants.txt'  
  MISSOVER DSD LRECL = 32767  
  input name $char14. @16 born mmddyy10. @27 died mmddyy10.;  
  proc print;  
- run;
+ run;`
 
-proc print;  
+`proc print;  
  format died born mmddyy10.;  
- run;
+ run;`
 
-data mylib.giants;  
+`data mylib.giants;  
    set mylib.giants;  
-    age  = \(died - born\)/365.2425;  
-    longAgo = \(today\(\) - died\)/365.2425;  
- run;
+    age  = (died - born)/365.2425;  
+    longAgo = (today() - died)/365.2425;  
+ run;`
 
-proc print;  
+`proc print;  
  format died born mmddyy10. age longAgo 5.2;  
- run;
+ run;`
 
-R:
+##### PYTHON:
 
-giants&lt;- read.fwf\(  
+##### R:
+
+`giants<- read.fwf(  
    file = "giants.txt",  
-   width = c\(15,11, 11\)  
-   col.names = c\("name", "born", "died"\)  
-   colClasses = c\("character", "character", "POSIXct"\),  
+   width = c(15,11, 11)  
+   col.names = c("name", "born", "died")  
+   colClasses = c("character", "character", "POSIXct"),  
    row.names = "name",  
    strip.white = TRUE;  
- \)
+ )`
 
-library\("lubridate"\)  
- giants$born &lt;- mdy\(giants$born\)
+`library("lubridate")  
+ giants$born <- mdy(giants$born)`
 
-as.POSIXct\(  
- c\(-2520460800, -3558556800, -2207952000, -1721347200, -2952201600\),  
- origin = "1960-01-01, tz = "UTC"\)
+`as.POSIXct(  
+ c(-2520460800, -3558556800, -2207952000, -1721347200, -2952201600),  
+ origin = "1960-01-01, tz = "UTC")`
 
-age&lt;- difftime\(died, born, units = "secs"\)  
- age &lt;- difftime\(died, born\) \# default age in days
+`age<- difftime(died, born, units = "secs")  
+ age <- difftime(died, born) # default age in days`
 
-giants$age &lt;- round\(as.numeric\(age/365.2425\), 2\)
+`giants$age <- round(as.numeric(age/365.2425), 2)`
 
-difftime\(now\(\), died\)/365.2425
+`difftime(now(), died)/365.2425`
 
-\# adding durations to date-time variables  
-SAS:  
-data mylib.giants;  
+#### 2. adding durations to date-time variables
+
+#####  SAS:
+
+  
+`data mylib.giants;  
   set mylib.giants;  
    died  = born +age;  
-   run;
+   run;`
 
-R:  
- age &lt;- as.duration\(  
- c\(2286057600, 2495664000, 2485382400, 2685916800, 1935705600\)  
- \)
+##### PYTHON: 
 
-\# accessing date-time elements  
-SAS:  
-data mylib.giants;  
+##### R:
+
+  
+` age <- as.duration(  
+ c(2286057600, 2495664000, 2485382400, 2685916800, 1935705600)  
+ )`
+
+#### 3. accessing date-time elements
+
+#####  SAS:
+
+  
+`data mylib.giants;  
   set mylib.giants;  
- myYear = YEAR\(born\);  
- myMonth =MONTH\(born\);  
- myDay = DAY\(born\);
+  myYear = YEAR(born);  
+  myMonth =MONTH(born);  
+  myDay = DAY(born);`
 
-R:
+##### PYTHON:
 
-year\(born\)  
-month\(born\)  
-day\(born\) \# day of month  
-wday\(born\) \# day of week
+##### R:
 
-\# creating date-time variables from elements  
-SAS:  
-data mylib.giants;  
+`year(born)  
+month(born)  
+day(born) # day of month  
+wday(born) # day of week`
+
+### 4.  creating date-time variables from elements
+
+####  SAS:
+
+  
+`data mylib.giants;  
   set mylib.giants;  
-  born = MDY\(myMonth, myDay, myYear\);  
-run;
+  born = MDY(myMonth, myDay, myYear);  
+run;`
 
-R:  
-myYear &lt;- year\(died\)  
-myMonth &lt;- month\(died\)  
-myDay &lt;- day\(died\)
 
-myDateString &lt;&lt;- paste\(myYear, myMonth, myDay, SEP = "/"\)  
-died2 &lt;- ymd\(myDateString\)
 
-\# logical comparisons with date-time variables
+#### PYTHON:
 
-SAS:  
-data born1900s;  
+#### R:
+
+  
+`myYear <- year(died)  
+myMonth <- month(died)  
+myDay <- day(died)`
+
+`myDateString <<- paste(myYear, myMonth, myDay, SEP = "/")  
+died2 <- ymd(myDateString)`
+
+#### 5. logical comparisons with date-time variables
+
+##### SAS:
+
+  
+`data born1900s;  
   set mylib.giants;  
-   if born &gt; "01jan1900"d;  
- run;
+   if born > "01jan1900"d;  
+ run;`
 
-R:
+##### R:
 
-giants\[born &gt;mdy\("1/1/1900"\), \]
+`giants[born >mdy("1/1/1900"), ]`
 
-\# formatting date-time output  
-proc format;  
+#### 6. formatting date-time output
+
+  
+`proc format;  
 picture myFormatI  
 LOW-HIGH = '%B %d, %Y is day %j of %Y'  
-\(DATATYPE = DATE\)  
-RUN;
+(DATATYPE = DATE)  
+RUN;`
 
-proc print data = mylib.giants;  
+`proc print data = mylib.giants;  
   var born;  
   format born myFormatI40.;  
-run;
+run;`
 
-data null;  
+`data null;  
   set mylib.giants;  
    put name $char14. born myFormatII34.;  
- run;
+ run;`
 
-\# two-digit years
+#### 7. two-digit years
 
-\# date-time conclusion  
-23. Loops  
-24. Functions1  
-8. Reshaping variables to observations and back
+#### 8. date-time conclusion
 
-SAS:
+##  28. Loops
 
-```
-proc transpose data = mylib.mydata
-out = mylib.mylong;
-var q1 - q4;
-by id workshop gender;
-run;
-```
+##  29. Functions 
 
-1. sorting data frames
-2. Converting data structure
-3. Character string manipulations
-4. Dates and Times
 
-\# Calculating durations
-
-\# adding durations to date-time variables
-
-\# accessing date-time elements
-
-\# creating date-time variables from elements
-
-\# logical comparisons with date-time variables
-
-\# formatting date-time output
-
-\# two-digit years
-
-\# date-time conclusion  
-23. Loops  
-24. Functions
 
