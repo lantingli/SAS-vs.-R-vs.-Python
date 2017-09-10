@@ -1,79 +1,56 @@
-# Selecting observations
+## R:
 
+### 1. Selecting observations by indexs
 
-\\# 1. Selecting observations by indexs
-
-   \# a. print all rows 
-
+#### a. print all rows
 
 ```
    print(mydata[ ]) ; 
-   print(mydata[, ]); print(mydata[1:8]) 
+   print(mydata[, ]); 
+   print(mydata[1:8])
 ```
 
-
-   \# b. Just observation 5: 
-   
-
+#### b. Just observation 5:
 
 ```
-print(mydata[5, ]) 
+print(mydata[5, ])
 ```
 
-
-
-   \# c. multiple: 
-   
-
+#### c. multiple
 
 ```
-print(mydata[ c(5,6,7,8), ]) 
+print(mydata[ c(5,6,7,8), ])
 ```
 
-
-
-   \# d. use indice: 
-
+#### d. use indice
 
 ```
    myMindices <- c(5,6,7,8) ; 
-   summary(mydata[myMindices, ]) 
+   summary(mydata[myMindices, ])
 ```
 
-
- \# e. print a list of index numbers for each observation 
- 
-
+#### e. print a list of index numbers for each observation
 
 ```
-data.frame(myindex = 1:8, mydata) 
+data.frame(myindex = 1:8, mydata)
 ```
 
-
-\# f. Select data using length as the end: 
-
-
+#### f. Select data using length as the end
 
 ```
 print(mydata[1:nrow(mydata), ])
 ```
 
+### 2. By row names
 
+#### a. Display row names
 
-\\# 2. By row names
+  
+`row.names (mydata)`
 
-\# a. Display row names: 
-row.names (mydata) 
+`print(mydata[ c("1", "2", "3", "4"), ])`
 
-
-```
-print(mydata[ c("1", "2", "3", "4"), ]) 
-```
-
-
-\# b. Assign new names: 
-
-
+#### b. Assign new names
 
 ```
 mynames <- c("Ann", "Cary", "Sue") ; 
@@ -84,64 +61,45 @@ myNames <- c("Ann", "Cary", "Sue");
 print(mydata[mynames, ])
 ```
 
+### 3. By logic
 
-\\#3. By logic
+#### a. 
 
+`myRows <- c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE) ; `
 
+`print(mydata[myRows,])`
 
-```
-a. 
-myRows <- c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE) ; 
-print(mydata[myRows,]) 
-```
+#### b. select first four rows using 1 and 0: 
 
+`myBinary <- c(1,1,1,1,0,0,0,0) ;`
 
+`print(mydata[myBinary, ])`
 
+`myRows <- as.logical(myBinary) ; `
 
+`print(mydata\[myRows, ])`
 
-```
-b. select first four rows using 1 and 0: 
-myBinary <- c(1,1,1,1,0,0,0,0) ; 
-print(mydata[myBinary, ]) 
-myRows <- as.logical(myBinary) ; 
-print(mydata\[myRows, ]) 
-```
+#### c. 
 
+`print(mydata[mydata$gender == "f", ]) `
 
+`print(mydata[which(mydata$gender == "f"), ])`
 
+#### d. using a saved vector 
 
+`myFemales <- which(mydata$gender == "f” ） `
 
-```
-c. print(mydata[mydata$gender == "f", ]) 
-print(mydata[which(mydata$gender == "f"), ]) 
-```
+`print(mydata[myFemales, ])`
 
+#### e. using %in% 
 
+`myRsas <- which(mydata$workshop %in% c("R", "SAS")); `
 
+`print(myRsas) ; `
 
+`print(mydata[myRsas, ])`
 
-```
-d. using a saved vector 
-myFemales <- which(mydata$gender == "f” ） 
-print(mydata\[myFemales, ]) 
-```
-
-
-
-
-
-```
-e. using %in% 
-myRsas <- which(mydata$workshop %in% c("R", "SAS")); 
-print(myRsas) ; 
-print(mydata[myRsas, ])
-```
-
-
-
-f. equvalent selections using different ways to refer to the variables 
-
-
+#### f. equvalent selections using different ways to refer to the variables
 
 ```
  print(subset(mydata, gender == 'f') )
@@ -152,12 +110,9 @@ f. equvalent selections using different ways to refer to the variables
   print(mydata[which(mydata$gender =="f"), ])
 ```
 
+### 4. By string search
 
-
-\\# 4. By string search
-
-\# search for row names that begin with “C” 
-
+search for row names that begin with “C”
 
 ```
 myCindices <- grep("^C", row.names(mydata), value = FALSE) 
@@ -165,41 +120,27 @@ myCindices <- grep("^C", row.names(mydata), value = FALSE)
 print(mydata[myCindices , ])
 ```
 
-
-
-\\# 5. By subset function
-
-
+###  5. By subset function
 
 ```
 subset(mydata, subset = gender == "f") 
 summary( subset(mydata, subset = gender = "m" & q4 ==5) ）
 ```
 
-
-
-\\# 6. Generating indices A to Z from two row names
-
-
+### 6. Generating indices A to Z from two row names
 
 ```
 myMaleA <- which(row.names(mydata) == "Bob") 
 myMaleZ <- which(row.names(mydata) == "Rich") print(mydata[myMaleA :myMaleZ, ])
 ```
 
-
-
-\\# 7. Creating a new data frame of selected observations
-
-
+### 7. Creating a new data frame of selected observations
 
 ```
 a. myMales <- mydata [5:8, ] 
 b. myMales <- mydata[which(mydata$gender =="m"), ] 
 c. myMales <- subset\(mydata, subset = gender == "m")
 ```
-
-
 
 
 

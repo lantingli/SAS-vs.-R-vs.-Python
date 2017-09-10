@@ -1,36 +1,42 @@
-iiiiiiiiiiiiii
+## 1.Tranforming variables
 
-1. Tranforming variables
-
-a. R：
+### R：
 
 ```
     setwd("c:/myRfolder") 
     load(file = "mydata.RData")
 ```
-   \# Transformation in the middle of another function
-```
-     summary(log(mydata$q4)
-```
-   \# Creating meanQ with dollar notation
 
-    mydata$meanQ <- (mydata$q1 +mydata$q2+mydata$q3+mydata$q4) /4
-
-   \# Creating two variables using transfrom
-
-    mydata <-- transform(mydata, score1 = (q1+q2)/2, score2 = (q3+q4)/2)
-
-   \# Creating meanQ using index notation on the left 
+#### a. Transformation in the middle of another function
 
 ```
-    load(file = "mydata.RData")
-      mydata <- data.frame(cbind(mydata, mean   q =0.))
-      mydata[7] <- (mydata$q1 +mydata$q2 +mydata$q3    +mydata$q4)/4
+summary(log(mydata$q4)
 ```
 
-b. PYTHON:
+#### b. Creating meanQ with dollar notation
 
-c. SAS:
+```
+mydata$meanQ <- (mydata$q1 +mydata$q2+mydata$q3+mydata$q4) /4
+```
+
+#### c. Creating two variables using transfrom
+
+```
+mydata <-- transform(mydata, score1 = (q1+q2)/2, score2 = (q3+q4)/2)
+```
+
+#### d. Creating meanQ using index notation on the left
+
+```
+load(file = "mydata.RData")
+mydata <- data.frame(cbind(mydata, mean   q =0.))
+mydata[7] <- (mydata$q1 +mydata$q2 +mydata$q3    +mydata$q4)/4
+```
+
+### PYTHON:
+
+### SAS:
+
 ```
     LIBNAME mylib 'C:\myRfolder';
       data mylib.mydataTransformed;
@@ -38,46 +44,49 @@ c. SAS:
         totalq = (q1+q2+q3+q4);
         logtot = log10(totalq);
         mean1 = (q1+q2+q3+q4)/4;
-        mean2 = mean(of q1 - q4);
+        mean2 = mean(of q1 - q4)
 ```
 
+## 2. Procedures or functions
 
+### R
 
-2. Procedures or functions
+#### a. Mean of the q variables
 
-
-  \#1)Applying the mean function
-     
-  \#a. R
-        
- \# Mean of the q variables
-     `mean(mydata[3:6], na.rm = TURE)`
-  \# Create mymatrix
-     `mymatrix <- as.matrix(mydata[ , 3:6])`
-  \#  Get mean of whole matrix
-     `mean(mymatrix, na.rm = TRUE)`
-  \# get mean of matrix columns.
-     `apply(mymatrix, 2,mean, na.rm= TRUE)`
-  \# get mean of matrix rows
   
+     `mean(mydata[3:6], na.rm = TURE)`
+
+####  b. Create mymatrix
+
+  
+     `mymatrix <- as.matrix(mydata[ , 3:6])`
+
+####  c. Get mean of whole matrix
+
+  
+     `mean(mymatrix, na.rm = TRUE)`
+
+####  d. get mean of matrix columns.
+
+  
+     `apply(mymatrix, 2,mean, na.rm= TRUE)`
+
+####  e. get mean of matrix rows
+
 ```
      apply(mymatrix, 1, mean, na.rm = TRUE)
      rowMeans (mymatrix, na.rm = TRUE)
 ```
 
-  \# add row means to mydata
-    
+#### f. add row means to mydata
 
 ```
      mydata$meanQ <- apply(mymatrix, 1, mean, na.rm = TRUE) 
      mydata$meanQ <- rowMeans (mymatrix, na.rm = TRUE)
-     mydata <- transform(mydata, meanQ =  rowMeans(mymatrix, na.rm = TRUE)
-     )
+     mydata <- transform(mydata, meanQ =  rowMeans(mymatrix, na.rm = TRUE))
 ```
 
-
-  \# Means of data frames & their vectors
-     
+#### g. Means of data frames & their vectors
 
 ```
      lapply(mydata [, 3:6], mean, na.rm = TRUE)
@@ -87,8 +96,7 @@ c. SAS:
      )
 ```
 
- \# Length of data frames & their vectors
- 
+#### h. Length of data frames & their vectors
 
 ```
     length(mydata[, "q3"])
@@ -97,64 +105,63 @@ c. SAS:
     !is.na(mydata [ , "q3"])
     sum(!is.na(mydata [, "q3"]))
 ```
- 
-   python:
-   SAS:
-```
-    data mylib.mydata;
-     set mylib.mydata;
-       myMean = MEAN(OF q1-q4);
-       myN = N(OF q1- q4);
-    run;
-    
-    proc means ;
-       var q1 - q4 myMean myN;
-    run;
-```
 
+### PYTHON:
 
+###  SAS:
 
-     \#Finding N or NVALID
-     R: 
-```
-     library("prettyR")
-     sapply(mydata, valid.n)
-     apply(myMatrix, 1, valid.n)
-     mydata$myQn <- apply(myMatrix,1, valid.n)
-```
+`data mylib.mydata;`
 
+`set mylib.mydata;`
 
+`myMean = MEAN(OF q1-q4);`
 
-     \#standardizing and ranking variables
-     
-     R:
+` myN = N(OF q1- q4);`
 
+`run;`
 
-```
-     myZs <- apply(mymatrix, 2,scale)
-     myRanks <- apply(mymatrix, 2, rank)
-```
+`proc means ;`
 
+`var q1 - q4 myMean myN;`
 
-     
-     PYTHON:
-     SAS:
+`run;`
+
+## 3. Finding N or NVALID
+
+### R:
+
+`library("prettyR")`
+
+`sapply(mydata, valid.n)`
+
+`apply(myMatrix, 1, valid.n)`
+
+`mydata$myQn <- apply(myMatrix,1, valid.n)`
+
+## 4. Standardizing and ranking variables
+
+### R:
+
+`myZs <- apply(mymatrix, 2,scale)`
+
+`myRanks <- apply(mymatrix, 2, rank)`
+
+### PYTHON:
+
+### SAS:
+
 ```
      proc standard data = mylib.mydata;
        mean = 0 std = 1 out = myzs;
      run;
-   
+
      proc rank data = mylib.mydata out = myranks;
      run;
 ```
 
+## 5. applying your own functions
 
-
- \# applying your own functions
-
-  `apply(mymatrix, 2, mean, sd) # No good`
-   
- 
+`apply(mymatrix, 2, mean, sd) # No good`
 
 ```
     mystats <function(x) {
@@ -168,29 +175,27 @@ c. SAS:
          })
 ```
 
+## 6. Conditional transformations
 
-3. Conditional transformations
+### R
 
-     \# the ifelse function
-     
-      \#a. R
-      
+`setwd("c:/myRfolder")`
 
-```
-      setwd("c:/myRfolder")
-      load(file = "mydata.RData")
-      mydata$q4Sagree <- ifelse(q4 ==5, 1,0)
-      mydata$q4agree <- as.numeric(q4 ==5)
-      mydata$q4agree <- ifelse(q4 >= 4, 1,0)
-      mydata$ws1agree <- ifelse(workshop = 1& q4 >= 4, 1,0)
-      mydata$score <- ifelse(gender =="f", (2*q1) +q2, (3*q1) +q2)
-```
+`load(file = "mydata.RData")`
 
+`mydata$q4Sagree <- ifelse(q4 ==5, 1,0)`
 
-      \#b. python
-      \#c. SAS
-      
+`mydata$q4agree <- as.numeric(q4 ==5)`
 
+`mydata$q4agree <- ifelse(q4 >= 4, 1,0)`
+
+`mydata$ws1agree <- ifelse(workshop = 1& q4 >= 4, 1,0)`
+
+`mydata$score <- ifelse(gender =="f", (2*q1) +q2, (3*q1) +q2)`
+
+### PYTHON:
+
+### SAS:
 
 ```
       LIBNAME mylib 'C:\myRfolder';
@@ -208,15 +213,15 @@ c. SAS:
          run;
 ```
 
+## 7. cutting functions
 
+### R:
 
-  \# 4.  cutting functions
-  \#a. R
-  
-  `attach(mydata100)`
-  
-\#an inefficient approach
- ```    
+`attach(mydata100)`
+
+#### a. an inefficient approach
+
+```
      postgroup <- posttest 
      postgroup <- ifelse(posttest <60           , 1, postgroup)
      postgroup <- ifelse(posttest >= 60 & posttest <70, 2, postgroup)
@@ -225,7 +230,8 @@ c. SAS:
      postgroup <- ifelse(posttest >= 90,                5, postgroup)
 ```
 
-\#an efficient approach
+#### b. an efficient approach
+
 ```
     postgroup <- 
      ifelse(posttest <60                 , 1,
@@ -236,8 +242,8 @@ c. SAS:
      ))))
     table(postgroup)
 ```
-\# Logical approach
-  
+
+####  c. Logical approach
 
 ```
    postgroup <- 1 +
@@ -248,8 +254,6 @@ c. SAS:
       table(postgroup)
 ```
 
-
-
 ```
 library("Hmisc"）
 postgroup <- cut2(posttest, c(60,70, 80, 90))
@@ -258,13 +262,9 @@ postgroup<- cut2(posttest, g = 5)
 postgroup <- cut2(postest, m =25)
 ```
 
+### PYTHON:
 
-
-
-  \#b. python
-  \#c. SAS
-  
- 
+### SAS:
 
 ```
     data mylib.mydataTransformed;
@@ -275,60 +275,61 @@ postgroup <- cut2(postest, m =25)
     else if (posttest >= 80 & posttest <90) then postgroup = 4;
     else if (posttest >= 90) then postegroup = 5;
     run;
- 
+
     proc freq;
       tables postgroup;
     run;
- 
+
     proc rank out = mylib.mydataTransformed Groups = 5;
       var posttest;
     run;
 ```
 
+## 8. Multiple conditional transformation
 
-     
+### R:
 
-5. Multiple conditional transformation
+#### a. Using the ifelse approach
 
-\#R
+`mydata$score1 <- ifelse(gender == "f", (2`_`q1) +q2, #score1 for females;  
+  (20`_`q1+q2)  # score1 for males  
+  )`
 
-\# using the ifelse approach
+`mydata$score2 <- ifelse(gender =="f",   
+  (3`_`q1+q2), # score2 for females  
+   (30 `_`q1 +q2) # score 2 for males  
+   )`
 
-  mydata$score1 <- ifelse(gender == "f", (2*q1) +q2, #score1 for females;
-  (20*q1+q2)  # score1 for males
-  )
-  
-  mydata$score2 <- ifelse(gender =="f", 
-  (3*q1+q2), # score2 for females
-   (30 *q1 +q2) # score 2 for males
-   )
-   
-\# using the index approach
-  load(file = "mydata.Rdata")
-      \#create names in data frame
-
-
-```
-      mydata <- data.frame(mydata, score1 = NA, score2 = NA)
-       attach(mydata)
-       \# find which are males and females
-       gals <- which(gender == "f")
-       guys <- which(gender =="m")
-       mydata[gals, "socre1"] <- 2*q1[gals] +q2[gals]
-       mydata[gals, "score2"] <- 3 *q1[gals] +q2[gals]
-       mydata[guys, "score1"] <- 20* q1[guys] + q2 *[guys]
-       mydata[guys, "score2"] <- 30 * q1[guys] +q2[guys]
-       
-        \# clean up
-        rm(guys, gals)
-```
-
+#### b. Using the index approach
 
   
-\#PYTHON
+`load(file = "mydata.Rdata")  
+ #create names in data frame`
+
+`mydata <- data.frame(mydata, score1 = NA, score2 = NA)`
+
+`attach(mydata)`
+
+`\# find which are males and females`
+
+`gals <- which(gender == "f")`
+
+`guys <- which(gender =="m")`
+
+`mydata[gals, "socre1"] <- 2*q1[gals] +q2[gals]`
+
+`mydata[gals, "score2"] <- 3 *q1[gals] +q2[gals]`
+
+`mydata[guys, "score1"] <- 20* q1[guys] + q2 *[guys]`
+
+`mydata[guys, "score2"] <- 30 * q1[guys] +q2[guys]`
+
+`\# clean up`
+
+`rm(guys, gals)`
+
+\#PYTHON  
 \# SAS
-
-
 
 ```
     data mylib.mydata;
@@ -344,15 +345,10 @@ postgroup <- cut2(postest, m =25)
     run;
 ```
 
+1. Missing values
 
-
-
-
-6. Missing values
-
-\# when importing numeric data, R reads blanks as missing(except when blanks are delimiters). R reads the string NA as missing for both numeric and character variables. when importing a text file, both SAS and SPSS would recognize a period as a missing value for numeric variables. R will instead read the whole variable as a character vector!
-\# SAS 
-
+\# when importing numeric data, R reads blanks as missing\(except when blanks are delimiters\). R reads the string NA as missing for both numeric and character variables. when importing a text file, both SAS and SPSS would recognize a period as a missing value for numeric variables. R will instead read the whole variable as a character vector!  
+\# SAS
 
 ```
     data mylib.mydata;
@@ -374,41 +370,37 @@ postgroup <- cut2(postest, m =25)
 
 \# R
 
-
 ```
 mydataNA <- read.table("mydataNA.txt")
   \#read it so that ".", 9, 99 are missing.
   mydataNA <- read.table("mydtaNA.txt", 
     na.strings = c(".", "9", "99"))
-    
+
     \# convert 9 and 99 manually
     mydataNA <- read.table("mydataNA.txt",
     na.string = ".")
     mydataNA [mydataNA ==9 | mydataNA ==99] <-NA
     \# substitute the mean for missing values
      mydataNA$q1 [is.na(mydataNA$q1)] <- mean(mydataNA$q1, na.rm = TRUE)
-
 ```
-
 
     \eliminate observations with any NAs
     `myNoMissing <- na.omit(mydataNA)`
-    
+
 
      \# finding complete observations
-     
+
      `complete.cases(mydataNA)`
      \# use that result to select complete cases
       `myNoMissing <- mydataN[complete.cases(mydataNA), ]`
      \# use that result to select incomplete cases
      `myincomplete <- mydataNA [!complete.cases(mydataNA), ]`
-     
+
 
      \# when "99" has meaning 
      `mydataNA <- read.table("mydataNA.txt", na.strings = ".")`
-     
+
      \# assign missing values for q variables
-     
 
 ```
       mydataNA$q1 [q1 == 9] <- NA
@@ -417,16 +409,14 @@ mydataNA <- read.table("mydataNA.txt")
       mydataNA$q4 [q4 == 99] <- NA
 ```
 
-
-      
-      \#use our funcion
-
-
+```
+  \#use our funcion
+```
 
 ```
        my9isNA <- function(X){x[x==9] <- NA; x}
        my99isNA <- function(x) {x[x==99]<- NA; x}
-       
+
        mydataNA[3:4] <- lapply(mydataNA[3:4, my9isNA)
        mydataNA[5:6] <- lapply(mydataNA[5:6], my99isNA)
 ```
@@ -435,40 +425,36 @@ PYTHON
 
 pandas uses floating value NaN to represent missing data in both floating as well as in non-floating point arrays.
 
-In: string_data = series(['aardvark', 'articoke', np.nan, 'avocado'])
+In: string\_data = series\(\['aardvark', 'articoke', np.nan, 'avocado'\]\)
 
-string_data.isnull()
+string\_data.isnull\(\)
 
+1. Renaming variables
 
+   \# R
 
-7. Renaming variables
- 
-    \# R
+   \# advanced renaming
 
-      \# advanced renaming 
-   
-     \# using the data editor
-       fix(mydata)
-     \# Restore original names for next example
-        names(mydata) <- c("workshop", "gender", "q1", "q2", "q3", "q4")
-      
-      \# using the reshape2 pakage
-        library("reshape2")
-        myChanges <- c(q1 = "x1", q2 = "x2", q3 = "x3", q4 = "x4")
-        mydata <- rename(mydata, myChanges)
-      
-      \# the standard R approach
-        names(mydata) <- c("workshop", "gender", "x1", "x2", "x3", "x4")
-        
-      \#Using the edit function
-        names (mydata) <- edit(names(mydata))
-      
-   \#python
+   \# using the data editor  
+       fix\(mydata\)  
+     \# Restore original names for next example  
+        names\(mydata\) &lt;- c\("workshop", "gender", "q1", "q2", "q3", "q4"\)
+
+   \# using the reshape2 pakage  
+        library\("reshape2"\)  
+        myChanges &lt;- c\(q1 = "x1", q2 = "x2", q3 = "x3", q4 = "x4"\)  
+        mydata &lt;- rename\(mydata, myChanges\)
+
+   \# the standard R approach  
+        names\(mydata\) &lt;- c\("workshop", "gender", "x1", "x2", "x3", "x4"\)
+
+   \#Using the edit function  
+        names \(mydata\) &lt;- edit\(names\(mydata\)\)
+
+   \#python  
    \#sas
-   
- \# renaming by index
- 
 
+   \# renaming by index
 
 ```
    mynames <- names(mydata)
@@ -480,10 +466,7 @@ string_data.isnull()
    names(mydata) <- mynames
 ```
 
-
-
 \# renaming by column name
- 
 
 ```
 mynames <- names(mydata)
@@ -494,35 +477,32 @@ mynames <- names(mydata)
  names(mydata) <- mynames
 ```
 
-
- 
-
 \# renaming many sequentially numbered variable
 
-names(mydata)
-myXs <- paste("x", 1:4, sep = "")
-myA <- which(names(mydata) == "q1")
-myZ <- which(names(mydata) =="q4")
+names\(mydata\)  
+myXs &lt;- paste\("x", 1:4, sep = ""\)  
+myA &lt;- which\(names\(mydata\) == "q1"\)  
+myZ &lt;- which\(names\(mydata\) =="q4"\)
 
-names(mydata) [myA:myZ] < myXs(mydata)
+names\(mydata\) \[myA:myZ\] &lt; myXs\(mydata\)
 
 \# SAS
+
 ```
      data mylib.mydata;
      rename q1 - q4 = x1-x4;
      run;
 ```
 
+1. Recording variables
 
+   \# recoding a few variables
 
-8. Recording variables
+   \# recoding many variables
 
-      \# recoding a few variables
-
-      \# recoding many variables
-
-       \#R
-
+   ```
+   \#R
+   ```
 
 ```
        library("car")
@@ -532,13 +512,11 @@ names(mydata) [myA:myZ] < myXs(mydata)
        mydata$qr4 <- recode(q4, 1=2; 5=4")
 ```
 
+```
+   \#not sure what this part is about!!!
 
-       
-       \#not sure what this part is about!!!
-      
-      \#SAS
-      
-    
+  \#SAS
+```
 
 ```
   LIBNAME mylib 'C:\myRfolder';
@@ -550,7 +528,7 @@ names(mydata) [myA:myZ] < myXs(mydata)
         value agreement 1= "Disagree" 2= "Disagree"
           3 = "Neutral" 4 = "Agree"; 
         run;
-        
+
       data mylib.mydata;
         set mylib.mydata;
           array q q1 - q4;
@@ -563,7 +541,7 @@ names(mydata) [myA:myZ] < myXs(mydata)
           end;
           format q1 - q4 agreement;
         run;
-        
+
         \#this will use the recorded formats automatically
         proc freq;
           tables q1 - q4;
@@ -575,31 +553,27 @@ names(mydata) [myA:myZ] < myXs(mydata)
         proc univariate;
           var qr1 - qr4;
         run;
-            
-
 ```
 
+1. indicator or Dummy variables  
+   \#R
 
-9. indicator or Dummy variables
-\#R
+   load\("mydata100.RData"\)  
+   attach\(mydata100\)  
+   r &lt;- as.numeric\(workshop == "R"\)  
+   sas &lt;- as.numeric\(workshop == "SAS"\)  
+   spss &lt;- as.numeric\(workshop == "spss"\)  
+   stata &lt;- as.numeric\(workshop == "Stata"\)  
+   head\(data.frame\(workshop, r, sas, spss, stata\)\)  
+   lm\(posttest ~ pretest +sas+spss+stata\)  
+   lm\(posttest ~ prestest +workshop\)  
+   workshop &lt;- relevel \(workshop, "SAS"\)  
+   coef\(lm\(posttest ~ pretest +workshop\)\)  
+   library\("nmet"\)  
+   head\(class.ind\(workshop\)\)
 
- load("mydata100.RData")
- attach(mydata100)
- r <- as.numeric(workshop == "R")
- sas <- as.numeric(workshop == "SAS")
- spss <- as.numeric(workshop == "spss")
- stata <- as.numeric(workshop == "Stata")
- head(data.frame(workshop, r, sas, spss, stata))
- lm(posttest ~ pretest +sas+spss+stata)
- lm(posttest ~ prestest +workshop)
- workshop <- relevel (workshop, "SAS")
- coef(lm(posttest ~ pretest +workshop))
- library("nmet")
- head(class.ind(workshop))
- 
-\#python
-\#SAS 
-
+\#python  
+\#SAS
 
 ```
  data temp;
@@ -609,54 +583,38 @@ names(mydata) [myA:myZ] < myXs(mydata)
     spss = workshop = 3;
     stat = workshop = 4;
   run;
-  
+
   proc reg;
     model posttest = pretest sas spss stata;
   run;
 ```
 
-
-    
-
-10. Keeping and Dropping variables
+1. Keeping and Dropping variables
 
 \# R
 
 \#using variable selection
 
-
-
 ```
 myleft <- mydata[, 1:4]
 ```
 
-
-
 \#using NULL
-
 
 ```
 myleft <- mydata
 myleft$q3 <-mydata$q4 <- NULL
 ```
 
-
-
 \# PYTHON
 
 \\#1. reindexing:
 
-
 ```
-
 in: obj = series [(4.5, 7.2, -5.3, 3.6], index = ['d', 'b', 'a', 'c'])
 ```
 
-
-
 calling reindex on this series rearranges the data according to the new index, introducing missing if any index values were not already present:
-
-
 
 ```
 in: obj2 = obj.reindex(['a', 'b', 'c', 'd', 'e'])
@@ -676,54 +634,34 @@ in: obj3 = series(['blue', 'purple', 'yellow'], index = [0,2,4])
 obj3.reindex (range(6), method = 'ffill')
 ```
 
+reindex method \(interpolation\) options
 
+ffill or pad: fill \(or carry\) values forward  
+bfill or backfill: fill\(or carry\) values backford
 
-reindex method (interpolation) options
-
-ffill or pad: fill (or carry) values forward
-bfill or backfill: fill(or carry) values backford
-
-With dataframe, reindex can alter either the (row) index, columns, or both. when passed just a sequence, the rows are reindexed in the result:
+With dataframe, reindex can alter either the \(row\) index, columns, or both. when passed just a sequence, the rows are reindexed in the result:
 
 \\# dropping entries from an axis
 
 dropping one or more entries from an axis is easy if you have an index array or list without those entries. as that can require a bit of munging and set logic, the drop method will return a new object with the indicated value or values deleted from an axis:
-
-
 
 ```
 in: obj= series(np.arrange(5.), index = ['a', 'b', 'c', 'd', 'e'])
 new_obj = obj.drop ('c')
 ```
 
-
-
 with dataframe, index values can be deleted from either axis:
-
-
 
 ```
 in : data = dataframe(np.arrange(16).reshape((4,4)),
  index = ['ohio', 'colorado', 'utah', 'new york'], columns = ['one' , 'two', 'three', 'four'])
- 
+
  data.drop (['Colorado', 'ohio']
  data.drop('two', axis = 1)
  data.drop('two', 'four'], axis = 1)
-
 ```
 
-
-
-
-
-
-
-
-
-
 \# SAS
-
-
 
 ```
 data myleft;
@@ -735,39 +673,7 @@ data myleft;
   set mydata;
     drop q3 q4;
 run;
-
 ```
-
-  
- 
-   
-
-
-
-
-
-   
-   
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
