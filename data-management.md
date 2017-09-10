@@ -53,25 +53,21 @@ mydata[7] <- (mydata$q1 +mydata$q2 +mydata$q3    +mydata$q4)/4
 
 #### a. Mean of the q variables
 
-  
      `mean(mydata[3:6], na.rm = TURE)`
 
-####  b. Create mymatrix
+#### b. Create mymatrix
 
-  
      `mymatrix <- as.matrix(mydata[ , 3:6])`
 
-####  c. Get mean of whole matrix
+#### c. Get mean of whole matrix
 
-  
      `mean(mymatrix, na.rm = TRUE)`
 
-####  d. get mean of matrix columns.
+#### d. get mean of matrix columns.
 
-  
      `apply(mymatrix, 2,mean, na.rm= TRUE)`
 
-####  e. get mean of matrix rows
+#### e. get mean of matrix rows
 
 ```
      apply(mymatrix, 1, mean, na.rm = TRUE)
@@ -108,7 +104,7 @@ mydata[7] <- (mydata$q1 +mydata$q2 +mydata$q3    +mydata$q4)/4
 
 ### PYTHON:
 
-###  SAS:
+### SAS:
 
 `data mylib.mydata;`
 
@@ -116,7 +112,7 @@ mydata[7] <- (mydata$q1 +mydata$q2 +mydata$q3    +mydata$q4)/4
 
 `myMean = MEAN(OF q1-q4);`
 
-` myN = N(OF q1- q4);`
+`myN = N(OF q1- q4);`
 
 `run;`
 
@@ -243,7 +239,7 @@ mydata[7] <- (mydata$q1 +mydata$q2 +mydata$q3    +mydata$q4)/4
     table(postgroup)
 ```
 
-####  c. Logical approach
+#### c. Logical approach
 
 ```
    postgroup <- 1 +
@@ -291,20 +287,20 @@ postgroup <- cut2(postest, m =25)
 
 #### a. Using the ifelse approach
 
-`mydata$score1 <- ifelse(gender == "f", (2`_`q1) +q2, #score1 for females;  
-  (20`_`q1+q2)  # score1 for males  
+`mydata$score1 <- ifelse(gender == "f", (2q1) +q2, #score1 for females;    
+  (20q1+q2)  # score1 for males    
   )`
 
-`mydata$score2 <- ifelse(gender =="f",   
-  (3`_`q1+q2), # score2 for females  
-   (30 `_`q1 +q2) # score 2 for males  
+`mydata$score2 <- ifelse(gender =="f",     
+  (3q1+q2), # score2 for females    
+   (30q1 +q2) # score 2 for males    
    )`
 
 #### b. Using the index approach
 
-  
-`load(file = "mydata.Rdata")  
- #create names in data frame`
+l`oad(file = "mydata.Rdata")`
+
+`create names in data frame`
 
 `mydata <- data.frame(mydata, score1 = NA, score2 = NA)`
 
@@ -328,8 +324,9 @@ postgroup <- cut2(postest, m =25)
 
 `rm(guys, gals)`
 
-\#PYTHON  
-\# SAS
+### PYTHON：
+
+###  SAS：
 
 ```
     data mylib.mydata;
@@ -342,13 +339,14 @@ postgroup <- cut2(postest, m =25)
     score1 = (20*q1) +q2;
     score2 = (30*q1)+q2;
     end;
-    run;
+    run；
 ```
 
-1. Missing values
+## 9. Missing values
 
-\# when importing numeric data, R reads blanks as missing\(except when blanks are delimiters\). R reads the string NA as missing for both numeric and character variables. when importing a text file, both SAS and SPSS would recognize a period as a missing value for numeric variables. R will instead read the whole variable as a character vector!  
-\# SAS
+When importing numeric data, R reads blanks as missing\(except when blanks are delimiters\). R reads the string NA as missing for both numeric and character variables. when importing a text file, both SAS and SPSS would recognize a period as a missing value for numeric variables. R will instead read the whole variable as a character vector!
+
+###   SAS
 
 ```
     data mylib.mydata;
@@ -368,50 +366,59 @@ postgroup <- cut2(postest, m =25)
         end;
 ```
 
-\# R
+### PYTHON:
 
-```
-mydataNA <- read.table("mydataNA.txt")
-  \#read it so that ".", 9, 99 are missing.
-  mydataNA <- read.table("mydtaNA.txt", 
-    na.strings = c(".", "9", "99"))
+### R:
 
-    \# convert 9 and 99 manually
-    mydataNA <- read.table("mydataNA.txt",
-    na.string = ".")
-    mydataNA [mydataNA ==9 | mydataNA ==99] <-NA
-    \# substitute the mean for missing values
-     mydataNA$q1 [is.na(mydataNA$q1)] <- mean(mydataNA$q1, na.rm = TRUE)
-```
+`mydataNA <- read.table("mydataNA.txt")`
 
-    \eliminate observations with any NAs
-    `myNoMissing <- na.omit(mydataNA)`
+\\#read it so that ".", 9, 99 are missing.
 
+`mydataNA <- read.table("mydtaNA.txt",  na.strings = c(".", "9", "99"))`
 
-     \# finding complete observations
+\\# convert 9 and 99 manually
 
-     `complete.cases(mydataNA)`
-     \# use that result to select complete cases
-      `myNoMissing <- mydataN[complete.cases(mydataNA), ]`
-     \# use that result to select incomplete cases
-     `myincomplete <- mydataNA [!complete.cases(mydataNA), ]`
+`mydataNA <- read.table("mydataNA.txt", na.string = ".")`
 
+`mydataNA [mydataNA ==9 | mydataNA ==99] <-NA`
 
-     \# when "99" has meaning 
-     `mydataNA <- read.table("mydataNA.txt", na.strings = ".")`
+\\# substitute the mean for missing values
 
-     \# assign missing values for q variables
+ `mydataNA$q1 [is.na(mydataNA$q1)] <- mean(mydataNA$q1, na.rm = TRUE)`
 
-```
-      mydataNA$q1 [q1 == 9] <- NA
-      mydataNA$q2[q2 ==9] <- NA
-      mydataNA$q3 [q3 ==99] <- NA
-      mydataNA$q4 [q4 == 99] <- NA
-```
+\\#eliminate observations with any NAs
 
-```
-  \#use our funcion
-```
+`myNoMissing <- na.omit(mydataNA)`
+
+\\# finding complete observations
+
+`complete.cases(mydataNA)`
+
+\\# use that result to select complete cases
+
+`myNoMissing <- mydataN[complete.cases(mydataNA), ]`
+
+\\# use that result to select incomplete cases
+
+`myincomplete <- mydataNA [!complete.cases(mydataNA), ]`
+
+\\# when "99" has meaning 
+
+`mydataNA <- read.table("mydataNA.txt", na.strings = ".")`
+
+\\# assign missing values for q variables
+
+`mydataNA$q1 [q1 == 9] <- NA`
+
+`mydataNA$q2[q2 ==9] <- NA`
+
+`mydataNA$q3 [q3 ==99] <- NA`
+
+`mydataNA$q4 [q4 == 99] <- NA`
+
+## 10. Use our function
+
+### R:
 
 ```
        my9isNA <- function(X){x[x==9] <- NA; x}
@@ -421,7 +428,7 @@ mydataNA <- read.table("mydataNA.txt")
        mydataNA[5:6] <- lapply(mydataNA[5:6], my99isNA)
 ```
 
-PYTHON
+### PYTHON
 
 pandas uses floating value NaN to represent missing data in both floating as well as in non-floating point arrays.
 
@@ -429,32 +436,41 @@ In: string\_data = series\(\['aardvark', 'articoke', np.nan, 'avocado'\]\)
 
 string\_data.isnull\(\)
 
-1. Renaming variables
+## 11. Renaming variables
 
-   \# R
+### R:
 
-   \# advanced renaming
+####    a. using the data editor
 
-   \# using the data editor  
-       fix\(mydata\)  
-     \# Restore original names for next example  
-        names\(mydata\) &lt;- c\("workshop", "gender", "q1", "q2", "q3", "q4"\)
+  
+   ` fix(mydata)  
+    Restore original names for next example  
+    names(mydata) <- c("workshop", "gender", "q1", "q2", "q3", "q4")`
 
-   \# using the reshape2 pakage  
-        library\("reshape2"\)  
-        myChanges &lt;- c\(q1 = "x1", q2 = "x2", q3 = "x3", q4 = "x4"\)  
-        mydata &lt;- rename\(mydata, myChanges\)
+####    b. using the reshape2 pakage
 
-   \# the standard R approach  
-        names\(mydata\) &lt;- c\("workshop", "gender", "x1", "x2", "x3", "x4"\)
+  
+     `library("reshape2")  
+    myChanges <- c(q1 = "x1", q2 = "x2", q3 = "x3", q4 = "x4")  
+    mydata <- rename(mydata, myChanges)`
 
-   \#Using the edit function  
-        names \(mydata\) &lt;- edit\(names\(mydata\)\)
+####     c.  the standard R approach
 
-   \#python  
-   \#sas
+  
+     `names(mydata) <- c("workshop", "gender", "x1", "x2", "x3", "x4")`
 
-   \# renaming by index
+####     d. Using the edit function
+
+  
+    ` names (mydata) <- edit(names(mydata))`
+
+### PYTHON:
+
+###  SAS:
+
+## 12. Renaming by index
+
+### R: 
 
 ```
    mynames <- names(mydata)
@@ -466,10 +482,10 @@ string\_data.isnull\(\)
    names(mydata) <- mynames
 ```
 
-\# renaming by column name
+a. renaming by column name
 
 ```
-mynames <- names(mydata)
+ mynames <- names(mydata)
  mynames[mynames == "q1"] <- "x1"
  mynames[mynames =="q2"] <- x2"
  mynames [mynames == "q3"]<- "x3"
@@ -477,46 +493,47 @@ mynames <- names(mydata)
  names(mydata) <- mynames
 ```
 
-\# renaming many sequentially numbered variable
+b. renaming many sequentially numbered variable
 
-names\(mydata\)  
-myXs &lt;- paste\("x", 1:4, sep = ""\)  
-myA &lt;- which\(names\(mydata\) == "q1"\)  
-myZ &lt;- which\(names\(mydata\) =="q4"\)
+`names(mydata)  
+ myXs <- paste("x", 1:4, sep = "")  
+ myA <- which(names(mydata) == "q1")  
+ myZ <- which(names(mydata) =="q4")`
 
-names\(mydata\) \[myA:myZ\] &lt; myXs\(mydata\)
+`names(mydata) [myA:myZ] < myXs(mydata)`
 
-\# SAS
+### PYTHON:
+
+### SAS:
 
 ```
      data mylib.mydata;
      rename q1 - q4 = x1-x4;
      run;
+     
 ```
 
-1. Recording variables
+## 13. Recording variables
 
-   \# recoding a few variables
 
-   \# recoding many variables
 
-   ```
-   \#R
-   ```
+a.  recoding many variables
 
-```
-       library("car")
-       mydata$qr1 <- recode(q1, "1=2; 5= 4")
-       mydata$qr2 <- recode(q2, "1=2; 5= 4")
-       mydata$qr3 <- recode(q3, "1=2; 5=4")
-       mydata$qr4 <- recode(q4, 1=2; 5=4")
-```
+### R:
 
-```
-   \#not sure what this part is about!!!
+library\("car"\)
 
-  \#SAS
-```
+mydata$qr1 &lt;- recode\(q1, "1=2; 5= 4"\)
+
+mydata$qr2 &lt;- recode\(q2, "1=2; 5= 4"
+
+mydata$qr3 &lt;- recode\(q3, "1=2; 5=4"\)
+
+mydata$qr4 &lt;- recode\(q4, 1=2; 5=4"\)
+
+### PYTHON:
+
+### SAS: 
 
 ```
   LIBNAME mylib 'C:\myRfolder';
@@ -555,25 +572,27 @@ names\(mydata\) \[myA:myZ\] &lt; myXs\(mydata\)
         run;
 ```
 
-1. indicator or Dummy variables  
-   \#R
+## 14. Indicator or Dummy variables
 
-   load\("mydata100.RData"\)  
-   attach\(mydata100\)  
-   r &lt;- as.numeric\(workshop == "R"\)  
-   sas &lt;- as.numeric\(workshop == "SAS"\)  
-   spss &lt;- as.numeric\(workshop == "spss"\)  
-   stata &lt;- as.numeric\(workshop == "Stata"\)  
-   head\(data.frame\(workshop, r, sas, spss, stata\)\)  
-   lm\(posttest ~ pretest +sas+spss+stata\)  
-   lm\(posttest ~ prestest +workshop\)  
-   workshop &lt;- relevel \(workshop, "SAS"\)  
-   coef\(lm\(posttest ~ pretest +workshop\)\)  
-   library\("nmet"\)  
-   head\(class.ind\(workshop\)\)
+###  R:
 
-\#python  
-\#SAS
+`load("mydata100.RData")  
+attach(mydata100)  
+r <- as.numeric(workshop == "R")  
+sas <- as.numeric(workshop == "SAS")  
+spss <- as.numeric(workshop == "spss")  
+stata <- as.numeric(workshop == "Stata")  
+head(data.frame(workshop, r, sas, spss, stata))  
+lm(posttest ~ pretest +sas+spss+stata)  
+lm(posttest ~ prestest +workshop)  
+workshop <- relevel (workshop, "SAS")  
+coef(lm(posttest ~ pretest +workshop))  
+library("nmet")  
+head(class.ind(workshop))`
+
+### PYTHON:
+
+###  SAS:
 
 ```
  data temp;
@@ -587,30 +606,31 @@ names\(mydata\) \[myA:myZ\] &lt; myXs\(mydata\)
   proc reg;
     model posttest = pretest sas spss stata;
   run;
+  
 ```
 
-1. Keeping and Dropping variables
+## 15. Keeping and Dropping variables
 
-\# R
+### R:
 
-\#using variable selection
+#### a. using variable selection
 
 ```
 myleft <- mydata[, 1:4]
 ```
 
-\#using NULL
+#### b. using NULL
 
 ```
 myleft <- mydata
 myleft$q3 <-mydata$q4 <- NULL
 ```
 
-\# PYTHON
+### PYTHON:
 
-\\#1. reindexing:
+#### a. reindexing:
 
-```
+```py
 in: obj = series [(4.5, 7.2, -5.3, 3.6], index = ['d', 'b', 'a', 'c'])
 ```
 
@@ -641,7 +661,7 @@ bfill or backfill: fill\(or carry\) values backford
 
 With dataframe, reindex can alter either the \(row\) index, columns, or both. when passed just a sequence, the rows are reindexed in the result:
 
-\\# dropping entries from an axis
+#### b. dropping entries from an axis
 
 dropping one or more entries from an axis is easy if you have an index array or list without those entries. as that can require a bit of munging and set logic, the drop method will return a new object with the indicated value or values deleted from an axis:
 
@@ -661,7 +681,7 @@ in : data = dataframe(np.arrange(16).reshape((4,4)),
  data.drop('two', 'four'], axis = 1)
 ```
 
-\# SAS
+###  SAS:
 
 ```
 data myleft;
