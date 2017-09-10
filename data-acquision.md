@@ -136,6 +136,12 @@ mydata<- read.csv(myURL)
 
 ## 4. Reading text from the clipboard
 
+### SAS: \(NEED TO CONFIRM\)
+
+### PYTHON:\(NEED TO CONFIRM\)
+
+## R：
+
 #### ** a. Copy a column of numbers or words, then :**
 
 ```
@@ -337,6 +343,8 @@ run;
 
 ## 10. Reading from relational databases
 
+### R: 
+
 ```
 library("RODBC") 
 myConnection <- odbcConnectExcel("mydata.xls") 
@@ -344,7 +352,13 @@ mydata <- sqlFetch(myConnection, "Sheet1")
 close(myConnection)
 ```
 
-## 11. Reading data from SAS
+### PYTHON:
+
+### SAS:
+
+## 
+
+## 11. Reading data from SAS \(only for R\)
 
 ```
 library("foreign")   
@@ -354,7 +368,7 @@ library("Hmisc")
 mydata <- sasxport.get("mydata.xpt")
 ```
 
-## 12. Write data from SAS and read it into R
+## 12. Write data from SAS and read it into R\(only for R\)
 
 ```
 LIBNAME mylib 'C:\myRfolder'; 
@@ -428,7 +442,7 @@ quote = FALSE, sep = "\t", na = " ",
 row.names = TRUE, col.names = TRUE)
 ```
 
-## 14. Viewing a text fileViewing a text file
+## 14. Viewing a text fileViewing a text file\(only for R\)
 
 ```
 file.show("mydataFromR.csv")
@@ -460,6 +474,8 @@ RUN;
 
 ## 16. Writing to relational databases
 
+### R:
+
 ```
 library("RODBC") 
 myConnection <- odbcConnectExcel("mydataFromR.xls", readOnly = FALSE) 
@@ -467,7 +483,13 @@ sqlSave(myConnection, mydata)
 close(myConnection)
 ```
 
-## 17. Writing data to SAS
+### PYTHON:
+
+### SAS:
+
+## 
+
+## 17. Writing data to SAS \(only for R?\)
 
 ```
 library("foreign") 
