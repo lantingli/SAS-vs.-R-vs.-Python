@@ -1,6 +1,6 @@
 ## 23. Reshaping variables to observations and back
 
-SAS:
+### SAS:
 
 ```
 \\# wide to long
@@ -28,7 +28,7 @@ data mylib.mywide;
 run;
 ```
 
-R:
+### R:
 
 ```
 library("reshap2")
@@ -62,7 +62,7 @@ mylong <- melt(mydata,
 
 ### 24. sorting data frames
 
-SAS :
+### SAS :
 
 ```
 proc sort data = mylib.mydata;
@@ -74,38 +74,38 @@ proc sort data = mylib.mydata;
   run;
 ```
 
-PYTHON:
+### PYTHON:
 
-obj = series\(range\(4\), index = \['d', 'a', 'b', 'c'\]\)  
-obj.sort\_index \(\)
+`obj = series(range(4), index = ['d', 'a', 'b', 'c'])  
+obj.sort_index ()`
 
-with a dataframe, you can sort by index on either axis:
+`with a dataframe, you can sort by index on either axis:`
 
-frame = dataframe\(np.arrange\(8\). reshape\(\(2, 4\)\), index = \['three', 'one'\], columns = \['d', 'a', 'b', 'c'\]\)
+`frame = dataframe(np.arrange(8). reshape((2, 4)), index = ['three', 'one'], columns = ['d', 'a', 'b', 'c'])`
 
-frame.sort\_index\(\)
+`frame.sort_index()`
 
-frame.sort\_index\(axis = 1\)
+`frame.sort_index(axis = 1)`
 
-frame.sort\_index\(axis = 1, ascending = False\)
+`frame.sort_index(axis = 1, ascending = False)`
 
 \\# To sort a series by its values, use its order method:  
-in : obj = series\(4,7,-3, 2\]\)  
-obj.order\(\)
+`in : obj = series(4,7,-3, 2])  
+ obj.order()`
 
 \\# any missing values are sorted to the end of the series by default
 
-in: obj = series\(\[4, np.nan, 7, np.nan, -3, 2\]\)  
-obj.order\(\)
+`in: obj = series([4, np.nan, 7, np.nan, -3, 2])  
+obj.order()`
 
 \\# on dataframe, you may want to sort by the values in one or more columns. to do so, pass one or more column names to the by options:
 
-in : frame = dataframe\({'b': \[4,7,-3, 2\], 'a': \[0, 1, 0, 1\]}\)
+`in : frame = dataframe({'b': [4,7,-3, 2], 'a': [0, 1, 0, 1]})`
 
-frame.sort\_index\(by  ='b'\)  
-frame.sort\_index \(by = 'a', 'b'\]\)
+`frame.sort_index(by  ='b')  
+frame.sort_index (by = 'a', 'b'])`
 
-R:
+### R:
 
 ```
   \\# show first four observations in order
@@ -126,7 +126,7 @@ R:
 
 ## 26. Character string manipulations
 
-SAS:
+### SAS:
 
 ```
 data mylib.giants;
@@ -189,30 +189,35 @@ data mylib.giants;
            run;
 ```
 
-PYTHON：  
-\#1. split a commma-separated string into a broken pieces
+### PYTHON：
 
-val = 'a,b, guido'  
-val.split\(,\)
+####  1. split a commma-separated string into a broken pieces
 
-out : \['a', 'b', 'guido'\]
+`val = 'a,b, guido'  
+ val.split(,)`
 
-split is often combined with strip to trim whitespace\(including newlines\)
+`out : ['a', 'b', 'guido']`
 
-pieces = \[x.strip\(\) for x in val.split\(','\)
+`split is often combined with strip to trim whitespace(including newlines)`
 
-out : \['a', 'b', 'guido'\]
+`pieces = [x.strip() for x in val.split(',')`
 
-\\# 2. join together  
- in : first + '::' + second '::' + third  
- out : 'a::b::guido'
+`out : ['a', 'b', 'guido']`
 
-\\# 3. detect a substring, through index and find  
- in : 'guido' in val  
- val.index\(,\)   
+#### 2. join together
+
+  
+` in : first + '::' + second '::' + third  
+  out : 'a::b::guido'`
+
+#### 3. detect a substring, through index and find
+
+  
+`in : 'guido' in val  
+ val.index(,)  
  out : 1  
- val.find\(':'\)  
- out : -1
+ val.find(':')  
+ out : -1`
 
 note the difference between find and index is that index raises an exception if the string isn't found\(versus returning -1\)
 
@@ -337,7 +342,7 @@ library\("lubridate"\)
  giants$born &lt;- mdy\(giants$born\)
 
 as.POSIXct\(  
- c\(-2520460800, -3558556800, -2207952000, -1721347200, -2952201600\),   
+ c\(-2520460800, -3558556800, -2207952000, -1721347200, -2952201600\),  
  origin = "1960-01-01, tz = "UTC"\)
 
 age&lt;- difftime\(died, born, units = "secs"\)  
@@ -354,7 +359,7 @@ data mylib.giants;
    died  = born +age;  
    run;
 
-R:   
+R:  
  age &lt;- as.duration\(  
  c\(2286057600, 2495664000, 2485382400, 2685916800, 1935705600\)  
  \)
@@ -375,7 +380,7 @@ day\(born\) \# day of month
 wday\(born\) \# day of week
 
 \# creating date-time variables from elements  
-SAS:   
+SAS:  
 data mylib.giants;  
   set mylib.giants;  
   born = MDY\(myMonth, myDay, myYear\);  
