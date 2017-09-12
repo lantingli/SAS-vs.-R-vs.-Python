@@ -192,19 +192,19 @@ run;
 
 ##### R:
 
-t.test\(q1 ~ gender, data = mydata100\)
+`t.test(q1 ~ gender, data = mydata100)`
 
 \\# same test; requires attached data;
 
-t.test\(q1\[gender =="Male"\], q1\[gender == "Female"\]\)
+`t.test(q1[gender =="Male"], q1[gender == "Female"])`
 
 \\# same test using with\(\) function
 
-with\(mydata100,  t.test\(q4\[which\(gender =="m"\)\], q4\[which\(gender =="f"\)\]\)\)
+`with(mydata100,  t.test(q4[which(gender =="m")], q4[which(gender =="f")]))`
 
 \\# same test using subset\(\) function
 
-t.test\(subset\(mydata100, gender =="m", select = q4\), subset\(mydata100, gender == "f", select = q4\)
+`t.test(subset(mydata100, gender =="m", select = q4), subset(mydata100, gender == "f", select = q4)`
 
 ##### 
 
@@ -222,19 +222,17 @@ t.test\(subset\(mydata100, gender =="m", select = q4\), subset\(mydata100, gende
 
 ##### R:
 
-t.test\(posttest, pretest, paired = TRUE\)
+`t.test(posttest, pretest, paired = TRUE)`
 
-### b. Chisq for category variables 
+### b. Chisq for category variables
 
 ##### SAS:
 
 PROC FREQ:
 
-  TABLES workshop \* gender /CHISQ;
+TABLES workshop \* gender /CHISQ;
 
 RUN;
-
-
 
 ##### PYTHON:
 
@@ -268,6 +266,18 @@ RUN;
 
 ##### R:
 
+Wilcoxon/Mann-Whitney test
+
+`wilcox.test(q1 ~ gender, data = mydata100)`
+
+\\# same test specified differently
+
+`wilcox.test(q1[gender =='Male‘]， q1[gender =='Female'])`
+
+`aggregate(q1, data.frame(gender), median, na.rm = TRUE)`
+
+
+
 #### 2. Nonparametric test for continuous variable \(paired variable\)
 
 ##### SAS:
@@ -284,29 +294,21 @@ RUN;
 
 ##### R:
 
-Wilcoxon/Mann-Whitney test
-
-wilcox.test\(q1 ~ gender, data = mydata100\)
-
-\\# same test specified differently
-
-wilcox.test\(q1\[gender =='Male‘\]， q1\[gender =='Female'\]\)
-
-aggregate\(q1, data.frame\(gender\), median, na.rm = TRUE\)W
-
 \# wilcoxon signed rank test
 
- wilcox.test\(posttest, pretest, paired = TRUE\) 
+`wilcox.test(posttest, pretest, paired = TRUE)`
 
-median\(pretest\) 
+`median(pretest)`
 
-median\(posttest\) 
+`median(posttest)`
 
-\#10. sign test: paried groups  \# sign test
+ \# sign test: paried groups  
 
- library\("PASWR"\) 
+\# sign test
 
-sign.test\(posttest, pretest, conf.level = .95\)
+`library("PASWR")`
+
+`sign.test(posttest, pretest, conf.level = .95)`
 
 #### 2. Nonparametric test for category variables
 
@@ -318,21 +320,25 @@ sign.test\(posttest, pretest, conf.level = .95\)
 
 #### C. eqality of variance
 
+##### SAS:
+
+##### PYTHON:
+
+##### R:
+
 `library("car")`
 
 `levene.test(posttest, gender)`
 
 `var.test(posttest ~ gender)`
 
-\\\# 判断两总体方差是否相等的方法常用的有F 检验，Bartlett 检验，Levene 检验，F检验，Bartlett 检验要求资料服从正态分布；Levene 检验不依赖总体分布具体形式，更为稳健。F 检验只用于两样本方差齐性检验，Bartlett 和 Levene检验即可用于两样本方差齐性检验，，也可用于多样本方差齐性检验。  
-
-
+\\# 判断两总体方差是否相等的方法常用的有F 检验，Bartlett 检验，Levene 检验，F检验，Bartlett 检验要求资料服从正态分布；Levene 检验不依赖总体分布具体形式，更为稳健。F 检验只用于两样本方差齐性检验，Bartlett 和 Levene检验即可用于两样本方差齐性检验，，也可用于多样本方差齐性检验。
 
 1. analysis of variance\\# analysis of variance \(ANOVA\) aggregate\(posttest, data.frame\(workshop\), mean, na.rm = TRUE\) library\("car"\) levene.test\(posttest, workshop\) myModel &lt;- aov\(posttest ~ workshop, data = mydata100\) anova\(myModel\) summary\(myModel\) \\# type III sums of squares library\("car"\) Anova\(myModel, type = "III"\) pairwise.t.test\(posttest, workshop\)\#1. 
 
 ## 3. Correlation
 
-### SAS: 
+### SAS:
 
 #### \# pearson correlations;
 
@@ -368,19 +374,17 @@ sign.test\(posttest, pretest, conf.level = .95\)
     rcorr.adjust(mydata[3:6])
 ```
 
-####  spearman correlations
+#### spearman correlations
 
 `rcorr.adjust(mydata[3:6], type = "spearman")`
 
 #### the built-in cor function
 
- `cor(mydata[3:6], method = "pearson", use = "pairwise")`
+`cor(mydata[3:6], method = "pearson", use = "pairwise")`
 
 #### the built -in cor.test function
 
 `cor.test(mydata$q1, mydata$q2, use = "pairwise")`
-
-
 
 ## 4. linear regression
 
@@ -416,7 +420,6 @@ proc glm;
       model posttest = workshop;
       means workshop/tukey;
     run;
-   
 ```
 
 #### PYTHON:
@@ -425,13 +428,25 @@ proc glm;
 
 ### b. Nonparametric version
 
-SAS:
+#### SAS:
 
-PYTHON:
+`Kruskal-- Wallis test`
 
-R:
+`PROC npar1way;`
 
-1. PSM
+`class workshop;`
+
+`var posttest;`
+
+`run;`
+
+
+
+#### PYTHON:
+
+#### R:
+
+
 
 
 
