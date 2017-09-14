@@ -12,7 +12,7 @@
 * managing your files
 * [Graphics \(with ggplot2\)](graphics.md)
 * [Statistics](statistics.md)
-* Machine learning
+* [Machine learning](machine-learning.md)
 * [supplmentary](supplmentary.md)
 * [Data management 2](data-management-2.md)
 * [Data management 2.1](data-management-21.md)
