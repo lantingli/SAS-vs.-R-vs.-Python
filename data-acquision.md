@@ -138,7 +138,8 @@ mydata<- read.csv(myURL)
 
 ### SAS: \(NEED TO CONFIRM\)
 
-### PYTHON:\(NEED TO CONFIRM\)
+### PYTHON:
+read_clipboard: version of read_table that reads data from the clipboard. useful for converting tables from web pages
 
 ## R：
 
