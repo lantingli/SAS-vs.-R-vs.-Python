@@ -55,7 +55,26 @@ data = 'a,b,c\n1,2,3\n4,5,6\n7,8,9'
 pd.read_csv(StringIO(data), names = ['foo', 'bar', 'baz'], header = 0) # throw away the header
 pd.read_csv(StringIO(data), names = ['foo', 'bar', 'baz'], header = None) # keep the raw header
 
-pd.read_csv(StringIO(data), header = 1) # if the header is in a row other than the first, pass the row number to header 
+pd.read_csv(StringIO(data), header = 1) # if the header is in a row other than the first, pass the row number to header
+
+#5. Duplicate names parsing: if the file or header contains duplicate names, pandas by default will deduplicate these names so as to prevent data overwrite:
+
+data = 'a,b', a\n0,1,2\n3,4,5'
+
+pd.read_csv(StringIO(data), mangle_dupe_cols = False) # will arise duplicate data, so a value error will report
+
+#6. Filtering columns: the usecols argument allows to select any subset of the columns in a file, either using the column names or position numbers:
+data = 'a,b,c,d\n1,2,3,foo\n4,5,6,bar\n7,8,9,baz'
+
+pd.read_csv(StringIO(data), usecols = ['b', 'd'])
+pd.read_csv(StrinIO(data), usecols = [0,2,3])
+
+# 7. Comments and Empty lines: 
+
+
+
+
+
 
 
 
