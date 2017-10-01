@@ -69,15 +69,7 @@ data = 'a,b,c,d\n1,2,3,foo\n4,5,6,bar\n7,8,9,baz'
 pd.read_csv(StringIO(data), usecols = ['b', 'd'])
 pd.read_csv(StrinIO(data), usecols = [0,2,3])
 
-# 7. Comments and Empty lines: 
-
-
-
-
-
-
-
-
+# 7. Comments and Empty lines:
 ```
 
 or
