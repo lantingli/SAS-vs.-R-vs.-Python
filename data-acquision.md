@@ -180,9 +180,9 @@ pd.read_csv\(StringIO\(data\), error\_bad\_lines = False\) \# will skip bad line
 
 \#17. Quoting and Escape characters
 
-data = 'a,b\n"hello, \\"Bob\\", nice to see you", 5'
+data = 'a,b\n"hello, \"Bob\", nice to see you", 5'
 
-pd.read\_csv\(StringIO\(data\), escapechar = '\\'\)
+pd.read\_csv\(StringIO\(data\), escapechar = '\'\)
 
 \#18. Index
 
@@ -192,11 +192,11 @@ print\(open\('data/mindex\_ex.csv'\).read\(\)\)
 
 the index\__col argument to read\_csv and read\_table can take a list of column numbers to turn multiple columns into a multiindex for the index of the returned object：_
 
-df = pd.read_csv\("data/mindexex.csv", index_col = \[0,1\]\)
+df = pd.read\_csv\("data/mindexex.csv", index\_col = \[0,1\]\)
 
 \#19. Automatically "sniffing" the delimiter
 
-read\_csv is capable if inferring delimited \(not necessarily comma -separated\) files, as pandas uses the csv.sniffer class of the csv module. for this, you need to specify sep = None \) 
+read\_csv is capable if inferring delimited \(not necessarily comma -separated\) files, as pandas uses the csv.sniffer class of the csv module. for this, you need to specify sep = None \)
 
 pd.read\_csv\('tmp2.csv', sep = None, engine = 'python'\)
 
@@ -277,7 +277,11 @@ pd.read_csv('ch06/ex6.csv', nrows = 5)
  RUN;
 ```
 
-### **PYTHON:\(NEED TO CONFRIM\)**
+### **PYTHON:**
+
+```
+df = pd.table('ch06/ex1.csv', sep ="\n")
+```
 
 ### **R:**
 
@@ -313,7 +317,7 @@ DATAROW =2;
 RUN;
 ```
 
-### **PYTHON:\(NEED TO CONFIRM !!!\)**
+### 
 
 ### **R:**
 
@@ -329,6 +333,10 @@ mydata<- read.csv(myURL)
 ### PYTHON:
 
 read\_clipboard: version of read\_table that reads data from the clipboard. useful for converting tables from web pages
+
+A handy way to grab data is to use the read\__clipboard method, which takes the contents of the clipboard buffer and passes them to the read_\_table method. for instance, you can copy the following text to the clipboard \(CTRL-C\) on many operating systems\)
+
+clipdf = pd.read\_clipboard\(\)
 
 ## R：
 
@@ -376,8 +384,6 @@ mystring <- "workshop, gender, q1, q2, q3, q4
 mydata <- read.csv(textConnection(mystring))
 ```
 
-### **PYTHON:\(NEED TO CONFIRM!!!\)**
-
 ### **SAS:**
 
 ```
@@ -424,7 +430,7 @@ q1 =0, q2 = 0, q3 = 0, q4 =0 ))
 mydata <- data.frame(mylist)
 ```
 
-### **PYTHON:\(NEED TO CONFIRM\)**
+### 
 
 ### **SAS:**
 
@@ -470,11 +476,9 @@ colspecs = \[\(0,6\], \(8,20\), \(21, 33\), \(34, 43\)\]
 
 df = read_fwf\('bar.csv', colspecs = colspecs, header = None, index\_col = 0\)_
 
+\#also can supply just the column widths for contiguous column
 
-
-\#also can supply just the column widths for contiguous column 
-
- widths = \[6, 14,13, 10\]
+widths = \[6, 14,13, 10\]
 
 df = pd.read\_rwf\('bar.csv', widths = widths, header = None\)
 
@@ -533,7 +537,45 @@ mydata <- read.xls("mydata.xls")
 
 ### **PYTHON:**
 
-pd.read\__excel\('foo.xlsx', 'Sheet1', index\_col = None, na\_values = \['NA'\]\)_
+The read\__excel method can read excel 2003 \(.xls\) and excel 2007\(.xlsx\) files using the xlrd python module, the to\_excel instance method is used for saving a dataframe to excel. generally, the semantics are similar to working with csv data._
+
+read\__excel \(\['path\_to\_file.xls', sheetname = 'Sheet1'\)_
+
+or 
+
+xlsx = pd.ExcelFile\('path\__to\__file.xls'\)
+
+df = pd.read\_excel\(xlsx, 'Sheet1'\)
+
+or 
+
+with pd.ExcelFile\('path\__to\__file.xls'\) as xls:
+
+df1 = pd.read\_excel\(xls, 'Sheet1'\)
+
+df2 = pd/read\_excel\(xls, 'Sheet2'\)
+
+if an excelfile is parsing multiple sheets with different parameters:
+
+data  =\(\)
+
+with pd.excelfile\('path\__to\__file.xls'\) as xls:
+
+data\['Sheet1'\] = pd.read\__excel\(xls, 'Sheet1', index_col = None, na\_values = \['NA'\]\)
+
+data\['Sheet2'\] = pd.read_excel\(xls, 'Sheet2', index_\_col = 1\)
+
+if the same parsing parameters are used for all sheets, a list of sheet names can simply be passed to read\_excel with no loss in performance.
+
+data = read_excel\('pathtofile.xls', \['Sheet1', 'Sheet2'\], index_col = None, na_\_values = \['NA'\]\)_
+
+Parsing specific columns:
+
+read_excel\('pathtofile.xls', 'Sheet1', parse_\_cols = \[0,2,3\]\);
+
+
+
+
 
 ### **SAS:**
 
@@ -560,15 +602,18 @@ mydata <- sqlFetch(myConnection, "Sheet1")
 close(myConnection)
 ```
 
-### PYTHON:
+
 
 ### SAS:
 
 ## 11. Reading HDF5\(only for PYTHON\)
 
-## 11. Reading data from SAS \(only for R\)
+## 12. Reading data from SAS
+
+### R:
 
 ```
+
 library("foreign")   
 mydata <- read.ssd("c:/myRfolder", "mydata",   
 sascmd - "C:/Program files/SAS/SASFoundation/9.2/sas.exe")                                                                                                  
@@ -576,7 +621,11 @@ library("Hmisc")
 mydata <- sasxport.get("mydata.xpt")
 ```
 
-## 12. Write data from SAS and read it into R\(only for R\)
+### PYTHON:
+
+## 13. Reading from sql
+
+## 1. Write data from SAS and read it into R\(only for R\)
 
 ```
 LIBNAME mylib 'C:\myRfolder'; 
@@ -597,7 +646,7 @@ library("Hmisc")
 mydata <- sasxport.get("mydata.xpt")
 ```
 
-## 13. Writing delimited text files
+## 2. Writing delimited text files
 
 ### **SAS: **
 
@@ -650,13 +699,13 @@ quote = FALSE, sep = "\t", na = " ",
 row.names = TRUE, col.names = TRUE)
 ```
 
-## 14. Viewing a text fileViewing a text file\(only for R\)
+## 3. Viewing a text fileViewing a text file\(only for R\)
 
 ```
 file.show("mydataFromR.csv")
 ```
 
-## 15. Writing Excel files
+## 4. Writing Excel files
 
 ### **R:**
 
@@ -682,7 +731,7 @@ RUN;
 
 df.to\__excel \('foo.xlsx', sheet\_name = 'Sheet1'\)_
 
-## 16. Writing to relational databases
+## 5. Writing to relational databases
 
 ### R:
 
@@ -699,7 +748,7 @@ close(myConnection)
 
 ## 
 
-## 17. Writing data to SAS \(only for R?\)
+## 6. Writing data to SAS \(only for R?\)
 
 ```
 library("foreign") 
