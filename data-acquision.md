@@ -108,6 +108,62 @@ df = pd.read\_csv\(BytesIO\(data\), encoding = 'latin-1'\)
 
 \#9 Index columns and trailing delimiters
 
+if a file has one more column of data than the number of column names, the first column will be used as the dataframe's row names:
+
+data = 'a,b,c,\n4,apple,bat,5.7\n8,orange,cow,10'
+
+pd.read\__csv\(StringIO\(data\), index\__col = 0\)
+
+pd.read_csv\(StringIO\(data\), index_col = False\)
+
+
+
+\#10. Date Handling
+
+specifying data columns
+
+To better facilitate working with datatime data, read_csv\(\) and readtable\(\) use the keyword arguments parse\_dates and data\_parser to allow users to specify a variety of columns and date/time formats to turn the input text data into datetime objects_
+
+df = pd.read\__csv\('foo.csv', index\_col = 0, parse\_dates = True\)_
+
+df = pd.read\__csv\('tmp.csv', header = None, parse\_dates = \[\[1,2\], \[1,3\]\]\) \# for concatenation of the component column names_
+
+df = pd.read\__csv\('tmp.csv', header = None, parse\_dates = \[\[1,2\], \[1,3\]\], keep\_date\_col = True\) keep raw date column_
+
+date\_spec = \('nominal':\[1,2\],  'actural': \[1,3\]\)
+
+df = pd.read_csv\('tmp.csv', header = None, parse_dates = date\_spec\) \#specify new column names
+
+df = pd.read_csv\('tmp.csv', header = None, parse\_dates = date\_spec, date\_parser = conv.parse\_date\_time\) \# since read\_csv has a fast path for parsing datetime strings in iso8601 format, so if we can arrange for our data to store datetimes in this format, load times will be significantly faster. _
+
+ Infering datetime format
+
+df = pd.read\__csv\('foo.csv', index\__col = 0, parse\__dates = True, infer\_datetime\_format = True\)_
+
+International date formats
+
+while US date formats tend to be MM/DD/YYYY, many international formats use DD/MM/YYYY instead, a dayfirst keyword is provided, so always:
+
+pd.read\__csv\('tmp.csv', dayfirst = True, parse\_dates = \[0\]\)_
+
+\#11. Specifying method for floating -point conversion
+
+pd.read\_csv\(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 **a. Assign column names**
 
 ```
