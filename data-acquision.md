@@ -541,15 +541,15 @@ The read\__excel method can read excel 2003 \(.xls\) and excel 2007\(.xlsx\) fil
 
 read\__excel \(\['path\_to\_file.xls', sheetname = 'Sheet1'\)_
 
-or 
+or
 
-xlsx = pd.ExcelFile\('path\__to\__file.xls'\)
+xlsx = pd.ExcelFile\('path\_\_to\_\_file.xls'\)
 
 df = pd.read\_excel\(xlsx, 'Sheet1'\)
 
-or 
+or
 
-with pd.ExcelFile\('path\__to\__file.xls'\) as xls:
+with pd.ExcelFile\('path\_\_to\_\_file.xls'\) as xls:
 
 df1 = pd.read\_excel\(xls, 'Sheet1'\)
 
@@ -559,23 +559,19 @@ if an excelfile is parsing multiple sheets with different parameters:
 
 data  =\(\)
 
-with pd.excelfile\('path\__to\__file.xls'\) as xls:
+with pd.excelfile\('path\_\_to\_\_file.xls'\) as xls:
 
-data\['Sheet1'\] = pd.read\__excel\(xls, 'Sheet1', index_col = None, na\_values = \['NA'\]\)
+data\['Sheet1'\] = pd.read\_\_excel\(xls, 'Sheet1', index\_col = None, na\_values = \['NA'\]\)
 
 data\['Sheet2'\] = pd.read_excel\(xls, 'Sheet2', index_\_col = 1\)
 
 if the same parsing parameters are used for all sheets, a list of sheet names can simply be passed to read\_excel with no loss in performance.
 
-data = read_excel\('pathtofile.xls', \['Sheet1', 'Sheet2'\], index_col = None, na_\_values = \['NA'\]\)_
+data = read_excel\('pathtofile.xls', \['Sheet1', 'Sheet2'\], index\_col = None, na_\_values = \['NA'\]\)\_
 
 Parsing specific columns:
 
 read_excel\('pathtofile.xls', 'Sheet1', parse_\_cols = \[0,2,3\]\);
-
-
-
-
 
 ### **SAS:**
 
@@ -602,8 +598,6 @@ mydata <- sqlFetch(myConnection, "Sheet1")
 close(myConnection)
 ```
 
-
-
 ### SAS:
 
 ## 11. Reading HDF5\(only for PYTHON\)
@@ -613,7 +607,6 @@ close(myConnection)
 ### R:
 
 ```
-
 library("foreign")   
 mydata <- read.ssd("c:/myRfolder", "mydata",   
 sascmd - "C:/Program files/SAS/SASFoundation/9.2/sas.exe")                                                                                                  
@@ -748,7 +741,7 @@ close(myConnection)
 
 ## 
 
-## 6. Writing data to SAS \(only for R?\)
+## 6. Writing data to SAS \(only for R\)
 
 ```
 library("foreign") 
