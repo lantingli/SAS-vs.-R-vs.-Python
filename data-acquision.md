@@ -20,7 +20,6 @@ read\_clipboard: version of read\_table that reads data from the clipboard. usef
 
 ```
 
-
 ```
 
 or
@@ -87,41 +86,27 @@ pd.read\_csv\(StrinIO\(data\), usecols = \[0,2,3\]\)
 
 Ignoring line comments and empty lines
 
-
-
 data = '\na, b,c\n, \n\# commented line\n1,2,3\n\n4,5,6'
 
 pd.read\_csv\(StringIO\(data\), comment= '\#'\)
-
-
 
 data = 'a,b,c\n\n1,2,3\n\n\n4,5,6'
 
 pd.read\_csv\(StringIO\(data\), skip\_blank\_lines = False\)
 
-
-
 data = '\#comment\na,b,c\nA,B,C\n1,2,3'
 
 pd\_read\_csv\(StringIO\(data\), comment = '\#', skiprows = 2\)
-
-
 
 comments: if the comments or meta data included in a file
 
 df = pd.read\_csv\('tmp.csv', comment = '\#'\)
 
-
-
 \#8. dealing with unicode data
 
 df = pd.read\_csv\(BytesIO\(data\), encoding = 'latin-1'\)
 
-
-
 \#9 Index columns and trailing delimiters
-
-
 
 **a. Assign column names**
 
