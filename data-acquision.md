@@ -136,7 +136,7 @@ df = pd.read_csv\('tmp.csv', header = None, parse\_dates = date\_spec, date\_par
 
 Infering datetime format
 
-df = pd.read\__csv\('foo.csv', index\_\_col = 0, parse\_\_dates = True, infer\_datetime\_format = True\)_
+df = pd.read\__csv\('foo.csv', index\_\_col = 0, parse\_\_dates = True, infer\_datetime\_format = True\)\_
 
 International date formats
 
@@ -146,9 +146,7 @@ pd.read\__csv\('tmp.csv', dayfirst = True, parse\_dates = \[0\]\)_
 
 \#11. Specifying method for floating -point conversion
 
-pd.read_csv\(StringIO\(data\), engine = 'c', float_precision = None \) \# can be None, high, round\_trip
-
-
+pd.read\_csv\(StringIO\(data\), engine = 'c', float\_precision = None \) \# can be None, high, round\_trip
 
 \#12. Thousand separators
 
@@ -172,17 +170,53 @@ pd.read\_csv\('tmp.csv', squeeze = True\)
 
 pd.read_csv\(StringIO\(data\), true\_values = \['Yes'\], false\_values = \['Np'\]\)_
 
+\#16. Handling "bad" lines
 
+Some files may have malformed lines with too few fields or too many. lines with too few fields will have NA values filled in the trailing fields. lines with too many will cause an error by default:
 
+data = 'a,b,c\n1, 2,3\n4,5,6,7,\n8,9,10'
 
+pd.read_csv\(StringIO\(data\), error\_bad\_lines = False\) \# will skip bad lines_
 
+\#17. Quoting and Escape characters
 
+data = 'a,b\n"hello, \\"Bob\\", nice to see you", 5'
 
+pd.read\_csv\(StringIO\(data\), escapechar = '\\'\)
 
+\#18. Index
 
+reading an index with a multiindex
 
+print\(open\('data/mindex\_ex.csv'\).read\(\)\)
 
-**a. Assign column names**
+the index\__col argument to read\_csv and read\_table can take a list of column numbers to turn multiple columns into a multiindex for the index of the returned object：_
+
+df = pd.read_csv\("data/mindexex.csv", index_col = \[0,1\]\)
+
+\#19. Automatically "sniffing" the delimiter
+
+read\_csv is capable if inferring delimited \(not necessarily comma -separated\) files, as pandas uses the csv.sniffer class of the csv module. for this, you need to specify sep = None \) 
+
+pd.read\_csv\('tmp2.csv', sep = None, engine = 'python'\)
+
+\#20. Iterating through files chunk by chunk
+
+Suppose you wish to iterate through a \(potentially very large\) file lazily rather than reading the entire file into memory.
+
+reader = pd.read\_table\('tmp.csv', sep = '\|' , chunksize = 4\)
+
+for chunk in reader:
+
+print\(chunk\)
+
+or specifying interator = True will also return the TextFileReader object:
+
+reader = pd.read\_table\('tmp.csv', sep = '\|', iterator = True\)
+
+read.get\(chunk\(5\)
+
+**a. Assign column names **
 
 ```
 pd.read_csv('ch06/ex2.csv', names  = ['a','b', 'c', 'message'])
@@ -428,7 +462,21 @@ myvariablenames <- c("id", "gender", "q1", "q2", "q3", "q4")
  row.names = "id", na.strings = " ", fill = TRUE, strip.white = TRUE)
 ```
 
-### **PYTHON: \(NEED TO CONFIRM\)**
+### **PYTHON: **
+
+\#column specifications are a list of half-intervals
+
+colspecs = \[\(0,6\], \(8,20\), \(21, 33\), \(34, 43\)\]
+
+df = read_fwf\('bar.csv', colspecs = colspecs, header = None, index\_col = 0\)_
+
+
+
+\#also can supply just the column widths for contiguous column 
+
+ widths = \[6, 14,13, 10\]
+
+df = pd.read\_rwf\('bar.csv', widths = widths, header = None\)
 
 ### **SAS:**
 
@@ -454,7 +502,9 @@ myVariableWidths <- list(myRecord1Widths, myRecord2Widths)
 mydata <- read.fwf( file = myfile, width = myVariableWidths, col.names = myVariableWidths, row.names = "id", na.strings = " ", fill = TRUE, strip.white = TRUE)
 ```
 
-### **PYTHON:\(NEED TO CONFIRM\)**
+### **PYTHON:**
+
+Same with above
 
 ### **SAS:**
 
