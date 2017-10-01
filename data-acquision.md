@@ -27,7 +27,57 @@ or
 ```
 df = pd.table('ch06/ex1.csv', sep =",")
 ```
+f= pd.read_csv('ch06/ex1.csv'， index_col = 0) # pass the column number or column name you wish to use as the index
+pd.read_csv ('foo.csv', index_col = 'date')
+pd.read_csv('foo.csv', index_col = [0,'A'])# hierarchical index
 
+# 1. for dialect keyword: gives greater flexibility in specifying the file format, uses the excel dialect by default
+data = 'a,b,c~1, 2,3~4, 5,6'
+pd.read_csv(StringIO(data), lineterminator = '~')
+
+or another common dialect option
+data = 'a,b,c\n1,2,3\n4,5,6'
+pd.read_csv(StringIO(data), skipinitialspace = True)
+
+# 2. specifying column data types: you can indicate the data type for the whole dataframe or individual columns
+data = 'a, b, c\n1, 2,3\n4, 5,6\n7, 8,9'
+df = pd.read_csv(StringIO(data), dtype = object)
+or
+df = pd.read_csv(StringIO(data), dtype = 'b': object, 'c': np.float64))
+
+#3. specifying categorical dtype
+
+data = 'col1, col2, col3\na, b, 1\na, b, 2\nc, d, 3'
+pd.read_csv(StringIO(data), dtype= 'category').dtypes
+
+or for individual column:
+pd.read_csv(StringIO(data), dtype= 'col1': 'category')).dtypes
+
+if the categories are numeric they can be converted using the to_numeric () function or the other appropriate converter such as to_datetime()
+df= pd.read_csv(StringIO(data), dtype = 'category')
+df[col3'.cat.categories = pd.to_numeric(df['col3'].cat.categories)
+
+# 4. Naming and Using columns: a file may or may not have a header row, pandas assumes the first row should be
+data = 'a,b,c\n1,2,3\n4,5,6\n7,8,9'
+
+pd.read_csv(StringIO(data), names = ['foo', 'bar', 'baz'], header = 0) # throw away the header
+pd.read_csv(StringIO(data), names = ['foo', 'bar', 'baz'], header = None) # keep the raw header
+
+pd.read_csv(StringIO(data), header = 1) # if the header is in a row other than the first, pass the row number to header
+
+#5. Duplicate names parsing: if the file or header contains duplicate names, pandas by default will deduplicate these names so as to prevent data overwrite:
+
+data = 'a,b', a\n0,1,2\n3,4,5'
+
+pd.read_csv(StringIO(data), mangle_dupe_cols = False) # will arise duplicate data, so a value error will report
+
+#6. Filtering columns: the usecols argument allows to select any subset of the columns in a file, either using the column names or position numbers:
+data = 'a,b,c,d\n1,2,3,foo\n4,5,6,bar\n7,8,9,baz'
+
+pd.read_csv(StringIO(data), usecols = ['b', 'd'])
+pd.read_csv(StrinIO(data), usecols = [0,2,3])
+
+# 7. Comments and Empty lines:
 ### **a. Assign column names**
 
 ```
