@@ -112,11 +112,9 @@ if a file has one more column of data than the number of column names, the first
 
 data = 'a,b,c,\n4,apple,bat,5.7\n8,orange,cow,10'
 
-pd.read\__csv\(StringIO\(data\), index\__col = 0\)
+pd.read\_\_csv\(StringIO\(data\), index\_\_col = 0\)
 
-pd.read_csv\(StringIO\(data\), index_col = False\)
-
-
+pd.read\_csv\(StringIO\(data\), index\_col = False\)
 
 \#10. Date Handling
 
@@ -132,13 +130,13 @@ df = pd.read\__csv\('tmp.csv', header = None, parse\_dates = \[\[1,2\], \[1,3\]\
 
 date\_spec = \('nominal':\[1,2\],  'actural': \[1,3\]\)
 
-df = pd.read_csv\('tmp.csv', header = None, parse_dates = date\_spec\) \#specify new column names
+df = pd.read\_csv\('tmp.csv', header = None, parse\_dates = date\_spec\) \#specify new column names
 
 df = pd.read_csv\('tmp.csv', header = None, parse\_dates = date\_spec, date\_parser = conv.parse\_date\_time\) \# since read\_csv has a fast path for parsing datetime strings in iso8601 format, so if we can arrange for our data to store datetimes in this format, load times will be significantly faster. _
 
- Infering datetime format
+Infering datetime format
 
-df = pd.read\__csv\('foo.csv', index\__col = 0, parse\__dates = True, infer\_datetime\_format = True\)_
+df = pd.read\__csv\('foo.csv', index\_\_col = 0, parse\_\_dates = True, infer\_datetime\_format = True\)_
 
 International date formats
 
@@ -148,11 +146,31 @@ pd.read\__csv\('tmp.csv', dayfirst = True, parse\_dates = \[0\]\)_
 
 \#11. Specifying method for floating -point conversion
 
-pd.read\_csv\(
+pd.read_csv\(StringIO\(data\), engine = 'c', float_precision = None \) \# can be None, high, round\_trip
 
 
 
+\#12. Thousand separators
 
+df = pd.read\_csv\('tmp.csv', sep = '\|', thousands = ' , '\)
+
+\#13. NA values
+
+To control which values are parsed as missing values, specified a string in na\_values.
+
+read\__csv\(path, keep\_default\_na = False, na\_values = \[" "\]\) \# only empty field will be NaN_
+
+read\__csv\(path, keep\_default\_na = False, na\_values = \["NA", "0"\]\)  \# only NA and 0 as strings are NaN_
+
+read\__csv\(path, na\_values = \["Nope“\]\) \# the default values, in addition to the string "Nope"  are recognized as NaN_
+
+\#14. Returning series: using the squeeze keyword, the parser will return output with a single column as a series
+
+pd.read\_csv\('tmp.csv', squeeze = True\)
+
+\#15. Boolean values
+
+pd.read_csv\(StringIO\(data\), true\_values = \['Yes'\], false\_values = \['Np'\]\)_
 
 
 
