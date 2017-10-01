@@ -20,7 +20,7 @@
 #### **d. Exclude q1, q2 ,q3 q4**
 
 ```
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    print\(mydata\[-c\(3,4,5,6\)\]\) ; 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    print\(mydata\[-c\(3,4,5,6\)\]\) ;
 ```
 
 `print(mydata[-(3:6)])`
@@ -139,7 +139,7 @@
 
 `find numeric variables:`
 
-`mynums <- sapply(mydata, is.numeric);    
+`mynums <- sapply(mydata, is.numeric);        
  print(mydata[myNums]`
 
 `myA <- which(names(mydata) == "gender")`
@@ -166,39 +166,17 @@
 
 ## PTYHON:
 
-### 1. use the series's index
+### 1. Selecting via \[ \], which slices the rows
 
-`in: obj = series(np.arrange(4.), index = ['a', 'b', 'c', 'd'])`
+df\['A'\]
 
-`obj['b']`
+df\[0:3\]
 
-or
 
-`obj[1]`
 
-or
 
-`obj[2:4]`
-
-or
-
-`obj[[ 'b', 'a', 'd']]`
-
-or
-
-`obj[[1, 3]]`
-
-or
-
-`obj[obj <2]`
-
-or
-
-`obj['b':'c'] = 5`
 
 ## SAS:
-
-
 
 
 
