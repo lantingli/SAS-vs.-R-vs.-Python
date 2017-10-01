@@ -19,7 +19,46 @@ read\_fwf: read data in fixed-width column format\(that is, no delimiters\);
 read\_clipboard: version of read\_table that reads data from the clipboard. useful for converting tables from web pages.
 
 ```
-df= pd.read_csv('ch06/ex1.csv')
+df= pd.read_csv('ch06/ex1.csv'， index_col = 0) # pass the column number or column name you wish to use as the index
+pd.read_csv ('foo.csv', index_col = 'date')
+pd.read_csv('foo.csv', index_col = [0,'A'])# hierarchical index
+
+# 1. for dialect keyword: gives greater flexibility in specifying the file format, uses the excel dialect by default
+data = 'a,b,c~1, 2,3~4, 5,6'
+pd.read_csv(StringIO(data), lineterminator = '~')
+
+or another common dialect option
+data = 'a,b,c\n1,2,3\n4,5,6'
+pd.read_csv(StringIO(data), skipinitialspace = True)
+
+# 2. specifying column data types: you can indicate the data type for the whole dataframe or individual columns
+data = 'a, b, c\n1, 2,3\n4, 5,6\n7, 8,9'
+df = pd.read_csv(StringIO(data), dtype = object)
+or 
+df = pd.read_csv(StringIO(data), dtype = 'b': object, 'c': np.float64))
+
+#3. specifying categorical dtype
+
+data  = 'col1, col2, col3\na, b, 1\na, b, 2\nc, d, 3'
+pd.read_csv(StringIO(data), dtype= 'category').dtypes
+
+or for individual column:
+pd.read_csv(StringIO(data), dtype= 'col1': 'category')).dtypes
+
+if the categories are numeric they can be converted using the to_numeric () function or the other appropriate converter such as to_datetime()
+df= pd.read_csv(StringIO(data), dtype = 'category')
+df[col3'.cat.categories = pd.to_numeric(df['col3'].cat.categories)
+
+# 4. Naming and Using columns: a file may or may not have a header row, pandas assumes the first row should be 
+data = 'a,b,c\n1,2,3\n4,5,6\n7,8,9'
+
+pd.read_csv(StringIO(data), names = ['foo', 'bar', 'baz'], header = 0) # throw away the header
+pd.read_csv(StringIO(data), names = ['foo', 'bar', 'baz'], header = None) # keep the raw header
+
+pd.read_csv(StringIO(data), header = 1) # if the header is in a row other than the first, pass the row number to header 
+
+
+
 ```
 
 or
@@ -325,7 +364,9 @@ can get a binary file that is not distributed through CRAN
 mydata <- read.xls("mydata.xls")
 ```
 
-### **PYTHON:\(NEED TO CONFIRM\)**
+### **PYTHON:**
+
+pd.read\__excel\('foo.xlsx', 'Sheet1', index\_col = None, na\_values = \['NA'\]\)_
 
 ### **SAS:**
 
@@ -343,7 +384,7 @@ run;
 
 ## 10. Reading from relational databases
 
-### R: 
+### R:
 
 ```
 library("RODBC") 
@@ -356,7 +397,7 @@ close(myConnection)
 
 ### SAS:
 
-## 
+## 11. Reading HDF5\(only for PYTHON\)
 
 ## 11. Reading data from SAS \(only for R\)
 
@@ -470,7 +511,9 @@ SHEET = "mydata";
 RUN;
 ```
 
-### **PYTHON: NEED TO CONFIRM**
+### **PYTHON: **
+
+df.to\__excel \('foo.xlsx', sheet\_name = 'Sheet1'\)_
 
 ## 16. Writing to relational databases
 
