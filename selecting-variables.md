@@ -139,7 +139,7 @@
 
 `find numeric variables:`
 
-`mynums <- sapply(mydata, is.numeric);                
+`mynums <- sapply(mydata, is.numeric);                  
  print(mydata[myNums]`
 
 `myA <- which(names(mydata) == "gender")`
@@ -164,7 +164,7 @@
 
 `myqs <- subset(mydata, select = q1 :q4)`
 
-## PTYHON: 
+## PTYHON:
 
 The primary function of indexing are listed below:
 
@@ -174,8 +174,6 @@ The primary function of indexing are listed below:
 | DataFrame | frame\[colname\] | series corresponding to colname |
 | Panel | panel\[itemname\] | DataFrame corresponding to the itemname |
 
-
-
 Object selection has had a number of user-requested additions in order to support more explicit location based indexing. pandas now supports three types of multi-axis indexing.
 
 .loc is primarily label based , but may also be used with a boolean array. .loc will raise KeyError when the items are not found. Allowed inputs are:
@@ -184,7 +182,7 @@ Object selection has had a number of user-requested additions in order to suppor
 
 -- a list or array of labels\('a', 'b', 'c'\]
 
---a slice object with labels 'a': 'f', \(note that contrary to usual python slices, both the start and the stop are included. 
+--a slice object with labels 'a': 'f', \(note that contrary to usual python slices, both the start and the stop are included.
 
 -- a boolean array
 
@@ -198,15 +196,13 @@ Object selection has had a number of user-requested additions in order to suppor
 
 -- a boolean array
 
-.ix supports mixed integer and label based access. it is primarily label based, but will fall back to integer positional access unless the corresponding axis is of integer type. .ix is the most general and will support any of the inputs in .loc and .iloc. .ix also supports floating point label schemes. .ix is exceptionally useful when dealing with mixed positional and label based hierachical indexes. 
+.ix supports mixed integer and label based access. it is primarily label based, but will fall back to integer positional access unless the corresponding axis is of integer type. .ix is the most general and will support any of the inputs in .loc and .iloc. .ix also supports floating point label schemes. .ix is exceptionally useful when dealing with mixed positional and label based hierachical indexes.
 
 | Object Type | Indexers |
 | :--- | :--- |
 | Series | S.loc\[indexer\] |
 | DataFrame | df.loc\[row\_indexer, column\_indexer\] |
 | Panel | p.loc\[item\_indexer, major\_indexer, minor\_indexer\] |
-
-
 
 Pandas 进行行选择一般有三种方法：
 
@@ -223,6 +219,12 @@ p = fandango.loc\[1:3\]
 连续指定的位置选择一行或多行， 使用iloc 方法
 
 loc\[ \] 与iloc \[ \] 方法之前一个巨大的差别，那就是loc\[ \] 里的参数是对应的索引值即可，所以参数可以是整数，也可是是字符串，而iloc  \[ \] 里的参数表示的是第几行的数据， 所以只能是整数
+
+列选择：
+
+列选择比较简单，只要直接把列名传递过去即可，若果有多列的数据， 要单独指出列名或列索引号，但是如果通过列的索引号选择多列的时候，是不能用切片的， 应该是在参数中构建一个列表
+
+w = fandango\[list\(range\(5\)\)\]
 
 ### 1. Selecting via \[ \], which slices the rows
 
