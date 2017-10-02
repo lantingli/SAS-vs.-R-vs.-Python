@@ -620,7 +620,7 @@ mydata <- sasxport.get("mydata.xpt")
 
 ## 13. Reading from sql
 
-The pandas.io.sql module provides a collection of query wrappers to both facilitate data retrieval and to reduce dependency on DB- specific API. Database abstraction is provided by SQLAlchemy if installed, in addition you will need a driver library for your database. 
+The pandas.io.sql module provides a collection of query wrappers to both facilitate data retrieval and to reduce dependency on DB- specific API. Database abstraction is provided by SQLAlchemy if installed, in addition you will need a driver library for your database.
 
 if SQLAlchemy is not installed, a fallback is only provided for sqlite\(and for mysql for backwards compatibility, but this is deprecated and will be removed in a future version\). This mode requires a Python database adapter which respect the Python DB-API.
 
@@ -633,13 +633,13 @@ The key functions are :
 | read\_sql\(sql, con\[ , index\_col , ...\]\) | Read SQL query or database table  into a dataframe |
 | DataFrame.to\_sql \(name, con\[,flavor, ...\]\) | Write records stored in a DataFrame to a SQL database |
 
- pandas.read\__sql_\_table: Give a table name and SQLAlchemy connectable, returns a DataFrame， this function does not support DBAPI connection.
+pandas.read\__sql_\_table: Give a table name and SQLAlchemy connectable, returns a DataFrame， this function does not support DBAPI connection.
 
-pandas.read\__sql_\_query: returns a dataframe corresponding to the result set of the query string. 
+pandas.read\__sql_\_query: returns a dataframe corresponding to the result set of the query string.
 
 con: SQLAlchemy connectable \(engine/connection\) or database string URI
 
-or sqlite3 DBAPI2 connection Using SQLAlchemy makes it possible to use any DB supported by that library. if a DBAPI2 object, only sqlite3 is supported. 
+or sqlite3 DBAPI2 connection Using SQLAlchemy makes it possible to use any DB supported by that library. if a DBAPI2 object, only sqlite3 is supported.
 
 Any datetime values with time zone information parsed via the parse\_dates parameter will be converted to UTC
 
@@ -647,11 +647,11 @@ pandas.read\_sql: read SQL query or database table into a Dataframe
 
 In the following example, we use the SQlite SQL database engine. you can use a temporary SQLite database where data are stored in "memory"
 
-To connect with SQLAlchemy you use the create\_engine\(\) function to create an engine object from database URI. you only need to create the engine once per database you are connecting to. 
+To connect with SQLAlchemy you use the create\_engine\(\) function to create an engine object from database URI. you only need to create the engine once per database you are connecting to.
 
 from sqlalchemy import create\_engine
 
-\#create your engine: 
+\#create your engine:
 
 engine = create\_engine\('sqlite:///:memory:'\)
 
@@ -673,27 +673,59 @@ you can always override the default type by specifying the desired SQL type of a
 
 from sqlalchemy.types import string
 
-data.to_sql \('data_dtype', engine, dtype = {'Col\_1': String}\)
+data.to\_sql \('data\_dtype', engine, dtype = {'Col\_1': String}\)
 
-\#Reading Tables
+\#1. Reading Tables
 
 read\__sql_\_table\(\) will read a database table given the table name and optionally a subset of columns to read.
 
 In order to use read\__sql\_table\(\) , you must have the SQLAlchemy optional dependency installed. _
 
-pd.read\__sql\__table\('data', engine, index_\_col = 'id'\) \# specify the name of the column as the DataFrame index_
+pd.read\__sql\_\_table\('data', engine, index_\_col = 'id'\) \# specify the name of the column as the DataFrame index\_
 
-pd.read\__sql\_table\('data', engine, columns = \['col_1', 'col_\_2'\]\) \# specify a subset of columns to be read_
+pd.read\__sql\_table\('data', engine, columns = \['col\_1', 'col_\_2'\]\) \# specify a subset of columns to be read\_
 
-pd.read\__sql\__table\('data', engine, parse_\_dates = \['Date'\]\) \#explicitly force columns to be parsed as dates_
+pd.read\__sql\_\_table\('data', engine, parse_\_dates = \['Date'\]\) \#explicitly force columns to be parsed as dates\_
 
-pd.read\_s_ql\__table\('data', engine, parse\_dates = {'Date': '%Y-%m-%d'}\)  
+pd.read\_s\_ql\_\_table\('data', engine, parse\_dates = {'Date': '%Y-%m-%d'}\)
 
-pd.read_sql_table\('data', engine, parse\_dates = {'Date': {'format': '%Y-%m-%d %H:%M:%S'}}\) \#speicfy a format string 
+pd.read\_sql\_table\('data', engine, parse\_dates = {'Date': {'format': '%Y-%m-%d %H:%M:%S'}}\) \#speicfy a format string
 
+\#2. Querying
 
+You can query using raw SQL in the read\__sql\_query\(\) function. In this case you must use the SQL variant appropriate for your database.When using SQLAlchemy, you can also pass SQLAlchemy expression language constructs, which are database-agnostic. _
 
+pd.read\__sql_\_query\('SELECT \* FROM data', engine\)
 
+or 
+
+pd.read\__sql\_query\("SELECT id, Col_1, Col_\_2 FROM data WHERE id = 42;", engine\)_
+
+or 
+
+for chunk in pd.read\__sql\__query \("SELECT \* FROM data_\_chunks", engine, chunksize = 5\):_
+
+print \(chunk\) \#support chunksize argument
+
+you can also run a plain query without creating a dataframe with execute\(\). this is useful for queries that don't return values, such as INSERT. This is functionally equivalent to calling execute on the SQLAlchemy engine or db connection object. 
+
+from pandas.io import sql
+
+sql.execute\('SELECT \* FROM table\_name', engine\)
+
+sql.execute\('INSERT INTO table\_name VALUES\(?, ?, ?\)', engine, params = \[\('id', 1,12.2, True\)\]\)
+
+Engine connection examples
+
+To connect with SQLAlchemy you use the create\_engine\(\) function to create an engine object from database URI. you only need to create the engine once per database you are connecting to. 
+
+from sqlalchemy import create\_engine
+
+engine = create\_engine\('postgresql://scott:tiger@localhost:5432/mydatabase'\)
+
+or 
+
+engine = create\_engine\('oracle://scott:tiger@127.0.0.1: 1521/sidname'\)
 
 ## Writing：
 
