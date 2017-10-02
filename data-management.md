@@ -287,13 +287,13 @@ postgroup <- cut2(postest, m =25)
 
 #### a. Using the ifelse approach
 
-`mydata$score1 <- ifelse(gender == "f", (2q1) +q2, #score1 for females;    
-  (20q1+q2)  # score1 for males    
+`mydata$score1 <- ifelse(gender == "f", (2q1) +q2, #score1 for females;      
+  (20q1+q2)  # score1 for males      
   )`
 
-`mydata$score2 <- ifelse(gender =="f",     
-  (3q1+q2), # score2 for females    
-   (30q1 +q2) # score 2 for males    
+`mydata$score2 <- ifelse(gender =="f",       
+  (3q1+q2), # score2 for females      
+   (30q1 +q2) # score 2 for males      
    )`
 
 #### b. Using the index approach
@@ -326,7 +326,7 @@ l`oad(file = "mydata.Rdata")`
 
 ### PYTHON：
 
-###  SAS：
+### SAS：
 
 ```
     data mylib.mydata;
@@ -346,7 +346,7 @@ l`oad(file = "mydata.Rdata")`
 
 When importing numeric data, R reads blanks as missing\(except when blanks are delimiters\). R reads the string NA as missing for both numeric and character variables. when importing a text file, both SAS and SPSS would recognize a period as a missing value for numeric variables. R will instead read the whole variable as a character vector!
 
-###   SAS
+### SAS
 
 ```
     data mylib.mydata;
@@ -384,7 +384,7 @@ When importing numeric data, R reads blanks as missing\(except when blanks are d
 
 \\# substitute the mean for missing values
 
- `mydataNA$q1 [is.na(mydataNA$q1)] <- mean(mydataNA$q1, na.rm = TRUE)`
+`mydataNA$q1 [is.na(mydataNA$q1)] <- mean(mydataNA$q1, na.rm = TRUE)`
 
 \\#eliminate observations with any NAs
 
@@ -402,7 +402,7 @@ When importing numeric data, R reads blanks as missing\(except when blanks are d
 
 `myincomplete <- mydataNA [!complete.cases(mydataNA), ]`
 
-\\# when "99" has meaning 
+\\# when "99" has meaning
 
 `mydataNA <- read.table("mydataNA.txt", na.strings = ".")`
 
@@ -440,37 +440,33 @@ string\_data.isnull\(\)
 
 ### R:
 
-####    a. using the data editor
+#### a. using the data editor
 
-  
-   ` fix(mydata)  
-    Restore original names for next example  
+`fix(mydata)    
+    Restore original names for next example    
     names(mydata) <- c("workshop", "gender", "q1", "q2", "q3", "q4")`
 
-####    b. using the reshape2 pakage
+#### b. using the reshape2 pakage
 
-  
      `library("reshape2")  
     myChanges <- c(q1 = "x1", q2 = "x2", q3 = "x3", q4 = "x4")  
     mydata <- rename(mydata, myChanges)`
 
-####     c.  the standard R approach
+#### c.  the standard R approach
 
-  
      `names(mydata) <- c("workshop", "gender", "x1", "x2", "x3", "x4")`
 
-####     d. Using the edit function
+#### d. Using the edit function
 
-  
     ` names (mydata) <- edit(names(mydata))`
 
 ### PYTHON:
 
-###  SAS:
+### SAS:
 
 ## 12. Renaming by index
 
-### R: 
+### R:
 
 ```
    mynames <- names(mydata)
@@ -495,9 +491,9 @@ a. renaming by column name
 
 b. renaming many sequentially numbered variable
 
-`names(mydata)  
- myXs <- paste("x", 1:4, sep = "")  
- myA <- which(names(mydata) == "q1")  
+`names(mydata)    
+ myXs <- paste("x", 1:4, sep = "")    
+ myA <- which(names(mydata) == "q1")    
  myZ <- which(names(mydata) =="q4")`
 
 `names(mydata) [myA:myZ] < myXs(mydata)`
@@ -510,12 +506,9 @@ b. renaming many sequentially numbered variable
      data mylib.mydata;
      rename q1 - q4 = x1-x4;
      run;
-     
 ```
 
 ## 13. Recording variables
-
-
 
 a.  recoding many variables
 
@@ -533,7 +526,7 @@ mydata$qr4 &lt;- recode\(q4, 1=2; 5=4"\)
 
 ### PYTHON:
 
-### SAS: 
+### SAS:
 
 ```
   LIBNAME mylib 'C:\myRfolder';
@@ -574,25 +567,25 @@ mydata$qr4 &lt;- recode\(q4, 1=2; 5=4"\)
 
 ## 14. Indicator or Dummy variables
 
-###  R:
+### R:
 
-`load("mydata100.RData")  
-attach(mydata100)  
-r <- as.numeric(workshop == "R")  
-sas <- as.numeric(workshop == "SAS")  
-spss <- as.numeric(workshop == "spss")  
-stata <- as.numeric(workshop == "Stata")  
-head(data.frame(workshop, r, sas, spss, stata))  
-lm(posttest ~ pretest +sas+spss+stata)  
-lm(posttest ~ prestest +workshop)  
-workshop <- relevel (workshop, "SAS")  
-coef(lm(posttest ~ pretest +workshop))  
-library("nmet")  
+`load("mydata100.RData")    
+attach(mydata100)    
+r <- as.numeric(workshop == "R")    
+sas <- as.numeric(workshop == "SAS")    
+spss <- as.numeric(workshop == "spss")    
+stata <- as.numeric(workshop == "Stata")    
+head(data.frame(workshop, r, sas, spss, stata))    
+lm(posttest ~ pretest +sas+spss+stata)    
+lm(posttest ~ prestest +workshop)    
+workshop <- relevel (workshop, "SAS")    
+coef(lm(posttest ~ pretest +workshop))    
+library("nmet")    
 head(class.ind(workshop))`
 
 ### PYTHON:
 
-###  SAS:
+### SAS:
 
 ```
  data temp;
@@ -606,7 +599,6 @@ head(class.ind(workshop))`
   proc reg;
     model posttest = pretest sas spss stata;
   run;
-  
 ```
 
 ## 15. Keeping and Dropping variables
@@ -681,7 +673,7 @@ in : data = dataframe(np.arrange(16).reshape((4,4)),
  data.drop('two', 'four'], axis = 1)
 ```
 
-###  SAS:
+### SAS:
 
 ```
 data myleft;

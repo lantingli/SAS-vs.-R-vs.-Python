@@ -139,7 +139,7 @@
 
 `find numeric variables:`
 
-`mynums <- sapply(mydata, is.numeric);        
+`mynums <- sapply(mydata, is.numeric);          
  print(mydata[myNums]`
 
 `myA <- which(names(mydata) == "gender")`
@@ -164,17 +164,13 @@
 
 `myqs <- subset(mydata, select = q1 :q4)`
 
-## PTYHON:
+## PTYHON: page 403
 
 ### 1. Selecting via \[ \], which slices the rows
 
 df\['A'\]
 
 df\[0:3\]
-
-
-
-
 
 ## SAS:
 

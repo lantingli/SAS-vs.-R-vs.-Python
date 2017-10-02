@@ -1,3 +1,5 @@
+## Reading:
+
 ## 1. Comma delimited files
 
 ### **SAS:**
@@ -617,6 +619,83 @@ mydata <- sasxport.get("mydata.xpt")
 ### PYTHON:
 
 ## 13. Reading from sql
+
+The pandas.io.sql module provides a collection of query wrappers to both facilitate data retrieval and to reduce dependency on DB- specific API. Database abstraction is provided by SQLAlchemy if installed, in addition you will need a driver library for your database. 
+
+if SQLAlchemy is not installed, a fallback is only provided for sqlite\(and for mysql for backwards compatibility, but this is deprecated and will be removed in a future version\). This mode requires a Python database adapter which respect the Python DB-API.
+
+The key functions are :
+
+| Code | Function |
+| :--- | :--- |
+| read\_sq\_table\(table\_name, con\[, schema, ...\]\) | Read SQL database table into a DataFrame |
+| read\_sql\_query\(sql, con\[, index\_col, ...\]\) | Read SQL query into a Dataframe |
+| read\_sql\(sql, con\[ , index\_col , ...\]\) | Read SQL query or database table  into a dataframe |
+| DataFrame.to\_sql \(name, con\[,flavor, ...\]\) | Write records stored in a DataFrame to a SQL database |
+
+ pandas.read\__sql_\_table: Give a table name and SQLAlchemy connectable, returns a DataFrame， this function does not support DBAPI connection.
+
+pandas.read\__sql_\_query: returns a dataframe corresponding to the result set of the query string. 
+
+con: SQLAlchemy connectable \(engine/connection\) or database string URI
+
+or sqlite3 DBAPI2 connection Using SQLAlchemy makes it possible to use any DB supported by that library. if a DBAPI2 object, only sqlite3 is supported. 
+
+Any datetime values with time zone information parsed via the parse\_dates parameter will be converted to UTC
+
+pandas.read\_sql: read SQL query or database table into a Dataframe
+
+In the following example, we use the SQlite SQL database engine. you can use a temporary SQLite database where data are stored in "memory"
+
+To connect with SQLAlchemy you use the create\_engine\(\) function to create an engine object from database URI. you only need to create the engine once per database you are connecting to. 
+
+from sqlalchemy import create\_engine
+
+\#create your engine: 
+
+engine = create\_engine\('sqlite:///:memory:'\)
+
+if you want to mange your own connections you can pass one of those instead:
+
+with engine.connect\(\) as conn, conn.begin\(\);
+
+data = pd.read\__sql_\_table\('data', conn\)
+
+\#Writing DataFrames
+
+data.to\_sql\('data', engine, chunksize = 1000\)
+
+\#SQL data types
+
+to\_sql\(\) will try to map your data to an appropriate SQL data type based on the dtype of the data. when you have columns of dtype object, pandas will try to infer the data type.
+
+you can always override the default type by specifying the desired SQL type of any of the columns by using the dtype argument. this argument needs a dictionary mapping column names to SQLAlchemy types \(or strings for the sqlite3 fallback mode\). for example, specifying to use the sqlalchemy string type instead of the default Text type for string columns:
+
+from sqlalchemy.types import string
+
+data.to_sql \('data_dtype', engine, dtype = {'Col\_1': String}\)
+
+\#Reading Tables
+
+read\__sql_\_table\(\) will read a database table given the table name and optionally a subset of columns to read.
+
+In order to use read\__sql\_table\(\) , you must have the SQLAlchemy optional dependency installed. _
+
+pd.read\__sql\__table\('data', engine, index_\_col = 'id'\) \# specify the name of the column as the DataFrame index_
+
+pd.read\__sql\_table\('data', engine, columns = \['col_1', 'col_\_2'\]\) \# specify a subset of columns to be read_
+
+pd.read\__sql\__table\('data', engine, parse_\_dates = \['Date'\]\) \#explicitly force columns to be parsed as dates_
+
+pd.read\_s_ql\__table\('data', engine, parse\_dates = {'Date': '%Y-%m-%d'}\)  
+
+pd.read_sql_table\('data', engine, parse\_dates = {'Date': {'format': '%Y-%m-%d %H:%M:%S'}}\) \#speicfy a format string 
+
+
+
+
+
+## Writing：
 
 ## 1. Write data from SAS and read it into R\(only for R\)
 

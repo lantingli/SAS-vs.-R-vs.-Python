@@ -1,6 +1,6 @@
 ## 16. Stacking/Concatenating/Adding data sets
 
-### R: 
+### R:
 
 ```
 females <- mydata[which(gender =="f"), ]
@@ -348,7 +348,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 \# print a report of just the duplicate records
 
-  ` attach(myDuplicates)  
+`attach(myDuplicates)    
    myDuplicates[DupRecs, ]`
 
 \# Remove duplicates and duplicated variable  
@@ -356,7 +356,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 or according to more than one variable
 
-   `mykeys <- c("workshop", "gender")  
+`mykeys <- c("workshop", "gender")    
    mydata$DupKeys <- duplicated(mydata[ , myKeys])`
 
 ## 21. Selecting first or last observations per group
