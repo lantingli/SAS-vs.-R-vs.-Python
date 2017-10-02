@@ -139,7 +139,7 @@
 
 `find numeric variables:`
 
-`mynums <- sapply(mydata, is.numeric);          
+`mynums <- sapply(mydata, is.numeric);            
  print(mydata[myNums]`
 
 `myA <- which(names(mydata) == "gender")`
@@ -168,9 +168,63 @@
 
 ### 1. Selecting via \[ \], which slices the rows
 
-df\['A'\]
+df\['A'\] \#列
 
-df\[0:3\]
+df\[0:3\] \# 行
+
+2. Selection by label
+
+df.loc\[dates\[0\]\]  \# getting a cross section using a label
+
+df.loc\[:. \['A', 'B'\]\] \# selecting on a multi-axis by label
+
+df.loc\['20130102': '20130104', \['A','B'\]\]  \# Showing label slicing, both endpoints are included. 
+
+3. Selection by position 
+
+df.iloc\[3\]  \#select via the position of the passed integers 行
+
+df.iloc\[3:5, 0:2\] \# by integer slices 行 and 列
+
+df.iloc\[\[1,2,4\], \[0,2\]\]  \# 行 and 列 \# by lists of integer position locations
+
+df.iloc\[1:3, :\]  \# for slicing rows explicitly 
+
+df.iloc \[:, 1:3\] \# for slicing columns explicitly
+
+df.iloc\[1,1\] \# for getting a value explicitly
+
+4. Boolean indexing
+
+df\[df.A &gt;0\]  \# using a single column's values to select data
+
+df\[df &gt;0\] \# A where operation for getting 
+
+Using the isin\(\) method for filtering:
+
+df2 = df.copy\(\)
+
+df2\['E'\] = \['one', 'one', 'two','three', 'four', 'three'\]
+
+df2\[df2\['E'\].isin\(\['two', 'four'\]\)\]
+
+5. Setting
+
+Setting a new column automatically aligns the data by the indexes
+
+s1 = pd.series\(\[1,2,3,4,5,6\], index = pd.date\_range\('20130102', periods = 6\)\)
+
+df\['F'\] = s1  
+
+df.at\[dates\[0\], 'A'\] = 0 \# setting values by label
+
+df.iat\[0,1\] = 0 \# settign values by position
+
+df.loc\[:, 'D'\] = np.array\(\[5\] \* len\(df\)\)
+
+df2 = df.copy\(\)
+
+df2\[df2&gt;0\] = -df2  \# a where operation with setting 
 
 ## SAS:
 

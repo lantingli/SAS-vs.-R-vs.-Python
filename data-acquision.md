@@ -618,6 +618,22 @@ mydata <- sasxport.get("mydata.xpt")
 
 ### PYTHON:
 
+The top-level function read\_sas\(\) currently can read\(but not write\) SAS xport\(.XPT\) format files. pandas can not currently handle SAS7BDAT files. 
+
+XPORT files only contain two value types: ASCII text and double precision numeric values. there is no automatic type conversion to integers , dates, or categoricals. by default the whole file is read and returned as a DataFrame. 
+
+df = pd.read\__sas\('sas\_xport.xpt'\)_
+
+or 
+
+rdr = pd.read_sas\('sas_\_xport.xpt', chunk = 100000\)
+
+for chunk in rdr:
+
+do\__something\(chunk_\)
+
+
+
 ## 13. Reading from sql
 
 The pandas.io.sql module provides a collection of query wrappers to both facilitate data retrieval and to reduce dependency on DB- specific API. Database abstraction is provided by SQLAlchemy if installed, in addition you will need a driver library for your database.
@@ -697,17 +713,17 @@ You can query using raw SQL in the read\__sql\_query\(\) function. In this case 
 
 pd.read\__sql_\_query\('SELECT \* FROM data', engine\)
 
-or 
+or
 
-pd.read\__sql\_query\("SELECT id, Col_1, Col_\_2 FROM data WHERE id = 42;", engine\)_
+pd.read\__sql\_query\("SELECT id, Col\_1, Col_\_2 FROM data WHERE id = 42;", engine\)\_
 
-or 
+or
 
-for chunk in pd.read\__sql\__query \("SELECT \* FROM data_\_chunks", engine, chunksize = 5\):_
+for chunk in pd.read\__sql\_\_query \("SELECT \* FROM data_\_chunks", engine, chunksize = 5\):\_
 
 print \(chunk\) \#support chunksize argument
 
-you can also run a plain query without creating a dataframe with execute\(\). this is useful for queries that don't return values, such as INSERT. This is functionally equivalent to calling execute on the SQLAlchemy engine or db connection object. 
+you can also run a plain query without creating a dataframe with execute\(\). this is useful for queries that don't return values, such as INSERT. This is functionally equivalent to calling execute on the SQLAlchemy engine or db connection object.
 
 from pandas.io import sql
 
@@ -717,13 +733,13 @@ sql.execute\('INSERT INTO table\_name VALUES\(?, ?, ?\)', engine, params = \[\('
 
 Engine connection examples
 
-To connect with SQLAlchemy you use the create\_engine\(\) function to create an engine object from database URI. you only need to create the engine once per database you are connecting to. 
+To connect with SQLAlchemy you use the create\_engine\(\) function to create an engine object from database URI. you only need to create the engine once per database you are connecting to.
 
 from sqlalchemy import create\_engine
 
 engine = create\_engine\('postgresql://scott:tiger@localhost:5432/mydatabase'\)
 
-or 
+or
 
 engine = create\_engine\('oracle://scott:tiger@127.0.0.1: 1521/sidname'\)
 
