@@ -139,7 +139,7 @@
 
 `find numeric variables:`
 
-`mynums <- sapply(mydata, is.numeric);              
+`mynums <- sapply(mydata, is.numeric);                
  print(mydata[myNums]`
 
 `myA <- which(names(mydata) == "gender")`
@@ -164,7 +164,65 @@
 
 `myqs <- subset(mydata, select = q1 :q4)`
 
-## PTYHON: page 403
+## PTYHON: 
+
+The primary function of indexing are listed below:
+
+| Object Type | Selection | Return Value Type |
+| :--- | :--- | :--- |
+| Series | series\[label\] | scalar value |
+| DataFrame | frame\[colname\] | series corresponding to colname |
+| Panel | panel\[itemname\] | DataFrame corresponding to the itemname |
+
+
+
+Object selection has had a number of user-requested additions in order to support more explicit location based indexing. pandas now supports three types of multi-axis indexing.
+
+.loc is primarily label based , but may also be used with a boolean array. .loc will raise KeyError when the items are not found. Allowed inputs are:
+
+--a single label, e.g. 5 or 'a', \(note that 5 is interpreted as a label of the index. this use is not an integer position along the index\)
+
+-- a list or array of labels\('a', 'b', 'c'\]
+
+--a slice object with labels 'a': 'f', \(note that contrary to usual python slices, both the start and the stop are included. 
+
+-- a boolean array
+
+.iloc is primarily integer position based \(from 0 to length-1 of the axis\), but may also be used with a boolean array. .iloc will raise IndexError if a requested indexer is out-of -bounds, except slice indexers which allow out-of-bounds indexing. Allowed inputs are:
+
+--an integer e.g. 5
+
+-- a list or array of integers \[4,3,0\]
+
+--a slice object with ints 1:7
+
+-- a boolean array
+
+.ix supports mixed integer and label based access. it is primarily label based, but will fall back to integer positional access unless the corresponding axis is of integer type. .ix is the most general and will support any of the inputs in .loc and .iloc. .ix also supports floating point label schemes. .ix is exceptionally useful when dealing with mixed positional and label based hierachical indexes. 
+
+| Object Type | Indexers |
+| :--- | :--- |
+| Series | S.loc\[indexer\] |
+| DataFrame | df.loc\[row\_indexer, column\_indexer\] |
+| Panel | p.loc\[item\_indexer, major\_indexer, minor\_indexer\] |
+
+
+
+Pandas 进行行选择一般有三种方法：
+
+连续多行的选择用类似于python 的列表切片
+
+n = fandango\[1:3\]
+
+连续指定的索引选择一行或多行，使用loc\[ \] 方法
+
+o = fandango.loc\[1\]
+
+p = fandango.loc\[1:3\]
+
+连续指定的位置选择一行或多行， 使用iloc 方法
+
+loc\[ \] 与iloc \[ \] 方法之前一个巨大的差别，那就是loc\[ \] 里的参数是对应的索引值即可，所以参数可以是整数，也可是是字符串，而iloc  \[ \] 里的参数表示的是第几行的数据， 所以只能是整数
 
 ### 1. Selecting via \[ \], which slices the rows
 
