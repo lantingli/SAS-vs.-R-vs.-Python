@@ -287,13 +287,13 @@ postgroup <- cut2(postest, m =25)
 
 #### a. Using the ifelse approach
 
-`mydata$score1 <- ifelse(gender == "f", (2q1) +q2, #score1 for females;        
-  (20q1+q2)  # score1 for males        
+`mydata$score1 <- ifelse(gender == "f", (2q1) +q2, #score1 for females;          
+  (20q1+q2)  # score1 for males          
   )`
 
-`mydata$score2 <- ifelse(gender =="f",         
-  (3q1+q2), # score2 for females        
-   (30q1 +q2) # score 2 for males        
+`mydata$score2 <- ifelse(gender =="f",           
+  (3q1+q2), # score2 for females          
+   (30q1 +q2) # score 2 for males          
    )`
 
 #### b. Using the index approach
@@ -368,19 +368,49 @@ When importing numeric data, R reads blanks as missing\(except when blanks are d
 
 ### PYTHON:
 
-pandas primarily uses the value np.nan to represent missing data. it is by default not included in computations. 
+pandas primarily uses the value np.nan to represent missing data. it is by default not included in computations.
 
-To make detecting missing values easier （and across different array dtypes\), pandas provides the isnull\(\) and notnull\(\) functions, which are also methods on series and dataframe objects:
+\#1. To make detecting missing values easier （and across different array dtypes\), pandas provides the isnull\(\) and notnull\(\) functions, which are also methods on series and dataframe objects:
 
 pd.isnull\(df2\['one'\]\)
 
 df2\['four'\].notnull\(\)
 
-df2.isnull\(\)
+df.isnull\(\)
 
-Datetimes
+\#2. Datetimes
 
 For datetime64 types, NaT represents missing values
+
+\#3. Inserting missing data
+
+Your can insert missing values by simply assigning to containers. the actural missing value used will be chosen based on the type. for example, numeric containers will always use NaN regardless of the missing value type chosen:
+
+s = pd.series{\[1,2,3\]}
+
+s.log\[0\] = None
+
+s = pd.series{\['a', 'b', 'c'\]}
+
+s.log\[1\] = np.nan
+
+\#4. calculation with missing data
+
+Missing values propagate naturally through arithmetic operations between pandas objects
+
+The descriptive statistics and computational methods are all written to account for missing data. for example,
+
+when summing data, NA\(missing\) values will be treated as zero
+
+if the data are all NA, the result will be NA
+
+Methods like cumsum and cumprod ignore NA values, but preserve them in the resulting arrays
+
+df\['one'\].sum
+
+df.mean\(\)
+
+\#5. Cleaning/filling missing data
 
 
 
@@ -458,8 +488,8 @@ string\_data.isnull\(\)
 
 #### a. using the data editor
 
-`fix(mydata)      
-    Restore original names for next example      
+`fix(mydata)        
+    Restore original names for next example        
     names(mydata) <- c("workshop", "gender", "q1", "q2", "q3", "q4")`
 
 #### b. using the reshape2 pakage
@@ -507,9 +537,9 @@ a. renaming by column name
 
 b. renaming many sequentially numbered variable
 
-`names(mydata)      
- myXs <- paste("x", 1:4, sep = "")      
- myA <- which(names(mydata) == "q1")      
+`names(mydata)        
+ myXs <- paste("x", 1:4, sep = "")        
+ myA <- which(names(mydata) == "q1")        
  myZ <- which(names(mydata) =="q4")`
 
 `names(mydata) [myA:myZ] < myXs(mydata)`
@@ -585,18 +615,18 @@ mydata$qr4 &lt;- recode\(q4, 1=2; 5=4"\)
 
 ### R:
 
-`load("mydata100.RData")      
-attach(mydata100)      
-r <- as.numeric(workshop == "R")      
-sas <- as.numeric(workshop == "SAS")      
-spss <- as.numeric(workshop == "spss")      
-stata <- as.numeric(workshop == "Stata")      
-head(data.frame(workshop, r, sas, spss, stata))      
-lm(posttest ~ pretest +sas+spss+stata)      
-lm(posttest ~ prestest +workshop)      
-workshop <- relevel (workshop, "SAS")      
-coef(lm(posttest ~ pretest +workshop))      
-library("nmet")      
+`load("mydata100.RData")        
+attach(mydata100)        
+r <- as.numeric(workshop == "R")        
+sas <- as.numeric(workshop == "SAS")        
+spss <- as.numeric(workshop == "spss")        
+stata <- as.numeric(workshop == "Stata")        
+head(data.frame(workshop, r, sas, spss, stata))        
+lm(posttest ~ pretest +sas+spss+stata)        
+lm(posttest ~ prestest +workshop)        
+workshop <- relevel (workshop, "SAS")        
+coef(lm(posttest ~ pretest +workshop))        
+library("nmet")        
 head(class.ind(workshop))`
 
 ### PYTHON:
