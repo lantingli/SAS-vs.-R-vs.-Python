@@ -287,13 +287,13 @@ postgroup <- cut2(postest, m =25)
 
 #### a. Using the ifelse approach
 
-`mydata$score1 <- ifelse(gender == "f", (2q1) +q2, #score1 for females;            
-  (20q1+q2)  # score1 for males            
+`mydata$score1 <- ifelse(gender == "f", (2q1) +q2, #score1 for females;              
+  (20q1+q2)  # score1 for males              
   )`
 
-`mydata$score2 <- ifelse(gender =="f",             
-  (3q1+q2), # score2 for females            
-   (30q1 +q2) # score 2 for males            
+`mydata$score2 <- ifelse(gender =="f",               
+  (3q1+q2), # score2 for females              
+   (30q1 +q2) # score 2 for males              
    )`
 
 #### b. Using the index approach
@@ -412,6 +412,55 @@ df.mean\(\)
 
 \#5. Cleaning/filling missing data
 
+pandas objects are equipped with various data manipulation methods for dealing with missing data.
+
+Filling missing values : fillna 
+
+the fillna function can "fillin" NA values with non-null data in a couple of ways, which we illustrate:
+
+Replace NA with a scalar value
+
+df2.fillna \(0\)
+
+df2\['four'\].fillna\('missing'\)
+
+fill gaps forward or backward:
+
+df.fillna \(method = 'pad'\)
+
+To remind you, there are the available filling methods:
+
+| Method | Action |
+| :--- | :--- |
+| pad/ffill | Fill values forward |
+| bfill/backfill | Fill values backward |
+
+With time series data, using pad/ffill is extremely common so that the "last known value" is available at every time point.
+
+The ffill\(\) function is equvalent to fillna\(method = 'ffill'\) and bfill\(\) is equivalent to fillna\(method = 'bfill'\)
+
+Filling with a Pandasobject
+
+you can also fillna using a dict or series that is alignable. the labels of the dict or index of the series must match the columns of the frame you wish to fill. the use case of this is to fill a dataframe with the mean of that column .
+
+diff.fillna\(dff.mean\(\)\)
+
+dff.fillna\(dff.mean\(\)\['B','C'\]\)
+
+dff.where\(pd.notnull\(dff\), dff.mean\(\), axis = 'column'\)
+
+\#6. Dropping axis labels with missing data: dropna
+
+you may wish to simply exclude labels from a data set which refer to missing data. to do this, use the dropna method:
+
+df.dropna\(axis = 0\)
+
+dr.dropna\(axis = 1\)
+
+df\['one'\].dropna\(\)
+
+Series.dropna is a simpler method as it only has one axis to consider, dataframe.dropna has considerably more options than series.dropna.
+
 ### R:
 
 `mydataNA <- read.table("mydataNA.txt")`
@@ -486,8 +535,8 @@ string\_data.isnull\(\)
 
 #### a. using the data editor
 
-`fix(mydata)          
-    Restore original names for next example          
+`fix(mydata)            
+    Restore original names for next example            
     names(mydata) <- c("workshop", "gender", "q1", "q2", "q3", "q4")`
 
 #### b. using the reshape2 pakage
@@ -535,9 +584,9 @@ a. renaming by column name
 
 b. renaming many sequentially numbered variable
 
-`names(mydata)          
- myXs <- paste("x", 1:4, sep = "")          
- myA <- which(names(mydata) == "q1")          
+`names(mydata)            
+ myXs <- paste("x", 1:4, sep = "")            
+ myA <- which(names(mydata) == "q1")            
  myZ <- which(names(mydata) =="q4")`
 
 `names(mydata) [myA:myZ] < myXs(mydata)`
@@ -613,18 +662,18 @@ mydata$qr4 &lt;- recode\(q4, 1=2; 5=4"\)
 
 ### R:
 
-`load("mydata100.RData")          
-attach(mydata100)          
-r <- as.numeric(workshop == "R")          
-sas <- as.numeric(workshop == "SAS")          
-spss <- as.numeric(workshop == "spss")          
-stata <- as.numeric(workshop == "Stata")          
-head(data.frame(workshop, r, sas, spss, stata))          
-lm(posttest ~ pretest +sas+spss+stata)          
-lm(posttest ~ prestest +workshop)          
-workshop <- relevel (workshop, "SAS")          
-coef(lm(posttest ~ pretest +workshop))          
-library("nmet")          
+`load("mydata100.RData")            
+attach(mydata100)            
+r <- as.numeric(workshop == "R")            
+sas <- as.numeric(workshop == "SAS")            
+spss <- as.numeric(workshop == "spss")            
+stata <- as.numeric(workshop == "Stata")            
+head(data.frame(workshop, r, sas, spss, stata))            
+lm(posttest ~ pretest +sas+spss+stata)            
+lm(posttest ~ prestest +workshop)            
+workshop <- relevel (workshop, "SAS")            
+coef(lm(posttest ~ pretest +workshop))            
+library("nmet")            
 head(class.ind(workshop))`
 
 ### PYTHON:
