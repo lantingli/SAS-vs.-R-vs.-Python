@@ -120,7 +120,7 @@ when gluing together multiple DataFrames\( or Panels \) , you have a choice of h
 
 \#2. Concatenating using append
 
-A useful shortcut to concat are the append instance methods on Series and DataFrame. 
+A useful shortcut to concat are the append instance methods on Series and DataFrame.
 
 result = df1.append\(df2\)
 
@@ -138,17 +138,19 @@ result = df1.append\(df4, ignore\_index = True\)
 
 \#4. Concatenating with mixed ndims
 
-you  can concatenate a mix of Series and DataFrames. The Series will be transformed to DataFrames with the column name as the name of the Series. 
+you  can concatenate a mix of Series and DataFrames. The Series will be transformed to DataFrames with the column name as the name of the Series.
 
 s1 = pd.Series\(\['X0', 'X1', 'X2', 'X3'\], name = 'X'\)
 
 result = pd.concat \(\[df1, s1\], axis = 1\)
 
-result = pd.concat\(\[df1, s1\], axis = 1, ignore\__index = True\) \# Passin_g ignore\_index = True will drop all name references. 
+result = pd.concat\(\[df1, s1\], axis = 1, ignore\_\_index = True\) \# Passin\_g ignore\_index = True will drop all name references.
 
+\#5. More concatenating with group keys
 
+A fairly common use of the keys argument is to override the column names when creating a new DataFrame based on existed Series. Notice how the default behaviour consists on letting the resulting DataFrame inherits the parent Series' name, when these existed. 
 
-### SAS:
+### SAS
 
 ```
  data mylib.myleft;
@@ -400,7 +402,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 \# print a report of just the duplicate records
 
-`attach(myDuplicates)        
+`attach(myDuplicates)          
    myDuplicates[DupRecs, ]`
 
 \# Remove duplicates and duplicated variable  
@@ -408,7 +410,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 or according to more than one variable
 
-`mykeys <- c("workshop", "gender")        
+`mykeys <- c("workshop", "gender")          
    mydata$DupKeys <- duplicated(mydata[ , myKeys])`
 
 ## 21. Selecting first or last observations per group
