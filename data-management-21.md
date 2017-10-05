@@ -148,7 +148,48 @@ result = pd.concat\(\[df1, s1\], axis = 1, ignore\_\_index = True\) \# Passin\_g
 
 \#5. More concatenating with group keys
 
-A fairly common use of the keys argument is to override the column names when creating a new DataFrame based on existed Series. Notice how the default behaviour consists on letting the resulting DataFrame inherits the parent Series' name, when these existed. 
+A fairly common use of the keys argument is to override the column names when creating a new DataFrame based on existed Series. Notice how the default behaviour consists on letting the resulting DataFrame inherits the parent Series' name, when these existed.
+
+s3 = pd.series\(\[0,1,2,3\], name = 'foo'\)
+
+s4 = pd.series\(\[0,1,2,3\]\)
+
+s5 = pd.series\(\[0.1.4.5\]\)
+
+pd.concat\(\[s3, s4, s5\]. axis = 1\)
+
+Through the keys argument we can override the existing column names
+
+pd.concat\(\[s3, s4, s5\], axis = 1, keys = \['red', 'blue', 'yellow'\]\)
+
+\#6. Appending rows to a Dataframe
+
+While not especially efficient \(since a new object must be created\), you can append a single row to a DataFrame by passing a series or dict to append, which returns a new DataFrame.
+
+s2 = pd.series\(\['X0', 'X1', 'X2', 'X3'\], INDEX = \['A', 'B', 'C', 'D'\]\)
+
+result = df1.append\(s2, ignore\_index = True\)
+
+\#7. Database-style DataFrame joining/merging
+
+pandas has full-featured high performance in-memory join operations idiomatically very similar to relational databases like SQL. These methods perform significantly better than other open source implementations \(like base::merge.data.frame in R\). The reason for this is careful algorithmic design and internal layout of the data in Dataframe. 
+
+Pandas provides a single function, merge, as the entry point for all standard database join operations between DataFrame objects:
+
+pd.merge\(left, right, how = 'inner', on = None, left_on = None, right\_on= None, left\_index = False, right\_index = False, sort = True, suffixes = '\_x', '\_y'\), copy = True, Indicator = False\)_
+
+The how argument to merge specifies how to determine which keys are to be included in the resulting table. if a key combination does not appear in either the left or right tables, the values in the joined table will be NA. Here is a summary of the how options and their SQL equivalent names:
+
+| Merge method | SQL Join Name | Description |
+| :--- | :--- | :--- |
+| left | LEFT OUTER JOIN | Use keys from left frame only  |
+| right | RIGHT OUTER JOIN | Use keys from right frame only |
+| outer | FULL OUTER JOIN | Use union of keys from both frames |
+| inner | INNER JOIN | Use intersection of keys from both frames |
+
+result = pd.merge\(left, right, how = 'left', on = \['key1', 'key2'\]\)
+
+
 
 ### SAS
 
@@ -402,7 +443,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 \# print a report of just the duplicate records
 
-`attach(myDuplicates)          
+`attach(myDuplicates)            
    myDuplicates[DupRecs, ]`
 
 \# Remove duplicates and duplicated variable  
@@ -410,7 +451,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 or according to more than one variable
 
-`mykeys <- c("workshop", "gender")          
+`mykeys <- c("workshop", "gender")            
    mydata$DupKeys <- duplicated(mydata[ , myKeys])`
 
 ## 21. Selecting first or last observations per group

@@ -60,6 +60,160 @@ mylong <- melt(mydata,
      mywide <- dcast(mylong, subject + workshop + gender ~ variable)
 ```
 
+### PYTHON:
+
+\#1. Reshaping by pivoting DataFrame objects:
+
+Data is often stored in CSV files or databases in so-called 'stacked' or 'record' format:
+
+df.pivot\(index = 'date', columns = 'variable', values = 'value'\)
+
+\#2. Reshaping by stacking and unstacking
+
+Closely related to the pivot function are the related stack and unstack functions currently available on series and DataFrame. Here are essentially what these functions do:
+
+stack: 'pivot' a level of the \(possibly hierarchical\) column labels, returning a DataFrame with an index with a new inner-most level of row labels.
+
+unstack: inverse operation from stack: 'pivot' a level of the \(possibly hierarchical\) row index to the column axis, producing a reshaped DataFrame with a new inner-most level of column labels.
+
+If the columns have a MultiIndex, you can choose which level to stack. The stacked level becomes the new lowest level in a MultiIndex on the columns;  with a 'stacked' DataFrame or Series \(having a MultiIndex as the index\), the inverse operation of stack is unstack, which by default unstacks the last level. Notice that the stack and unstack methods implicitly sort the index levels involved. Hence a call to stack and then unstack will result in a sorted copy of the original DataFrame or Series.
+
+stacked.unstack\(\)
+
+stacked.unstack\(1\)
+
+stacked.unstack\('second'\) \# If the indexes have names, you can use the level names instead of specifying the level members
+
+\#3. Multiple Levels
+
+You may also stack or unstack more than one level at a time by passing a list of levels, in which case the end result is as if each level in the list were processed individually. 
+
+df.stack\(level = \['animal', 'hair\_length'\]\)
+
+\#4. Reshaping by Melt
+
+The melt\(\) function is useful to massage a DataFrame into a format where one or more columns are identifier variables, while all other columns, considered measured variables, are 'unpivoted' to the row axis, leaving just two non-identifier columns, 'variable' and 'value'. The names of those columns can be customized by supplying the var_name and value\_name parameters._
+
+cheese = pd.DataFrame\({'first': \['Join', 'Mary'\], 'last', : \['Doe', 'Bo'\],  'height' : \[5.5, 6.0\], 'weight': \[130, 150\]}\)
+
+pd.melt\(cheese, id\_vars = \['first', 'last'\]\)
+
+out :
+
+        first   last   variable   value 
+
+0     Join   Doe   height      5.5
+
+1     Mary  Bo     height      6.0
+
+2     Join   Doe    weight    130.0
+
+3.    Join   Bo    weight      150.0
+
+
+
+pd.melt\(cheese, id_vars = \['first', 'last'\], var\_name = 'quantity'\)_
+
+Get the same results with ones above
+
+Another way to transform is to use the wide\__to_\_long panel data convenience function
+
+\#5. Combining with stats and GroupBy
+
+It should be no shock that combining pivot/stack/unstack with GroupBy and the basic Series and DataFrame statistical functions can produce some very expressive and fast data manipulations. 
+
+df.stack\(\) .mean\(1\). unstack\(\) == df.groupby\(level =1, axis = 1\).mean\(\)
+
+df.stack\(\).groupby\(level = 1\).mean\(\)
+
+df.mean\(\).unstack\(0\)
+
+\#6. Pivot tables
+
+The function pandas.pivot\_table can be used to create spreadsheet-style pivot tables 
+
+pd.pivot\_table\(df, values = 'D', index = \['A', 'B'\], columns = \['C'\]\)
+
+\#7. Adding margins
+
+If you pass margins = True to pivot\_table, special All columns and rows will be added with partial group aggregates across the categories on the rows and columns . 
+
+df.pivot\_table\(index = \['A', 'B'\], columns = 'C', margins = True, aggfunc = np.std\)
+
+\#8. Cross tabulations
+
+Use the crosstab function to compute a cross-tabulation of two factors. By default crosstab computes a frequency table of the factors unless an array of values and an aggregation function are passed.
+
+df = pd.DataFrame\({'A': \[1,2,2,2,2\], 'B': \[3,3,4,4,4\], 'C': \[1.1, NP.NAN, 1, 1\]}\)
+
+pd.crosstab\(df.A, df.B\)
+
+$9. Normalization
+
+Frequency tables can also be normalized to show percentages rather than counts using the normalize argument:
+
+pd.crosstab\(df.A, df.B, normalize = True\)
+
+or 
+
+pd.crosstab\(df.A, df.B, normalize = 'columns'\)
+
+or 
+
+pd.crosstab\(df.A, df.B, values = df.C, aggfunc = np.sum, normalize = True, margins = True\)
+
+\#10. Computing indicator /dummy variables
+
+To convert a categorical variable into a 'dummy' or 'indicator' DataFrame, fro example a column in a DataFrame \( a series\) which has k distinct values, can derive a DataFrame containing k columns of 1s and 0s. 
+
+df = pd.DataFrame\({'key': list\('bbacab'\), 'data1', : range\(6\)}\)
+
+pd.get\_dummies\(df\['key'\]\)
+
+or 
+
+dummies = pd.get\_dummies \(df\['key'\], prefix = 'key'\)
+
+This function is often used along with discretization functions like cut:
+
+values  = np.random.randn\(10\)
+
+bins  = \[0, 0.2, 0.4, 0.6, 0.8, 1\]
+
+pd.get\_dummies\(pd.cut\(values, bins\)\)
+
+get\_dummies\(\) also accepts a DataFrame. By default all categorical variables\(categorical in the statistical sense, those with object or categorical dtype\) are encoded as dummy variables.
+
+df = pd.DataFrame \({'A': \['a', 'b', 'a'\], 'B': \['c', 'c', 'b'\], 'C': \[1,2,3\]}\)
+
+pd.get\_dummies\(df\)
+
+out:
+
+      C  A\__a  A\_b B\_b B\_c_
+
+0    1  1       0      0     1
+
+1    2  0       0      0     1
+
+2    3  1       0      1     0
+
+or you can control the columns that are encoded with the columns keyword.
+
+pd.get\_dummies\(df, columns = \['A'\]\)
+
+\#11. Factorizing values
+
+To encode 1-d values as an enumerated type use factorize:
+
+
+
+
+
+### 
+
+### 
+
 ### 24. sorting data frames
 
 ### SAS :
@@ -76,7 +230,7 @@ proc sort data = mylib.mydata;
 
 ### PYTHON:
 
-`obj = series(range(4), index = ['d', 'a', 'b', 'c'])    
+`obj = series(range(4), index = ['d', 'a', 'b', 'c'])      
 obj.sort_index ()`
 
 `with a dataframe, you can sort by index on either axis:`
@@ -90,20 +244,22 @@ obj.sort_index ()`
 `frame.sort_index(axis = 1, ascending = False)`
 
 \\# To sort a series by its values, use its order method:  
-`in : obj = series(4,7,-3, 2])    
+`in : obj = series(4,7,-3, 2])      
  obj.order()`
 
 \\# any missing values are sorted to the end of the series by default
 
-`in: obj = series([4, np.nan, 7, np.nan, -3, 2])    
+`in: obj = series([4, np.nan, 7, np.nan, -3, 2])      
 obj.order()`
 
 \\# on dataframe, you may want to sort by the values in one or more columns. to do so, pass one or more column names to the by options:
 
 `in : frame = dataframe({'b': [4,7,-3, 2], 'a': [0, 1, 0, 1]})`
 
-`frame.sort_index(by  ='b')    
+`frame.sort_index(by  ='b')      
 frame.sort_index (by = 'a', 'b'])`
+
+
 
 ### R:
 
@@ -193,7 +349,7 @@ data mylib.giants;
 
 #### 1. split a commma-separated string into a broken pieces
 
-`val = 'a,b, guido'    
+`val = 'a,b, guido'      
  val.split(,)`
 
 `out : ['a', 'b', 'guido']`
@@ -206,38 +362,35 @@ data mylib.giants;
 
 #### 2. join together
 
-`in : first + '::' + second '::' + third    
+`in : first + '::' + second '::' + third      
   out : 'a::b::guido'`
 
 #### 3. detect a substring, through index and find
 
-`in : 'guido' in val    
- val.index(,)    
- out : 1    
- val.find(':')    
+`in : 'guido' in val      
+ val.index(,)      
+ out : 1      
+ val.find(':')      
  out : -1`
 
 note the difference between find and index is that index raises an exception if the string isn't found\(versus returning -1\)
 
 #### 4. relatively, count returns the number of occurrences of a particular substring
 
-  
-` in: val.count(',')  
+`in: val.count(',')    
   out : 2`
 
 #### 5. replace will substitute occurrences of one pattern for another. this is commonly used to delete patterns, too, by passing an empty string:
 
-  
-`in: val.replace(',', '::')  
+`in: val.replace(',', '::')    
  out: 'a::b:: guido'`
 
-`in: val.place(',', '')  
+`in: val.place(',', '')    
  out: 'ab guido'`
 
 #### 6. python built-in string methods
 
-  
- count: return the number of non-overlapping occurrences of substring in the string  
+count: return the number of non-overlapping occurrences of substring in the string  
  endwith, startwith: returns true if sting ends with suffix  
  join: use string as delimiter for concatenating a sequence of other strings  
  index: return position of first character in substring if found in the string. raises valueError if not found.  
@@ -311,47 +464,47 @@ giants <- read.fwf(
 
 ##### SAS:
 
-`Infile '\myRfolder\giants.txt'  
- MISSOVER DSD LRECL = 32767  
- input name $char14. @16 born mmddyy10. @27 died mmddyy10.;  
- proc print;  
+`Infile '\myRfolder\giants.txt'    
+ MISSOVER DSD LRECL = 32767    
+ input name $char14. @16 born mmddyy10. @27 died mmddyy10.;    
+ proc print;    
  run;`
 
-`proc print;  
- format died born mmddyy10.;  
+`proc print;    
+ format died born mmddyy10.;    
  run;`
 
-`data mylib.giants;  
-   set mylib.giants;  
-    age  = (died - born)/365.2425;  
-    longAgo = (today() - died)/365.2425;  
+`data mylib.giants;    
+   set mylib.giants;    
+    age  = (died - born)/365.2425;    
+    longAgo = (today() - died)/365.2425;    
  run;`
 
-`proc print;  
- format died born mmddyy10. age longAgo 5.2;  
+`proc print;    
+ format died born mmddyy10. age longAgo 5.2;    
  run;`
 
 ##### PYTHON:
 
 ##### R:
 
-`giants<- read.fwf(  
-   file = "giants.txt",  
-   width = c(15,11, 11)  
-   col.names = c("name", "born", "died")  
-   colClasses = c("character", "character", "POSIXct"),  
-   row.names = "name",  
-   strip.white = TRUE;  
+`giants<- read.fwf(    
+   file = "giants.txt",    
+   width = c(15,11, 11)    
+   col.names = c("name", "born", "died")    
+   colClasses = c("character", "character", "POSIXct"),    
+   row.names = "name",    
+   strip.white = TRUE;    
  )`
 
-`library("lubridate")  
+`library("lubridate")    
  giants$born <- mdy(giants$born)`
 
-`as.POSIXct(  
- c(-2520460800, -3558556800, -2207952000, -1721347200, -2952201600),  
+`as.POSIXct(    
+ c(-2520460800, -3558556800, -2207952000, -1721347200, -2952201600),    
  origin = "1960-01-01, tz = "UTC")`
 
-`age<- difftime(died, born, units = "secs")  
+`age<- difftime(died, born, units = "secs")    
  age <- difftime(died, born) # default age in days`
 
 `giants$age <- round(as.numeric(age/365.2425), 2)`
@@ -360,75 +513,67 @@ giants <- read.fwf(
 
 #### 2. adding durations to date-time variables
 
-#####  SAS:
+##### SAS:
 
-  
-`data mylib.giants;  
-  set mylib.giants;  
-   died  = born +age;  
+`data mylib.giants;    
+  set mylib.giants;    
+   died  = born +age;    
    run;`
 
-##### PYTHON: 
+##### PYTHON:
 
 ##### R:
 
-  
-` age <- as.duration(  
- c(2286057600, 2495664000, 2485382400, 2685916800, 1935705600)  
+`age <- as.duration(    
+ c(2286057600, 2495664000, 2485382400, 2685916800, 1935705600)    
  )`
 
 #### 3. accessing date-time elements
 
-#####  SAS:
+##### SAS:
 
-  
-`data mylib.giants;  
-  set mylib.giants;  
-  myYear = YEAR(born);  
-  myMonth =MONTH(born);  
+`data mylib.giants;    
+  set mylib.giants;    
+  myYear = YEAR(born);    
+  myMonth =MONTH(born);    
   myDay = DAY(born);`
 
 ##### PYTHON:
 
 ##### R:
 
-`year(born)  
-month(born)  
-day(born) # day of month  
+`year(born)    
+month(born)    
+day(born) # day of month    
 wday(born) # day of week`
 
 ### 4.  creating date-time variables from elements
 
-####  SAS:
+#### SAS:
 
-  
-`data mylib.giants;  
-  set mylib.giants;  
-  born = MDY(myMonth, myDay, myYear);  
+`data mylib.giants;    
+  set mylib.giants;    
+  born = MDY(myMonth, myDay, myYear);    
 run;`
-
-
 
 #### PYTHON:
 
 #### R:
 
-  
-`myYear <- year(died)  
-myMonth <- month(died)  
+`myYear <- year(died)    
+myMonth <- month(died)    
 myDay <- day(died)`
 
-`myDateString <<- paste(myYear, myMonth, myDay, SEP = "/")  
+`myDateString <<- paste(myYear, myMonth, myDay, SEP = "/")    
 died2 <- ymd(myDateString)`
 
 #### 5. logical comparisons with date-time variables
 
 ##### SAS:
 
-  
-`data born1900s;  
-  set mylib.giants;  
-   if born > "01jan1900"d;  
+`data born1900s;    
+  set mylib.giants;    
+   if born > "01jan1900"d;    
  run;`
 
 ##### R:
@@ -437,30 +582,29 @@ died2 <- ymd(myDateString)`
 
 #### 6. formatting date-time output
 
-  
-`proc format;  
-picture myFormatI  
-LOW-HIGH = '%B %d, %Y is day %j of %Y'  
-(DATATYPE = DATE)  
+`proc format;    
+picture myFormatI    
+LOW-HIGH = '%B %d, %Y is day %j of %Y'    
+(DATATYPE = DATE)    
 RUN;`
 
-`proc print data = mylib.giants;  
-  var born;  
-  format born myFormatI40.;  
+`proc print data = mylib.giants;    
+  var born;    
+  format born myFormatI40.;    
 run;`
 
-`data null;  
-  set mylib.giants;  
-   put name $char14. born myFormatII34.;  
+`data null;    
+  set mylib.giants;    
+   put name $char14. born myFormatII34.;    
  run;`
 
 #### 7. two-digit years
 
 #### 8. date-time conclusion
 
-##  28. Loops
+## 28. Loops
 
-##  29. Functions 
+## 29. Functions
 
 
 
