@@ -96,6 +96,26 @@ or pd.merge(left, right, on = 'key1', suffixes = ('_left', '_right')) # used for
 \# Merging on index  
 what is difference between merging on variables and merging on index?
 
+Pandas provides facilities for easily combining together series, dataframe, and panel objects with various kinds of set logic for the indexes and relational algebra functionality in the case of join/merge-type opertaions
+
+\#1 concatenating objects
+
+The concat function does all of the heavy lifting of performing concatenation operations along an axis while performing optional 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### SAS:
 
 ```
@@ -348,7 +368,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 \# print a report of just the duplicate records
 
-`attach(myDuplicates)    
+`attach(myDuplicates)      
    myDuplicates[DupRecs, ]`
 
 \# Remove duplicates and duplicated variable  
@@ -356,7 +376,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 or according to more than one variable
 
-`mykeys <- c("workshop", "gender")    
+`mykeys <- c("workshop", "gender")      
    mydata$DupKeys <- duplicated(mydata[ , myKeys])`
 
 ## 21. Selecting first or last observations per group
