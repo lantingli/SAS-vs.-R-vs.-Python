@@ -100,19 +100,51 @@ Pandas provides facilities for easily combining together series, dataframe, and 
 
 \#1 concatenating objects
 
-The concat function does all of the heavy lifting of performing concatenation operations along an axis while performing optional 
+The concat function does all of the heavy lifting of performing concatenation operations along an axis while performing optional set logic\(union or intersection\) of the indexes or the other axes. pandas.concat takes a list or dict of homogeneously -typed objects and concatenates them with some configurable handling of "what to do with the other axes":
 
+pd.concat\(objs, axis = 0, join = 'outer', join_axes = None, ignore\_index = False, keys = None, levels = None, names = None, verify\_integrity  = False, copy = True\)_
 
+suppose we want to associate specific keys with each of the pieces of the chopped up dataframe. we can do this using the keys argument:
 
+result = pd.concat\(frames, keys = \['x', 'y', 'z'\]\)
 
+\#1. set logic on the other axes
 
+when gluing together multiple DataFrames\( or Panels \) , you have a choice of how to handle the other axes\(other than the one being concatenated\). This can be done in three ways:
 
+1\) Take the \(sorted\) union of them all, join = 'outer'. this is the default option as it results in zero information loss.
 
+2\) Take the intersection, join = 'inner'.
 
+3\) Use a specific index\(in the case of dataframe\) or indexes , i.e. the join\_axes argument
 
+\#2. Concatenating using append
 
+A useful shortcut to concat are the append instance methods on Series and DataFrame. 
 
+result = df1.append\(df2\)
 
+result = df1.append\(\[df2, df3\]\)
+
+\#3. Ignoring indexes on the concatenation axis
+
+For dataframes which don't have a meaningful index, you may wish to append them and ignore the fact that they may have overlapping indexe, to do this, use the ignore\_index argument:
+
+result = pd.concat \(\[df1, df4\], ignore\_index = True\)
+
+This is also a valid argument to dataframe.append:
+
+result = df1.append\(df4, ignore\_index = True\)
+
+\#4. Concatenating with mixed ndims
+
+you  can concatenate a mix of Series and DataFrames. The Series will be transformed to DataFrames with the column name as the name of the Series. 
+
+s1 = pd.Series\(\['X0', 'X1', 'X2', 'X3'\], name = 'X'\)
+
+result = pd.concat \(\[df1, s1\], axis = 1\)
+
+result = pd.concat\(\[df1, s1\], axis = 1, ignore\__index = True\) \# Passin_g ignore\_index = True will drop all name references. 
 
 
 
@@ -368,7 +400,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 \# print a report of just the duplicate records
 
-`attach(myDuplicates)      
+`attach(myDuplicates)        
    myDuplicates[DupRecs, ]`
 
 \# Remove duplicates and duplicated variable  
@@ -376,7 +408,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 or according to more than one variable
 
-`mykeys <- c("workshop", "gender")      
+`mykeys <- c("workshop", "gender")        
    mydata$DupKeys <- duplicated(mydata[ , myKeys])`
 
 ## 21. Selecting first or last observations per group
