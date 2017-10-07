@@ -172,7 +172,7 @@ result = df1.append\(s2, ignore\_index = True\)
 
 \#7. Database-style DataFrame joining/merging
 
-pandas has full-featured high performance in-memory join operations idiomatically very similar to relational databases like SQL. These methods perform significantly better than other open source implementations \(like base::merge.data.frame in R\). The reason for this is careful algorithmic design and internal layout of the data in Dataframe. 
+pandas has full-featured high performance in-memory join operations idiomatically very similar to relational databases like SQL. These methods perform significantly better than other open source implementations \(like base::merge.data.frame in R\). The reason for this is careful algorithmic design and internal layout of the data in Dataframe.
 
 Pandas provides a single function, merge, as the entry point for all standard database join operations between DataFrame objects:
 
@@ -182,14 +182,12 @@ The how argument to merge specifies how to determine which keys are to be includ
 
 | Merge method | SQL Join Name | Description |
 | :--- | :--- | :--- |
-| left | LEFT OUTER JOIN | Use keys from left frame only  |
+| left | LEFT OUTER JOIN | Use keys from left frame only |
 | right | RIGHT OUTER JOIN | Use keys from right frame only |
 | outer | FULL OUTER JOIN | Use union of keys from both frames |
 | inner | INNER JOIN | Use intersection of keys from both frames |
 
 result = pd.merge\(left, right, how = 'left', on = \['key1', 'key2'\]\)
-
-
 
 ### SAS
 
@@ -269,6 +267,78 @@ the concat function in pandas provides a consistent way to address each of these
  s3 = series([5,6], index = 'f', 'g'])
  pd.concat([s1, s2, s3]) \# by default concat works along axis = 0, producing another series. if you pass axis = 1, the result will instead be a dataframe(axis = 1 is the columns)
 ```
+
+Group by: split -apply-combine
+
+by 'group by' we are referring to a process involving one or more of the following steps:
+
+-- splitting the data into groups based on some criteria
+
+-- applying a function to each group independently
+
+-- combining the results into a data structure
+
+Of these, the split step is the most straightforward. In fact, in many situations you may wish to split the data set into groups and do something with those groups yourself. in the apply step, we might wish to one of the following:
+
+Aggregation: computing a summary statistic \( or statistics\) about each group, Some examples:
+
+-- Compute group sums or means
+
+-- Compute group sizes/counts
+
+Transformation: perform some group-specific computations and return a like-indexed. Some examples:
+
+---Standardizing data\(zscore\) within group
+
+-- Filling NAs within groups with a value derived from each group 
+
+Filtration: discard some groups, according to a group-wise computation that evaluates True or False. some examples:
+
+-- Discarding data that belongs to groups with only a few members
+
+--Filtering out data based on the group sum or mean
+
+Some combination of the above: Groupby will examine the results of the apply step and try to return a sensibly combined result if it doesn't fit into either of the above two categories. 
+
+\#1. Splitting an object into groups
+
+pandas objects can be split on any of their axes. The abstract definition of grouping is to provide a mapping of labels to group names. To create a groupby object, you can do the following:
+
+grouped =obj.groupby\(key\)
+
+grouped = obj.groupby\(key, axis =1\)
+
+grouped = obj.groupby\(\[key1, key2\]\)
+
+grouped = df.groupby\('A'\)
+
+grouped = df.groupby\(\['A', 'B'\]\)
+
+\#2. Groupby sorting
+
+By default the group keys are sorted during the groupby operation. you may however pass sort = False for potential speedups. 
+
+df2 = pd.DataFrame\({'X': \['B', 'B', 'A', 'A'\], 'Y': \[1,2,3,4\]}\)
+
+DF2.GROUPBY\(\['X'\]\).SUM\(\)
+
+df3.groupby\(\['X'\]\).get\_group\('B'\)
+
+\#3. GroupBy object attributes
+
+
+
+### 
+
+### 
+
+### 
+
+### 
+
+### 
+
+### 
 
 ### SAS:
 
@@ -443,7 +513,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 \# print a report of just the duplicate records
 
-`attach(myDuplicates)            
+`attach(myDuplicates)              
    myDuplicates[DupRecs, ]`
 
 \# Remove duplicates and duplicated variable  
@@ -451,7 +521,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 or according to more than one variable
 
-`mykeys <- c("workshop", "gender")            
+`mykeys <- c("workshop", "gender")              
    mydata$DupKeys <- duplicated(mydata[ , myKeys])`
 
 ## 21. Selecting first or last observations per group
