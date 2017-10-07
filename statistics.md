@@ -170,6 +170,82 @@ NA values are excluded unless the entire slice\(row or column in this case\) is 
 
 describe is producing multiple summary statistics in one shot: df.describe
 
+\#1. Percentage Change
+
+Series, DataFrame, and Panel all have a method pct\__change to compute the percent change over a given number of periods\(using fill_\_method to fill NA/null values before computing the percent change
+
+ser = pd.Series\(np.random.randn\(8\)\)
+
+ser.pct\_change
+
+df = pd.DataFrame\(np.random.randn\(10,4\)\)
+
+df.pct\_change \(periods = 3\)
+
+\#2. Covariance
+
+The Series object has a method cov to compute covariance between series\(excluding NA/null values\)
+
+s1 = pd.Series\(np.random.randn\(1000\)\)
+
+s2 = pd.Series\(np.random.randn\(1000\)\)
+
+s1.cov\(s2\)
+
+Analogously, DataFrame has a method cov to compute pairwise covariances among the series in the DataFrame, also excluding NA/null values.
+
+Assuming the missing data are missing at random this results in an estimate for the covariance matrix which is unbiased. However, for many applications this estimate may not be acceptable because the estimated covariance matrix is not guaranteed to be positive semi-definite. This could lead to estimated correlations having absolute values which are greater than one, and /or a non-invertible covariance matrix. 
+
+frame = pd.DataFrame\(np.random.randn\(1000,5\), columns  = \['a', 'b', 'c', 'd', 'e'\]\)
+
+frame.cov\(\)
+
+DataFrame.cov also supports an optional min-periods keyword that specifies the required minimum number of observations for each column pair in order to have a valid result. 
+
+frame = pd.DataFrame\(np.random.randn\(20,3\), columns = 'a', 'b', 'c'\]\)
+
+frame.ix\[:5, 'a'\] = np.nan
+
+frame.ix\[5:10, 'b'\] = np.nan
+
+frame.cov\(\)
+
+frame.cov\(min\_periods = 12\)
+
+\#3. Corrleation
+
+Several methods for computing correlations are provided:
+
+| Method name | Description |
+| :--- | :--- |
+| pearson\(default\) | Standard correlation coefficient |
+| kendall | Kendall Tau correlation coefficient |
+| spearman | Spearman rank correlation coefficient |
+
+
+
+All of these are currently computed using pairwise complete observations.
+
+frame = pd.DataFrame \(np.random.randn\(1000, 5\), columns  = \['a', 'b', 'c', 'd', 'e'\]\)
+
+frame.ix\[::2\] = np.nan
+
+frame\['a'\].corr\(frame\['b'\]\)
+
+frame\['a'\].corr\(frame\['b'\], method = 'spearman'\)
+
+Pairwise correlation of DataFrame columns: frame.corr\(\)
+
+Note that non-numeric columns will b automatically excluded from the correlation calculation, also corr supports the optional min-periods keyword
+
+
+
+
+
+
+
+
+
 ## 2. Hypothesis test\(group comparsion\)
 
 ### a. T test for continuous variables
@@ -276,8 +352,6 @@ Wilcoxon/Mann-Whitney test
 
 `aggregate(q1, data.frame(gender), median, na.rm = TRUE)`
 
-
-
 #### 2. Nonparametric test for continuous variable \(paired variable\)
 
 ##### SAS:
@@ -302,7 +376,7 @@ Wilcoxon/Mann-Whitney test
 
 `median(posttest)`
 
- \# sign test: paried groups  
+\# sign test: paried groups
 
 \# sign test
 
@@ -440,13 +514,9 @@ proc glm;
 
 `run;`
 
-
-
 #### PYTHON:
 
 #### R:
-
-
 
 
 
