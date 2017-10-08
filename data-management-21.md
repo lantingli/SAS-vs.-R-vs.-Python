@@ -290,7 +290,7 @@ Transformation: perform some group-specific computations and return a like-index
 
 ---Standardizing data\(zscore\) within group
 
--- Filling NAs within groups with a value derived from each group 
+-- Filling NAs within groups with a value derived from each group
 
 Filtration: discard some groups, according to a group-wise computation that evaluates True or False. some examples:
 
@@ -298,7 +298,7 @@ Filtration: discard some groups, according to a group-wise computation that eval
 
 --Filtering out data based on the group sum or mean
 
-Some combination of the above: Groupby will examine the results of the apply step and try to return a sensibly combined result if it doesn't fit into either of the above two categories. 
+Some combination of the above: Groupby will examine the results of the apply step and try to return a sensibly combined result if it doesn't fit into either of the above two categories.
 
 \#1. Splitting an object into groups
 
@@ -316,7 +316,7 @@ grouped = df.groupby\(\['A', 'B'\]\)
 
 \#2. Groupby sorting
 
-By default the group keys are sorted during the groupby operation. you may however pass sort = False for potential speedups. 
+By default the group keys are sorted during the groupby operation. you may however pass sort = False for potential speedups.
 
 df2 = pd.DataFrame\({'X': \['B', 'B', 'A', 'A'\], 'Y': \[1,2,3,4\]}\)
 
@@ -324,7 +324,75 @@ DF2.GROUPBY\(\['X'\]\).SUM\(\)
 
 df3.groupby\(\['X'\]\).get\_group\('B'\)
 
-\#3. GroupBy object attributes
+\#3. DataFrame column selection in GroupBy
+
+Once you have created the GroupBy object from a DataFrame, you might want to do something different for each of the columns. thus, using \[ \] similar to getting a column from a DataFrame, you can do:
+
+grouped = df.groupby\(\['A'\]\)
+
+grouped\_C = grouped\['C'\]
+
+grouped\_D = grouped\['D'\]
+
+This is mainly syntactic sugar for the alternative and much more verbose:
+
+df\['C'\].groupby\(df\['A'\]\)
+
+\#4. Selecting a group
+
+A single group can be selected using GroupBy.get\_group\( \)
+
+grouped.get\_group\('bar'\)
+
+Or for an object grouped on multiple columns
+
+df.groupby\(\['A', 'B'\]\).get\_group\(\('bar', 'one'\)\)
+
+\#5. Aggregation
+
+Once the GroupBy object has been created, several methods are available to perform a computation on the grouped data
+
+An obvious one is aggregation via the aggregate or equivalently agg method:
+
+grouped = df.groupby\(\['A', 'B'\]\)
+
+grouped.aggregate\(np.sum\)
+
+\#6. Applying multiple functions at once
+
+With grouped Series you can also pass a list or dict of functions to do aggregation with, outputting a DataFrame:
+
+grouped = df.groupby\['A'\)
+
+grouped\['C'\].agg\(\[np.sum, np.mean, np.std\]\)
+
+If a dict is passed, the keys will be used to name the columns. Otherwise the function's name will be used.
+
+grouped\['D'\].agg\({'result1': np.sum,
+
+                              'result2': np.mean}\)
+
+On a grouped DataFrame, you can pass a list of functions to apply to each column, which produces an aggregated result with a hierarchical index:
+
+grouped.agg\(\[np.sum, np.mean, np.std\]\)
+
+\#7. Applying different functions to DataFrame columns
+
+By passing a dict to aggregate you can apply a different aggregation to the columns of a DataFrame
+
+grouped.agg\({'C':np.sum,
+
+                         'D': lambda x: np.std\(x, ddof =1\)}\)
+
+The function names can also be strings. In order for a string to be valid it must be either implemented on GroupBy or available via  dispatching:
+
+grouped.agg\({'C': 'sum', 'D': 'std'}\)
+
+If you pass a dict to aggregate, the ordering of the output columns is non-deterministic. If you want to be sure the output columns will be in a specific order, you can use an OrderedDict:
+
+grouped.agg\(OrderedDict\(\[\('D', 'std'\), \('C', 'mean'\)\]\)\)
+
+
 
 
 
@@ -513,7 +581,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 \# print a report of just the duplicate records
 
-`attach(myDuplicates)              
+`attach(myDuplicates)                
    myDuplicates[DupRecs, ]`
 
 \# Remove duplicates and duplicated variable  
@@ -521,7 +589,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 or according to more than one variable
 
-`mykeys <- c("workshop", "gender")              
+`mykeys <- c("workshop", "gender")                
    mydata$DupKeys <- duplicated(mydata[ , myKeys])`
 
 ## 21. Selecting first or last observations per group
