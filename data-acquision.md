@@ -34,7 +34,7 @@ f= pd.read\_csv\('ch06/ex1.csv'， index\_col = 0\) \# pass the column number or
 pd.read\_csv \('foo.csv', index\_col = 'date'\)  
 pd.read\_csv\('foo.csv', index\_col = \[0,'A'\]\)\# hierarchical index
 
-# 1. for dialect keyword: gives greater flexibility in specifying the file format, uses the excel dialect by default
+1. for dialect keyword: gives greater flexibility in specifying the file format, uses the excel dialect by default
 
 data = 'a,b,c~1, 2,3~4, 5,6'  
 pd.read\_csv\(StringIO\(data\), lineterminator = '~'\)
@@ -43,14 +43,14 @@ or another common dialect option
 data = 'a,b,c\n1,2,3\n4,5,6'  
 pd.read\_csv\(StringIO\(data\), skipinitialspace = True\)
 
-# 2. specifying column data types: you can indicate the data type for the whole dataframe or individual columns
+2. specifying column data types: you can indicate the data type for the whole dataframe or individual columns
 
 data = 'a, b, c\n1, 2,3\n4, 5,6\n7, 8,9'  
 df = pd.read\_csv\(StringIO\(data\), dtype = object\)  
 or  
 df = pd.read\_csv\(StringIO\(data\), dtype = 'b': object, 'c': np.float64\)\)
 
-# 3. specifying categorical dtype
+3. specifying categorical dtype
 
 data = 'col1, col2, col3\na, b, 1\na, b, 2\nc, d, 3'  
 pd.read\_csv\(StringIO\(data\), dtype= 'category'\).dtypes
@@ -62,7 +62,7 @@ if the categories are numeric they can be converted using the to\_numeric \(\) f
 df= pd.read\_csv\(StringIO\(data\), dtype = 'category'\)  
 df\[col3'.cat.categories = pd.to\_numeric\(df\['col3'\].cat.categories\)
 
-# 4. Naming and Using columns: a file may or may not have a header row, pandas assumes the first row should be
+4. Naming and Using columns: a file may or may not have a header row, pandas assumes the first row should be
 
 data = 'a,b,c\n1,2,3\n4,5,6\n7,8,9'
 
@@ -71,20 +71,20 @@ pd.read\_csv\(StringIO\(data\), names = \['foo', 'bar', 'baz'\], header = None\)
 
 pd.read\_csv\(StringIO\(data\), header = 1\) \# if the header is in a row other than the first, pass the row number to header
 
-# 5. Duplicate names parsing: if the file or header contains duplicate names, pandas by default will deduplicate these names so as to prevent data overwrite:
+5. Duplicate names parsing: if the file or header contains duplicate names, pandas by default will deduplicate these names so as to prevent data overwrite:
 
 data = 'a,b', a\n0,1,2\n3,4,5'
 
 pd.read\_csv\(StringIO\(data\), mangle\_dupe\_cols = False\) \# will arise duplicate data, so a value error will report
 
-# 6. Filtering columns: the usecols argument allows to select any subset of the columns in a file, either using the column names or position numbers:
+6. Filtering columns: the usecols argument allows to select any subset of the columns in a file, either using the column names or position numbers:
 
 data = 'a,b,c,d\n1,2,3,foo\n4,5,6,bar\n7,8,9,baz'
 
 pd.read\_csv\(StringIO\(data\), usecols = \['b', 'd'\]\)  
 pd.read\_csv\(StrinIO\(data\), usecols = \[0,2,3\]\)
 
-# 7. Comments and Empty lines:
+7. Comments and Empty lines:
 
 Ignoring line comments and empty lines
 
@@ -618,21 +618,19 @@ mydata <- sasxport.get("mydata.xpt")
 
 ### PYTHON:
 
-The top-level function read\_sas\(\) currently can read\(but not write\) SAS xport\(.XPT\) format files. pandas can not currently handle SAS7BDAT files. 
+The top-level function read\_sas\(\) currently can read\(but not write\) SAS xport\(.XPT\) format files. pandas can not currently handle SAS7BDAT files.
 
-XPORT files only contain two value types: ASCII text and double precision numeric values. there is no automatic type conversion to integers , dates, or categoricals. by default the whole file is read and returned as a DataFrame. 
+XPORT files only contain two value types: ASCII text and double precision numeric values. there is no automatic type conversion to integers , dates, or categoricals. by default the whole file is read and returned as a DataFrame.
 
 df = pd.read\__sas\('sas\_xport.xpt'\)_
 
-or 
+or
 
 rdr = pd.read_sas\('sas_\_xport.xpt', chunk = 100000\)
 
 for chunk in rdr:
 
 do\__something\(chunk_\)
-
-
 
 ## 13. Reading from sql
 

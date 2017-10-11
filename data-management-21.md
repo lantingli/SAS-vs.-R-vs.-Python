@@ -370,7 +370,9 @@ If a dict is passed, the keys will be used to name the columns. Otherwise the fu
 
 grouped\['D'\].agg\({'result1': np.sum,
 
-                              'result2': np.mean}\)
+```
+                          'result2': np.mean}\)
+```
 
 On a grouped DataFrame, you can pass a list of functions to apply to each column, which produces an aggregated result with a hierarchical index:
 
@@ -382,7 +384,9 @@ By passing a dict to aggregate you can apply a different aggregation to the colu
 
 grouped.agg\({'C':np.sum,
 
-                         'D': lambda x: np.std\(x, ddof =1\)}\)
+```
+                     'D': lambda x: np.std\(x, ddof =1\)}\)
+```
 
 The function names can also be strings. In order for a string to be valid it must be either implemented on GroupBy or available via  dispatching:
 
@@ -391,10 +395,6 @@ grouped.agg\({'C': 'sum', 'D': 'std'}\)
 If you pass a dict to aggregate, the ordering of the output columns is non-deterministic. If you want to be sure the output columns will be in a specific order, you can use an OrderedDict:
 
 grouped.agg\(OrderedDict\(\[\('D', 'std'\), \('C', 'mean'\)\]\)\)
-
-
-
-
 
 ### 
 
@@ -581,7 +581,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 \# print a report of just the duplicate records
 
-`attach(myDuplicates)                
+`attach(myDuplicates)                  
    myDuplicates[DupRecs, ]`
 
 \# Remove duplicates and duplicated variable  
@@ -589,7 +589,7 @@ data.drop_duplicates(['k1', 'k2'], take_last = true)
 
 or according to more than one variable
 
-`mykeys <- c("workshop", "gender")                
+`mykeys <- c("workshop", "gender")                  
    mydata$DupKeys <- duplicated(mydata[ , myKeys])`
 
 ## 21. Selecting first or last observations per group
@@ -672,7 +672,7 @@ myFixed <- data.frame(myFixed)
 str(myFixed)
 
 myQs <- c("q1", "q2", "q3", "q4")
-myFixed[ , myQs] <- lapply(myFixed[ , myQs], as.numeric)
+myFixed[ , myQs] <- lapply(myFixed[ , myQs], as.numeric
 ```
 
 
