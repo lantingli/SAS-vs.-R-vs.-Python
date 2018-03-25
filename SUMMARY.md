@@ -16,4 +16,5 @@
 * [supplmentary](supplmentary.md)
 * [Data management 2](data-management-2.md)
 * [Data management 2.1](data-management-21.md)
+* [生存分析](sheng-cun-fen-xi.md)
 
