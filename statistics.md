@@ -194,13 +194,13 @@ s1.cov\(s2\)
 
 Analogously, DataFrame has a method cov to compute pairwise covariances among the series in the DataFrame, also excluding NA/null values.
 
-Assuming the missing data are missing at random this results in an estimate for the covariance matrix which is unbiased. However, for many applications this estimate may not be acceptable because the estimated covariance matrix is not guaranteed to be positive semi-definite. This could lead to estimated correlations having absolute values which are greater than one, and /or a non-invertible covariance matrix. 
+Assuming the missing data are missing at random this results in an estimate for the covariance matrix which is unbiased. However, for many applications this estimate may not be acceptable because the estimated covariance matrix is not guaranteed to be positive semi-definite. This could lead to estimated correlations having absolute values which are greater than one, and /or a non-invertible covariance matrix.
 
 frame = pd.DataFrame\(np.random.randn\(1000,5\), columns  = \['a', 'b', 'c', 'd', 'e'\]\)
 
 frame.cov\(\)
 
-DataFrame.cov also supports an optional min-periods keyword that specifies the required minimum number of observations for each column pair in order to have a valid result. 
+DataFrame.cov also supports an optional min-periods keyword that specifies the required minimum number of observations for each column pair in order to have a valid result.
 
 frame = pd.DataFrame\(np.random.randn\(20,3\), columns = 'a', 'b', 'c'\]\)
 
@@ -222,8 +222,6 @@ Several methods for computing correlations are provided:
 | kendall | Kendall Tau correlation coefficient |
 | spearman | Spearman rank correlation coefficient |
 
-
-
 All of these are currently computed using pairwise complete observations.
 
 frame = pd.DataFrame \(np.random.randn\(1000, 5\), columns  = \['a', 'b', 'c', 'd', 'e'\]\)
@@ -237,14 +235,6 @@ frame\['a'\].corr\(frame\['b'\], method = 'spearman'\)
 Pairwise correlation of DataFrame columns: frame.corr\(\)
 
 Note that non-numeric columns will b automatically excluded from the correlation calculation, also corr supports the optional min-periods keyword
-
-
-
-
-
-
-
-
 
 ## 2. Hypothesis test\(group comparsion\)
 
